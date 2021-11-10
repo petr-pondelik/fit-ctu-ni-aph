@@ -24,9 +24,15 @@ export class MapTile {
 
 }
 
+export type MapPosition = {
+	row: number;
+	column: number;
+}
+
 export type LevelData = {
 	name: string;
 	map: MapTile[][];
+	playerInitPos: MapPosition;
 }
 
 export type GameData = {

@@ -27,8 +27,10 @@ export class GameLoader {
 		const gameData: GameData = {
 			levels: LevelFactory.createLevels()
 		};
-		// console.log(gameData);
+		console.log('GAME DATA');
+		console.log(gameData);
 		engine.scene.assignGlobalAttribute(Attributes.GAME_DATA, gameData);
+		console.log('ADD KeyInputComponent');
 		// console.log(engine.scene.getGlobalAttribute<LevelData>(Attributes.GAME_DATA));
 		LevelFactory.loadLevel(engine.scene, 0);
 	}

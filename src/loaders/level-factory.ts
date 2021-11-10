@@ -4,7 +4,8 @@ import {Selectors} from '../selectors/selectors';
 import MazeBuilder from '../builders/maze-builder';
 import {LevelData, MapTile} from '../model/game-struct';
 import {LEVELS} from '../constants/levels';
-import {Assets} from '../constants/constants';
+import PlayerBuilder from "../builders/player-builder";
+import {SCENE_HEIGHT, SCENE_WIDTH, SPRITE_SIZE} from "../constants/config";
 
 
 export class LevelFactory {
@@ -23,7 +24,8 @@ export class LevelFactory {
 			}
 			res.push({
 				name: level.name,
-				map: map
+				map: map,
+				playerInitPos: {row: level.playerInitPos[0], column: level.playerInitPos[1]}
 			} as LevelData);
 		}
 		return res;
@@ -33,7 +35,12 @@ export class LevelFactory {
 		const levelData = Selectors.gameDataSelector(scene).levels[index];
 		// console.log(levelData);
 		MazeBuilder.prepare(scene, levelData).build();
-		// WallBuilder.build();
+		PlayerBuilder.prepare(scene, levelData.playerInitPos).build();
+
+		// console.log(levelData.playerInitPos.column);
+
+		scene.stage.pivot.x = (levelData.playerInitPos.column * SPRITE_SIZE) - (SCENE_WIDTH/SPRITE_SIZE/2 * SPRITE_SIZE)/2 + SPRITE_SIZE/2;
+		scene.stage.pivot.y = (levelData.playerInitPos.row * SPRITE_SIZE) - (SCENE_HEIGHT/SPRITE_SIZE/2 * SPRITE_SIZE)/2 + SPRITE_SIZE/2;
 	}
 
 }

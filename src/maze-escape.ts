@@ -29,6 +29,8 @@ class MazeEscape {
 			debugEnabled: false // debugging window
 		});
 
+		this.engine.scene.addGlobalComponent(new ECS.KeyInputComponent());
+
 		this.load();
 	}
 

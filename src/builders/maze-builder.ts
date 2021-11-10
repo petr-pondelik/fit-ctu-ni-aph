@@ -1,9 +1,9 @@
 import * as ECS from '../../libs/pixi-ecs';
+import * as PIXI from 'pixi.js';
 import {LevelData, MapTileType} from '../model/game-struct';
 import {Assets} from '../constants/constants';
 import {getTileAsset} from '../helpers';
 import {SPRITE_SIZE} from '../constants/config';
-import * as PIXI from 'pixi.js';
 
 export default class MazeBuilder {
 
