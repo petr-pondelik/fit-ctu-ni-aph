@@ -1,11 +1,10 @@
-import * as PIXI from 'pixi.js';
 import * as ECS from '../../libs/pixi-ecs';
 import {Selectors} from '../selectors/selectors';
 import MazeBuilder from '../builders/maze-builder';
-import {LevelData, MapTile} from '../model/game-struct';
+import {LevelData, MapData, MapTile} from '../model/game-struct';
 import {LEVELS} from '../constants/levels';
-import PlayerBuilder from "../builders/player-builder";
-import {SCENE_HEIGHT, SCENE_WIDTH, SPRITE_SIZE} from "../constants/config";
+import PlayerBuilder from '../builders/player-builder';
+import {SCENE_HEIGHT, SCENE_WIDTH, SPRITE_SIZE} from '../constants/config';
 
 
 export class LevelFactory {
@@ -13,13 +12,20 @@ export class LevelFactory {
 	static createLevels = (): LevelData[] => {
 		let res: LevelData[] = [];
 		for (const level of LEVELS) {
-			let map: MapTile[][] = [], rowInx: number = 0;
+			let map: MapData = {
+				tiles: [],
+				size: {
+					rows: level.map.length,
+					columns: level.map[0].length
+				}
+			};
+			let rowInx: number = 0;
 			for (const r of level.map) {
 				let row: MapTile[] = [], colInx: number = 0;
 				for (const tileType of r) {
 					row.push(new MapTile(tileType, rowInx, colInx++));
 				}
-				map.push(row);
+				map.tiles.push(row);
 				rowInx++;
 			}
 			res.push({
@@ -41,6 +47,18 @@ export class LevelFactory {
 
 		scene.stage.pivot.x = (levelData.playerInitPos.column * SPRITE_SIZE) - (SCENE_WIDTH/SPRITE_SIZE/2 * SPRITE_SIZE)/2 + SPRITE_SIZE/2;
 		scene.stage.pivot.y = (levelData.playerInitPos.row * SPRITE_SIZE) - (SCENE_HEIGHT/SPRITE_SIZE/2 * SPRITE_SIZE)/2 + SPRITE_SIZE/2;
+		// scene.stage.getChildByName('maze').pivot.x = (levelData.playerInitPos.column * SPRITE_SIZE) - (SCENE_WIDTH/4) + SPRITE_SIZE/2;
+		// scene.stage.getChildByName('maze').pivot.y = (levelData.playerInitPos.row * SPRITE_SIZE) - (SCENE_HEIGHT/4) + SPRITE_SIZE/2;
+
+		// console.log(scene.stage.pivot);
+		// console.log(scene.stage.getChildByName('maze').pivot);
+		// console.log(scene.stage.getChildByName('maze').getBounds());
+		// console.log(scene.stage.getChildByName('maze').position);
+
+		// scene.stage.getChildByName('maze').pivot.x = -100;
+		// scene.stage.getChildByName('maze').pivot.y = -100;
+
+		// scene.stage.rotation = 0.25 * Math.PI;
 	}
 
 }

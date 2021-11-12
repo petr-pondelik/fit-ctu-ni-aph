@@ -10,3 +10,7 @@ export const getTileAsset = (type: MapTileType): Assets => {
 		case MapTileType.WALL_LEFT:                     return Assets.WALL_LEFT;
 	}
 };
+
+export const isSteppableTile = (type: MapTileType): boolean => {
+	return type === MapTileType.FLOOR;
+};

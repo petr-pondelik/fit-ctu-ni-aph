@@ -3,6 +3,7 @@ import {Assets, Attributes} from '../constants/constants';
 import {LEVELS} from '../constants/levels';
 import {GameData, LevelData} from '../model/game-struct';
 import {LevelFactory} from './level-factory';
+import GameState from '../model/states/game-state';
 
 /**
  * Game loader, loads assets
@@ -24,12 +25,17 @@ export class GameLoader {
 	private onAssetsLoaded(engine: ECS.Engine) {
 		console.log('ASSETS LOADED');
 		console.log(engine.app.loader.resources);
+
 		const gameData: GameData = {
 			levels: LevelFactory.createLevels()
 		};
+
 		console.log('GAME DATA');
 		console.log(gameData);
+
 		engine.scene.assignGlobalAttribute(Attributes.GAME_DATA, gameData);
+		engine.scene.assignGlobalAttribute(Attributes.GAME_STATE, new GameState(engine.scene, gameData));
+
 		console.log('ADD KeyInputComponent');
 		// console.log(engine.scene.getGlobalAttribute<LevelData>(Attributes.GAME_DATA));
 		LevelFactory.loadLevel(engine.scene, 0);

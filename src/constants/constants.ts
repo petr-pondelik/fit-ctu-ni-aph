@@ -10,6 +10,7 @@ export enum Assets {
 
 export enum Attributes {
 	GAME_DATA = 'GAME_DATA',
+	GAME_STATE = 'GAME_STATE'
 }
 
 export enum Messages {

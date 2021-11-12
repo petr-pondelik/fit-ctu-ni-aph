@@ -9,7 +9,7 @@ export default class PlayerKeyboardController extends PlayerController {
 	onInit() {
 		super.onInit();
 		this.keyInputCmp = this.scene.findGlobalComponentByName<ECS.KeyInputComponent>(ECS.KeyInputComponent.name);
-		console.log(this.keyInputCmp);
+		// console.log(this.keyInputCmp);
 	}
 
 	onUpdate(delta: number, absolute: number) {
@@ -19,19 +19,19 @@ export default class PlayerKeyboardController extends PlayerController {
 		let yStep: number = 0;
 
 		if (this.keyInputCmp.isKeyPressed(ECS.Keys.KEY_W)) {
-			console.log('KEY_W');
+			// console.log('KEY_W');
 			yStep -= stepSize;
 		}
 		if (this.keyInputCmp.isKeyPressed(ECS.Keys.KEY_A)) {
-			console.log('KEY_A');
+			// console.log('KEY_A');
 			xStep -= stepSize;
 		}
 		if (this.keyInputCmp.isKeyPressed(ECS.Keys.KEY_S)) {
-			console.log('KEY_S');
+			// console.log('KEY_S');
 			yStep += stepSize;
 		}
 		if (this.keyInputCmp.isKeyPressed(ECS.Keys.KEY_D)) {
-			console.log('KEY_D');
+			// console.log('KEY_D');
 			xStep += stepSize;
 		}
 

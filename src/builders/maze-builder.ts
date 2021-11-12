@@ -13,18 +13,18 @@ export default class MazeBuilder {
 			.withName('maze')
 			.withParent(scene.stage);
 
-		for (const mazeRow of levelData.map) {
+		for (const tilesRow of levelData.map.tiles) {
 
-			for (const tile of mazeRow) {
+			for (const tile of tilesRow) {
 				if (tile.type === MapTileType.EMPTY) {
 					continue;
 				}
 				const tileAsset: Assets = getTileAsset(tile.type);
+				let texture = PIXI.Texture.from(tileAsset);
 				const tileBuilder = new ECS.Builder(scene)
-					.asSprite(PIXI.Texture.from(tileAsset))
+					.asSprite(texture)
 					.localPos(tile.column * SPRITE_SIZE, tile.row * SPRITE_SIZE)
 					.withName(`tile_${tile.row}_${tile.column}`);
-
 				mazeContainerBuilder.withChild(tileBuilder);
 			}
 

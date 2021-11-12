@@ -1,3 +1,5 @@
+import {isSteppableTile} from "../helpers";
+
 export enum MapTileType {
 	EMPTY,
 	FLOOR,
@@ -15,11 +17,13 @@ export class MapTile {
 	readonly type: MapTileType;
 	readonly row: number;
 	readonly column: number;
+	readonly isSteppable: boolean;
 
 	constructor(type: MapTileType, row: number, column: number) {
 		this.type = type;
 		this.row = row;
 		this.column = column;
+		this.isSteppable = isSteppableTile(type);
 	}
 
 }
@@ -29,9 +33,17 @@ export type MapPosition = {
 	column: number;
 }
 
+export type MapData = {
+	tiles: MapTile[][];
+	size: {
+		rows: number;
+		columns: number;
+	};
+}
+
 export type LevelData = {
 	name: string;
-	map: MapTile[][];
+	map: MapData;
 	playerInitPos: MapPosition;
 }
 
