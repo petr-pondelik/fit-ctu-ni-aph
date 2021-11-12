@@ -116,13 +116,10 @@ export default class PlayerController extends ECS.Component {
 
 		for (const pos of surroundingTiles) {
 			let tileFrame = this.owner.parentGameObject.getChildByName(`tile_${pos.row}_${pos.column}`);
-			// console.log(tileFrame.getBounds());
 			let tileModel = this.scene.stage.getAttribute<GameState>(Attributes.GAME_STATE).currentLevel.getMapTile(pos.row, pos.column);
 			/** Check the top tiles collision */
 			if (this.vector.y < 0) {
 				if (topBound > tileFrame.getBounds().top) {
-					// console.log(tileModel);
-					// console.log([topBound, tileFrame.getBounds().bottom]);
 					if (
 						!tileModel.isSteppable
 						&& (tileFrame.getBounds().bottom - topBound) > this.vector.y
@@ -131,34 +128,49 @@ export default class PlayerController extends ECS.Component {
 							(bounds.left < tileFrame.getBounds().right && bounds.right > tileFrame.getBounds().left)
 						)
 					) {
-						console.log(tileFrame.getBounds().bottom - topBound);
-						console.log(this.vector.y);
-						console.log('COLLIDED');
-						console.log([bounds.right, tileFrame.getBounds().left]);
 						this.vector.y = tileFrame.getBounds().bottom - topBound;
-						console.log(this.vector.y);
 					}
 				}
 			}
 			if (this.vector.x > 0) {
-				if(rightBound < tileFrame.getBounds().right) {
-					// console.log(tileModel);
-					// console.log([topBound, tileFrame.getBounds().bottom]);
+				if (rightBound < tileFrame.getBounds().right) {
 					if (
 						!tileModel.isSteppable
 						&& (tileFrame.getBounds().left - rightBound < this.vector.x)
-						&& (topBound < tileFrame.getBounds().bottom && bottomBound > tileFrame.getBounds().top || topBound > tileFrame.getBounds().bottom && bottomBound < tileFrame.getBounds().top)
-					)
-						// && (
-						// 	(bounds.right > tileFrame.getBounds().left && bounds.left < tileFrame.getBounds().left) ||
-						// 	(bounds.left < tileFrame.getBounds().right && bounds.right > tileFrame.getBounds().left)
-						// )
-					{
-						console.log([bottomBound, tileFrame.getBounds().top]);
-						console.log('COLLIDED');
-						// console.log([bounds.right, tileFrame.getBounds().left]);
+						&& (
+							topBound < tileFrame.getBounds().bottom && bottomBound > tileFrame.getBounds().top ||
+							topBound > tileFrame.getBounds().bottom && bottomBound < tileFrame.getBounds().top
+						)
+					) {
 						this.vector.x = tileFrame.getBounds().left - rightBound;
-						return false;
+					}
+				}
+			}
+			if (this.vector.y > 0) {
+				if (bottomBound < tileFrame.getBounds().bottom) {
+					if (
+						!tileModel.isSteppable
+						&& (tileFrame.getBounds().top - bottomBound) < this.vector.y
+						&& (
+							(bounds.right > tileFrame.getBounds().left && bounds.left < tileFrame.getBounds().left) ||
+							(bounds.left < tileFrame.getBounds().right && bounds.right > tileFrame.getBounds().left)
+						)
+					) {
+						this.vector.y = tileFrame.getBounds().top - bottomBound;
+					}
+				}
+			}
+			if (this.vector.x < 0) {
+				if (leftBound > tileFrame.getBounds().left) {
+					if (
+						!tileModel.isSteppable
+						&& (tileFrame.getBounds().right - leftBound > this.vector.x)
+						&& (
+							topBound < tileFrame.getBounds().bottom && bottomBound > tileFrame.getBounds().top ||
+							topBound > tileFrame.getBounds().bottom && bottomBound < tileFrame.getBounds().top
+						)
+					) {
+						this.vector.x = tileFrame.getBounds().right - leftBound;
 					}
 				}
 			}
