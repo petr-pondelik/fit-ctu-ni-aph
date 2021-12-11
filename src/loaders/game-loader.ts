@@ -1,7 +1,6 @@
 import * as ECS from '../../libs/pixi-ecs';
 import {Assets, Attributes} from '../constants/constants';
-import {LEVELS} from '../constants/levels';
-import {GameData, LevelData} from '../model/game-struct';
+import {GameData} from '../model/game-struct';
 import {LevelFactory} from './level-factory';
 import GameState from '../model/states/game-state';
 

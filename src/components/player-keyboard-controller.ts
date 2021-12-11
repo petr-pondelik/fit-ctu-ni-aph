@@ -1,6 +1,7 @@
 import * as ECS from '../../libs/pixi-ecs';
 import PlayerController from './player-controller';
-import {PLAYER_SPEED} from "../constants/config";
+import {PLAYER_SPEED} from '../constants/config';
+
 
 export default class PlayerKeyboardController extends PlayerController {
 
@@ -9,7 +10,6 @@ export default class PlayerKeyboardController extends PlayerController {
 	onInit() {
 		super.onInit();
 		this.keyInputCmp = this.scene.findGlobalComponentByName<ECS.KeyInputComponent>(ECS.KeyInputComponent.name);
-		// console.log(this.keyInputCmp);
 	}
 
 	onUpdate(delta: number, absolute: number) {

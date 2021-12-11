@@ -1,4 +1,4 @@
-import {isSteppableTile} from "../helpers";
+import {isAccessibleTile} from "../helpers";
 
 export enum MapTileType {
 	EMPTY,
@@ -17,13 +17,13 @@ export class MapTile {
 	readonly type: MapTileType;
 	readonly row: number;
 	readonly column: number;
-	readonly isSteppable: boolean;
+	readonly isAccessible: boolean;
 
 	constructor(type: MapTileType, row: number, column: number) {
 		this.type = type;
 		this.row = row;
 		this.column = column;
-		this.isSteppable = isSteppableTile(type);
+		this.isAccessible = isAccessibleTile(type);
 	}
 
 }

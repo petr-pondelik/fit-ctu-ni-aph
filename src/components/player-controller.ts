@@ -1,9 +1,9 @@
 import * as ECS from '../../libs/pixi-ecs';
-import {Direction, getMovementDirection, MovementVector, PlayerPosition} from '../model/movement';
+import {MovementVector} from '../model/movement';
 import {Attributes} from '../constants/constants';
 import GameState from '../model/states/game-state';
-import {MapPosition, MapTile} from '../model/game-struct';
-import {SPRITE_SIZE} from "../constants/config";
+import {MapPosition} from '../model/game-struct';
+import {SPRITE_SIZE} from '../constants/config';
 
 
 export default class PlayerController extends ECS.Component {
@@ -22,13 +22,13 @@ export default class PlayerController extends ECS.Component {
 			// console.log([this.owner.position.x, this.owner.position.y]);
 			// console.log(playerState.position);
 
-			let surroundingTiles: MapPosition[] = this.findSurroundingTiles();
-			// console.log(surroundingTiles);
+			let surroundingTiles: MapPosition[] = this.exploreSurrounding();
+			console.log(surroundingTiles);
 
-			// TODO: Check collisions with surrounding
-			let collision = this.checkCollisions(surroundingTiles);
+			let canMove: boolean = this.limitMovement(surroundingTiles);
+			console.log(canMove);
 
-			if (!collision) {
+			if (canMove) {
 				console.log('MOVE');
 				this.owner.parentGameObject.position.x -= this.vector.x;
 				this.owner.parentGameObject.position.y -= this.vector.y;
@@ -39,10 +39,12 @@ export default class PlayerController extends ECS.Component {
 		}
 	}
 
-	findSurroundingTiles() {
+	exploreSurrounding() {
 
 		let newX = this.owner.position.x + this.vector.x;
 		let newY = this.owner.position.y + this.vector.y;
+
+		let surrounding: MapPosition[] = [];
 
 		/**
 		 *  topL    |   topM    | topR
@@ -50,55 +52,62 @@ export default class PlayerController extends ECS.Component {
 		 *  leftM   |   Player  | rightM
 		 *             -------
 		 *  bottomL |  bottomM  | bottomR
-		 *
 		 */
 
-		let topL: MapPosition = {
+		// Top-Left
+		surrounding.push({
 			row: Math.floor((newY - 0.25 * SPRITE_SIZE) / SPRITE_SIZE),
 			column: Math.floor((newX - 0.25 * SPRITE_SIZE) / SPRITE_SIZE)
-		};
+		});
 
-		let topM: MapPosition = {
+		// Top-Middle
+		surrounding.push({
 			row: Math.floor((newY - 0.25 * SPRITE_SIZE) / SPRITE_SIZE),
 			column: Math.floor((newX + 0.25 * SPRITE_SIZE) / SPRITE_SIZE)
-		};
+		});
 
-		let topR: MapPosition = {
+		// Top-Right
+		surrounding.push({
 			row: Math.floor((newY - 0.25 * SPRITE_SIZE) / SPRITE_SIZE),
 			column: Math.floor((newX + 1.25 * SPRITE_SIZE) / SPRITE_SIZE)
-		};
+		});
 
-		let rightM: MapPosition = {
+		// Right-Middle
+		surrounding.push({
 			row: Math.floor((newY + 0.25 * SPRITE_SIZE) / SPRITE_SIZE),
 			column: Math.floor((newX + 1.25 * SPRITE_SIZE) / SPRITE_SIZE)
-		};
+		});
 
-		let bottomR: MapPosition = {
+		// Bottom-Right
+		surrounding.push({
 			row: Math.floor((newY + 1.25 * SPRITE_SIZE) / SPRITE_SIZE),
 			column: Math.floor((newX + 1.25 * SPRITE_SIZE) / SPRITE_SIZE)
-		};
+		});
 
-		let bottomM: MapPosition = {
+		// Bottom-Middle
+		surrounding.push({
 			row: Math.floor((newY + 1.25 * SPRITE_SIZE) / SPRITE_SIZE),
 			column: Math.floor((newX + 0.25 * SPRITE_SIZE) / SPRITE_SIZE)
-		};
+		});
 
-		let bottomL: MapPosition = {
+		// Bottom-Left
+		surrounding.push({
 			row: Math.floor((newY + 1.25 * SPRITE_SIZE) / SPRITE_SIZE),
 			column: Math.floor((newX - 0.25 * SPRITE_SIZE) / SPRITE_SIZE)
-		};
+		});
 
-		let leftM: MapPosition = {
+		// Left-Middle
+		surrounding.push({
 			row: Math.floor((newY + 0.25 * SPRITE_SIZE) / SPRITE_SIZE),
 			column: Math.floor((newX - 0.5 * SPRITE_SIZE) / SPRITE_SIZE)
-		};
+		});
 
 		// TODO: Filter surrounding to unique tiles
 
-		return [topL, topM, topR, rightM, bottomR, bottomM, bottomL, leftM];
+		return surrounding;
 	}
 
-	checkCollisions(surroundingTiles: MapPosition[]): bool {
+	limitMovement(surrounding: MapPosition[]): boolean {
 
 		let bounds = this.owner.getBounds();
 		// console.log(bounds);
@@ -114,14 +123,14 @@ export default class PlayerController extends ECS.Component {
 		 *
 		 * */
 
-		for (const pos of surroundingTiles) {
+		for (const pos of surrounding) {
 			let tileFrame = this.owner.parentGameObject.getChildByName(`tile_${pos.row}_${pos.column}`);
 			let tileModel = this.scene.stage.getAttribute<GameState>(Attributes.GAME_STATE).currentLevel.getMapTile(pos.row, pos.column);
 			/** Check the top tiles collision */
 			if (this.vector.y < 0) {
 				if (topBound > tileFrame.getBounds().top) {
 					if (
-						!tileModel.isSteppable
+						!tileModel.isAccessible
 						&& (tileFrame.getBounds().bottom - topBound) > this.vector.y
 						&& (
 							(bounds.right > tileFrame.getBounds().left && bounds.left < tileFrame.getBounds().left) ||
@@ -135,7 +144,7 @@ export default class PlayerController extends ECS.Component {
 			if (this.vector.x > 0) {
 				if (rightBound < tileFrame.getBounds().right) {
 					if (
-						!tileModel.isSteppable
+						!tileModel.isAccessible
 						&& (tileFrame.getBounds().left - rightBound < this.vector.x)
 						&& (
 							topBound < tileFrame.getBounds().bottom && bottomBound > tileFrame.getBounds().top ||
@@ -149,7 +158,7 @@ export default class PlayerController extends ECS.Component {
 			if (this.vector.y > 0) {
 				if (bottomBound < tileFrame.getBounds().bottom) {
 					if (
-						!tileModel.isSteppable
+						!tileModel.isAccessible
 						&& (tileFrame.getBounds().top - bottomBound) < this.vector.y
 						&& (
 							(bounds.right > tileFrame.getBounds().left && bounds.left < tileFrame.getBounds().left) ||
@@ -163,7 +172,7 @@ export default class PlayerController extends ECS.Component {
 			if (this.vector.x < 0) {
 				if (leftBound > tileFrame.getBounds().left) {
 					if (
-						!tileModel.isSteppable
+						!tileModel.isAccessible
 						&& (tileFrame.getBounds().right - leftBound > this.vector.x)
 						&& (
 							topBound < tileFrame.getBounds().bottom && bottomBound > tileFrame.getBounds().top ||
@@ -176,7 +185,7 @@ export default class PlayerController extends ECS.Component {
 			}
 		}
 
-		return false;
+		return this.vector.x !== 0.0 || this.vector.y !== 0.0;
 	}
 
 }

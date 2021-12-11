@@ -11,6 +11,6 @@ export const getTileAsset = (type: MapTileType): Assets => {
 	}
 };
 
-export const isSteppableTile = (type: MapTileType): boolean => {
+export const isAccessibleTile = (type: MapTileType): boolean => {
 	return type === MapTileType.FLOOR;
 };
