@@ -1,19 +1,17 @@
-import * as ECS from '../../../libs/pixi-ecs';
 import ObservableState from './observable-state';
 import {MovementVector, RealPosition} from '../movement';
 
 
-export default class PlayerState extends ObservableState {
+export default class MonsterState extends ObservableState {
 
-	private _position: RealPosition;
-
-	constructor(scene: ECS.Scene, position: RealPosition) {
-		super(scene);
-		this._position = position;
-	}
+	private _position?: RealPosition;
 
 	get position() {
 		return this._position;
+	}
+
+	set position(position) {
+		this._position = position;
 	}
 
 	applyMovement(vector: MovementVector) {

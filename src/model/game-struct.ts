@@ -1,13 +1,6 @@
-import {isAccessibleTile} from "../helpers";
+import {isAccessibleTile} from '../helpers';
+import {MapTileType} from '../constants/constants';
 
-export enum MapTileType {
-	EMPTY,
-	FLOOR,
-	WALL_FRONT_UPPER,
-	WALL_FRONT_BOTTOM,
-	WALL_UPPER_LEFT_INNER_EDGE,
-	WALL_LEFT
-}
 
 /**
  * A single sprite descriptor for map tile
@@ -28,7 +21,7 @@ export class MapTile {
 
 }
 
-export type MapPosition = {
+export type GridPosition = {
 	row: number;
 	column: number;
 }
@@ -44,7 +37,8 @@ export type MapData = {
 export type LevelData = {
 	name: string;
 	map: MapData;
-	playerInitPos: MapPosition;
+	playerInitPos: GridPosition;
+	monstersAmount: number;
 }
 
 export type GameData = {

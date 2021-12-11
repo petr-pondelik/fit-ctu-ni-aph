@@ -5,7 +5,26 @@ export enum Assets {
 	WALL_FRONT_BOTTOM = 'wall_front_bottom',
 	WALL_UPPER_LEFT_INNER_EDGE = 'wall_upper_left_inner_edge',
 	WALL_LEFT = 'wall_left',
-	PLAYER = 'player'
+	PLAYER = 'player',
+	MONSTER = 'monster'
+}
+
+export enum Containers {
+	MAZE = 'maze'
+}
+
+export enum MapTileType {
+	EMPTY,
+	FLOOR,
+	WALL_FRONT_UPPER,
+	WALL_FRONT_BOTTOM,
+	WALL_UPPER_LEFT_INNER_EDGE,
+	WALL_LEFT
+}
+
+export enum GameObjectType {
+	PLAYER = 1000,
+	MONSTER
 }
 
 export enum Attributes {

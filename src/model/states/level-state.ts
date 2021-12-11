@@ -2,18 +2,23 @@ import * as ECS from '../../../libs/pixi-ecs';
 import ObservableState from './observable-state';
 import PlayerState from './player-state';
 import {LevelData} from '../game-struct';
-import {PlayerPosition} from '../movement';
+import {RealPosition} from '../movement';
+import MonsterState from './monster-state';
 
 
 export default class LevelState extends ObservableState {
 
 	private readonly _levelData: LevelData;
 	private readonly _playerState: PlayerState;
+	private readonly _monstersStates: Array<MonsterState> = [];
 
 	constructor(scene: ECS.Scene, levelData: LevelData) {
 		super(scene);
 		this._levelData = levelData;
-		this._playerState = new PlayerState(scene, new PlayerPosition(levelData.playerInitPos));
+		this._playerState = new PlayerState(scene, new RealPosition(levelData.playerInitPos));
+		for (let i = 0; i < levelData.monstersAmount; i++) {
+			this._monstersStates.push(new MonsterState(scene));
+		}
 	}
 
 	get levelData() {

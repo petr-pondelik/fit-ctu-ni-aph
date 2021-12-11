@@ -2,7 +2,7 @@ import * as ECS from '../../libs/pixi-ecs';
 import {MovementVector} from '../model/movement';
 import {Attributes} from '../constants/constants';
 import GameState from '../model/states/game-state';
-import {MapPosition} from '../model/game-struct';
+import {GridPosition} from '../model/game-struct';
 import {SPRITE_SIZE} from '../constants/config';
 
 
@@ -17,19 +17,19 @@ export default class PlayerController extends ECS.Component {
 			// console.log(levelState.levelData.map);
 			// console.log(playerState);
 
-			console.log(this.vector);
+			// console.log(this.vector);
 
 			// console.log([this.owner.position.x, this.owner.position.y]);
 			// console.log(playerState.position);
 
-			let surroundingTiles: MapPosition[] = this.exploreSurrounding();
-			console.log(surroundingTiles);
+			let surroundingTiles: GridPosition[] = this.exploreSurrounding();
+			// console.log(surroundingTiles);
 
 			let canMove: boolean = this.limitMovement(surroundingTiles);
-			console.log(canMove);
+			// console.log(canMove);
 
 			if (canMove) {
-				console.log('MOVE');
+				// console.log('MOVE');
 				this.owner.parentGameObject.position.x -= this.vector.x;
 				this.owner.parentGameObject.position.y -= this.vector.y;
 				this.owner.position.x += this.vector.x;
@@ -44,7 +44,7 @@ export default class PlayerController extends ECS.Component {
 		let newX = this.owner.position.x + this.vector.x;
 		let newY = this.owner.position.y + this.vector.y;
 
-		let surrounding: MapPosition[] = [];
+		let surrounding: GridPosition[] = [];
 
 		/**
 		 *  topL    |   topM    | topR
@@ -107,7 +107,7 @@ export default class PlayerController extends ECS.Component {
 		return surrounding;
 	}
 
-	limitMovement(surrounding: MapPosition[]): boolean {
+	limitMovement(surrounding: GridPosition[]): boolean {
 
 		let bounds = this.owner.getBounds();
 		// console.log(bounds);

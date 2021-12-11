@@ -1,16 +1,15 @@
 import * as ECS from '../../libs/pixi-ecs';
-import * as PIXI from 'pixi.js';
-import {LevelData, MapTileType} from '../model/game-struct';
-import {Assets} from '../constants/constants';
-import {getTileAsset} from '../helpers';
+import {LevelData} from '../model/game-struct';
 import {SPRITE_SIZE} from '../constants/config';
+import TextureFactory from '../factory/texture-factory';
+import {Containers, MapTileType} from '../constants/constants';
 
 export default class MazeBuilder {
 
-	static prepare = (scene: ECS.Scene, levelData: LevelData) => {
+	static build = (scene: ECS.Scene, levelData: LevelData) => {
 		const mazeContainerBuilder = new ECS.Builder(scene)
 			.asContainer()
-			.withName('maze')
+			.withName(Containers.MAZE)
 			.withParent(scene.stage);
 
 		for (const tilesRow of levelData.map.tiles) {
@@ -19,10 +18,8 @@ export default class MazeBuilder {
 				if (tile.type === MapTileType.EMPTY) {
 					continue;
 				}
-				const tileAsset: Assets = getTileAsset(tile.type);
-				let texture = PIXI.Texture.from(tileAsset);
 				const tileBuilder = new ECS.Builder(scene)
-					.asSprite(texture)
+					.asSprite(TextureFactory.create(tile.type))
 					.localPos(tile.column * SPRITE_SIZE, tile.row * SPRITE_SIZE)
 					.withName(`tile_${tile.row}_${tile.column}`);
 				mazeContainerBuilder.withChild(tileBuilder);
@@ -30,7 +27,7 @@ export default class MazeBuilder {
 
 		}
 
-		return mazeContainerBuilder;
+		mazeContainerBuilder.build();
 	}
 
 }
