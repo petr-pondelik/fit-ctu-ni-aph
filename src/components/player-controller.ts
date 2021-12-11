@@ -1,9 +1,11 @@
+import * as PIXI from 'pixi.js';
 import * as ECS from '../../libs/pixi-ecs';
 import {MovementVector} from '../model/movement';
 import {Attributes} from '../constants/constants';
 import GameState from '../model/states/game-state';
-import {GridPosition} from '../model/game-struct';
-import {SPRITE_SIZE} from '../constants/config';
+import {GridPosition, MapTile} from '../model/game-struct';
+import {GRID_SIZE} from '../constants/config';
+import LevelState from '../model/states/level-state';
 
 
 export default class PlayerController extends ECS.Component {
@@ -14,22 +16,12 @@ export default class PlayerController extends ECS.Component {
 		if (this.vector.x !== 0 || this.vector.y !== 0) {
 			let levelState = this.scene.getGlobalAttribute<GameState>(Attributes.GAME_STATE).currentLevel;
 			let playerState = levelState.playerState;
-			// console.log(levelState.levelData.map);
-			// console.log(playerState);
 
-			// console.log(this.vector);
-
-			// console.log([this.owner.position.x, this.owner.position.y]);
-			// console.log(playerState.position);
-
-			let surroundingTiles: GridPosition[] = this.exploreSurrounding();
-			// console.log(surroundingTiles);
+			let surroundingTiles: MapTile[] = this.exploreSurrounding(levelState);
 
 			let canMove: boolean = this.limitMovement(surroundingTiles);
-			// console.log(canMove);
 
 			if (canMove) {
-				// console.log('MOVE');
 				this.owner.parentGameObject.position.x -= this.vector.x;
 				this.owner.parentGameObject.position.y -= this.vector.y;
 				this.owner.position.x += this.vector.x;
@@ -39,12 +31,11 @@ export default class PlayerController extends ECS.Component {
 		}
 	}
 
-	exploreSurrounding() {
-
+	exploreSurrounding(levelState: LevelState) {
 		let newX = this.owner.position.x + this.vector.x;
 		let newY = this.owner.position.y + this.vector.y;
 
-		let surrounding: GridPosition[] = [];
+		let surrounding: MapTile[] = [];
 
 		/**
 		 *  topL    |   topM    | topR
@@ -54,63 +45,34 @@ export default class PlayerController extends ECS.Component {
 		 *  bottomL |  bottomM  | bottomR
 		 */
 
-		// Top-Left
-		surrounding.push({
-			row: Math.floor((newY - 0.25 * SPRITE_SIZE) / SPRITE_SIZE),
-			column: Math.floor((newX - 0.25 * SPRITE_SIZE) / SPRITE_SIZE)
-		});
+		let exploringShifts = [
+			[ -1, -1 ], // Top-Left
+			[ -1, 0 ], // Top-Middle
+			[ -1, 1 ], // Top-Right
+			[ 0, 1 ], // Right-Middle
+			[ 1, 1 ], // Bottom-Right
+			[ 1, 0 ], // Bottom-Middle
+			[ 1, -1 ], // Bottom-Left
+			[ 0, -1 ] // Left-Middle
+		];
 
-		// Top-Middle
-		surrounding.push({
-			row: Math.floor((newY - 0.25 * SPRITE_SIZE) / SPRITE_SIZE),
-			column: Math.floor((newX + 0.25 * SPRITE_SIZE) / SPRITE_SIZE)
-		});
-
-		// Top-Right
-		surrounding.push({
-			row: Math.floor((newY - 0.25 * SPRITE_SIZE) / SPRITE_SIZE),
-			column: Math.floor((newX + 1.25 * SPRITE_SIZE) / SPRITE_SIZE)
-		});
-
-		// Right-Middle
-		surrounding.push({
-			row: Math.floor((newY + 0.25 * SPRITE_SIZE) / SPRITE_SIZE),
-			column: Math.floor((newX + 1.25 * SPRITE_SIZE) / SPRITE_SIZE)
-		});
-
-		// Bottom-Right
-		surrounding.push({
-			row: Math.floor((newY + 1.25 * SPRITE_SIZE) / SPRITE_SIZE),
-			column: Math.floor((newX + 1.25 * SPRITE_SIZE) / SPRITE_SIZE)
-		});
-
-		// Bottom-Middle
-		surrounding.push({
-			row: Math.floor((newY + 1.25 * SPRITE_SIZE) / SPRITE_SIZE),
-			column: Math.floor((newX + 0.25 * SPRITE_SIZE) / SPRITE_SIZE)
-		});
-
-		// Bottom-Left
-		surrounding.push({
-			row: Math.floor((newY + 1.25 * SPRITE_SIZE) / SPRITE_SIZE),
-			column: Math.floor((newX - 0.25 * SPRITE_SIZE) / SPRITE_SIZE)
-		});
-
-		// Left-Middle
-		surrounding.push({
-			row: Math.floor((newY + 0.25 * SPRITE_SIZE) / SPRITE_SIZE),
-			column: Math.floor((newX - 0.5 * SPRITE_SIZE) / SPRITE_SIZE)
-		});
-
-		// TODO: Filter surrounding to unique tiles
+		for (const shift of exploringShifts) {
+			let tile: MapTile = levelState.getMapTile(
+				new GridPosition(
+					Math.floor((newY - shift[0] * GRID_SIZE) / GRID_SIZE),
+					Math.floor((newX - shift[1] * GRID_SIZE) / GRID_SIZE)
+				)
+			);
+			if (!tile.isAccessible) {
+				surrounding.push(tile);
+			}
+		}
 
 		return surrounding;
 	}
 
-	limitMovement(surrounding: GridPosition[]): boolean {
-
+	limitMovement(surrounding: MapTile[]): boolean {
 		let bounds = this.owner.getBounds();
-		// console.log(bounds);
 
 		let topBound = bounds.top;
 		let rightBound = bounds.right;
@@ -123,15 +85,14 @@ export default class PlayerController extends ECS.Component {
 		 *
 		 * */
 
-		for (const pos of surrounding) {
-			let tileFrame = this.owner.parentGameObject.getChildByName(`tile_${pos.row}_${pos.column}`);
-			let tileModel = this.scene.stage.getAttribute<GameState>(Attributes.GAME_STATE).currentLevel.getMapTile(pos.row, pos.column);
+		for (const tile of surrounding) {
+			let tileFrame = this.owner.parentGameObject.getChildByName(`tile_${tile.getRow()}_${tile.getColumn()}`);
+
 			/** Check the top tiles collision */
 			if (this.vector.y < 0) {
 				if (topBound > tileFrame.getBounds().top) {
 					if (
-						!tileModel.isAccessible
-						&& (tileFrame.getBounds().bottom - topBound) > this.vector.y
+						(tileFrame.getBounds().bottom - topBound) > this.vector.y
 						&& (
 							(bounds.right > tileFrame.getBounds().left && bounds.left < tileFrame.getBounds().left) ||
 							(bounds.left < tileFrame.getBounds().right && bounds.right > tileFrame.getBounds().left)
@@ -144,8 +105,7 @@ export default class PlayerController extends ECS.Component {
 			if (this.vector.x > 0) {
 				if (rightBound < tileFrame.getBounds().right) {
 					if (
-						!tileModel.isAccessible
-						&& (tileFrame.getBounds().left - rightBound < this.vector.x)
+						(tileFrame.getBounds().left - rightBound < this.vector.x)
 						&& (
 							topBound < tileFrame.getBounds().bottom && bottomBound > tileFrame.getBounds().top ||
 							topBound > tileFrame.getBounds().bottom && bottomBound < tileFrame.getBounds().top
@@ -158,8 +118,7 @@ export default class PlayerController extends ECS.Component {
 			if (this.vector.y > 0) {
 				if (bottomBound < tileFrame.getBounds().bottom) {
 					if (
-						!tileModel.isAccessible
-						&& (tileFrame.getBounds().top - bottomBound) < this.vector.y
+						(tileFrame.getBounds().top - bottomBound) < this.vector.y
 						&& (
 							(bounds.right > tileFrame.getBounds().left && bounds.left < tileFrame.getBounds().left) ||
 							(bounds.left < tileFrame.getBounds().right && bounds.right > tileFrame.getBounds().left)
@@ -172,8 +131,7 @@ export default class PlayerController extends ECS.Component {
 			if (this.vector.x < 0) {
 				if (leftBound > tileFrame.getBounds().left) {
 					if (
-						!tileModel.isAccessible
-						&& (tileFrame.getBounds().right - leftBound > this.vector.x)
+						(tileFrame.getBounds().right - leftBound > this.vector.x)
 						&& (
 							topBound < tileFrame.getBounds().bottom && bottomBound > tileFrame.getBounds().top ||
 							topBound > tileFrame.getBounds().bottom && bottomBound < tileFrame.getBounds().top

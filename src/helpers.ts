@@ -1,4 +1,8 @@
 import {Assets, GameObjectType, MapTileType} from './constants/constants';
+import {RealPosition} from './model/movement';
+import {GridPosition} from './model/game-struct';
+import {GRID_SIZE} from './constants/config';
+
 
 export const getAsset = (type: MapTileType|GameObjectType): Assets => {
 	switch (type) {
@@ -14,4 +18,8 @@ export const getAsset = (type: MapTileType|GameObjectType): Assets => {
 
 export const isAccessibleTile = (type: MapTileType): boolean => {
 	return type === MapTileType.FLOOR;
+};
+
+export const realPositionToGrid = (realPos: RealPosition): GridPosition => {
+	return new GridPosition(Math.floor(realPos.y / GRID_SIZE), Math.floor(realPos.x / GRID_SIZE));
 };

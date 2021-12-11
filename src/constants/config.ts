@@ -6,9 +6,9 @@ export const SCENE_RESOLUTION = 2;
 
 
 
-/** Sprites config */
+/** Grid config */
 
-export const SPRITE_SIZE = 32;
+export const GRID_SIZE = 32;
 
 
 

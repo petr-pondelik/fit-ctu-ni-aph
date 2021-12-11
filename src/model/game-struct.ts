@@ -1,6 +1,15 @@
 import {isAccessibleTile} from '../helpers';
 import {MapTileType} from '../constants/constants';
 
+export class GridPosition {
+	row: number;
+	column: number;
+
+	constructor(row: number, column: number) {
+		this.row = row;
+		this.column = column;
+	}
+}
 
 /**
  * A single sprite descriptor for map tile
@@ -8,22 +17,23 @@ import {MapTileType} from '../constants/constants';
 export class MapTile {
 
 	readonly type: MapTileType;
-	readonly row: number;
-	readonly column: number;
+	readonly position: GridPosition;
 	readonly isAccessible: boolean;
 
 	constructor(type: MapTileType, row: number, column: number) {
 		this.type = type;
-		this.row = row;
-		this.column = column;
+		this.position = new GridPosition(row, column);
 		this.isAccessible = isAccessibleTile(type);
 	}
 
-}
+	getRow(): number {
+		return this.position.row;
+	}
 
-export type GridPosition = {
-	row: number;
-	column: number;
+	getColumn(): number {
+		return this.position.column;
+	}
+
 }
 
 export type MapData = {

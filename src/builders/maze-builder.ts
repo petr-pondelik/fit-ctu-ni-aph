@@ -1,6 +1,6 @@
 import * as ECS from '../../libs/pixi-ecs';
 import {LevelData} from '../model/game-struct';
-import {SPRITE_SIZE} from '../constants/config';
+import {GRID_SIZE} from '../constants/config';
 import TextureFactory from '../factory/texture-factory';
 import {Containers, MapTileType} from '../constants/constants';
 
@@ -20,14 +20,15 @@ export default class MazeBuilder {
 				}
 				const tileBuilder = new ECS.Builder(scene)
 					.asSprite(TextureFactory.create(tile.type))
-					.localPos(tile.column * SPRITE_SIZE, tile.row * SPRITE_SIZE)
-					.withName(`tile_${tile.row}_${tile.column}`);
+					.localPos(tile.getColumn() * GRID_SIZE, tile.getRow() * GRID_SIZE)
+					.withName(`tile_${tile.getRow()}_${tile.getColumn()}`)
+					.anchor(0.5);
 				mazeContainerBuilder.withChild(tileBuilder);
 			}
 
 		}
 
-		mazeContainerBuilder.build();
+		mazeContainerBuilder.build().pivot.set(GRID_SIZE/2, GRID_SIZE/2);
 	}
 
 }

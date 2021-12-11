@@ -1,9 +1,9 @@
 import * as ECS from '../../../libs/pixi-ecs';
 import ObservableState from './observable-state';
 import PlayerState from './player-state';
-import {LevelData} from '../game-struct';
-import {RealPosition} from '../movement';
+import {GridPosition, LevelData, MapTile} from '../game-struct';
 import MonsterState from './monster-state';
+import {RealPosition} from '../movement';
 
 
 export default class LevelState extends ObservableState {
@@ -15,7 +15,7 @@ export default class LevelState extends ObservableState {
 	constructor(scene: ECS.Scene, levelData: LevelData) {
 		super(scene);
 		this._levelData = levelData;
-		this._playerState = new PlayerState(scene, new RealPosition(levelData.playerInitPos));
+		this._playerState = new PlayerState(scene, levelData.playerInitPos);
 		for (let i = 0; i < levelData.monstersAmount; i++) {
 			this._monstersStates.push(new MonsterState(scene));
 		}
@@ -29,10 +29,10 @@ export default class LevelState extends ObservableState {
 		return this._playerState;
 	}
 
-	getMapTile(row: number, column: number) {
-		if (column >= this._levelData.map.size.columns || row >= this._levelData.map.size.rows || column < 0 || row < 0) {
-			throw new Error(`Coordinates outside bounds: [${column}, ${row}]`);
+	getMapTile(position: GridPosition) {
+		if (position.column >= this._levelData.map.size.columns || position.row >= this._levelData.map.size.rows || position.column < 0 || position.row < 0) {
+			throw new Error(`Coordinates outside bounds: [${position.column}, ${position.row}]`);
 		}
-		return this._levelData.map.tiles[row][column];
+		return this._levelData.map.tiles[position.row][position.column];
 	}
 }

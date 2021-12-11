@@ -1,24 +1,34 @@
 import * as ECS from '../../../libs/pixi-ecs';
 import ObservableState from './observable-state';
 import {MovementVector, RealPosition} from '../movement';
+import {GridPosition} from '../game-struct';
+import {realPositionToGrid} from '../../helpers';
+import {GRID_SIZE} from '../../constants/config';
 
 
 export default class PlayerState extends ObservableState {
 
-	private _position: RealPosition;
+	private _gridPosition: GridPosition
+	private _realPosition: RealPosition;
 
-	constructor(scene: ECS.Scene, position: RealPosition) {
+	constructor(scene: ECS.Scene, gridPosition: GridPosition) {
 		super(scene);
-		this._position = position;
+		this._gridPosition = gridPosition;
+		this._realPosition = new RealPosition(gridPosition.column * GRID_SIZE + GRID_SIZE/2, gridPosition.row * GRID_SIZE + GRID_SIZE/2);
 	}
 
-	get position() {
-		return this._position;
+	get gridPosition() {
+		return this._gridPosition;
+	}
+
+	get realPosition() {
+		return this._realPosition;
 	}
 
 	applyMovement(vector: MovementVector) {
-		this._position.x += vector.x;
-		this._position.y += vector.y;
+		this._realPosition.x += vector.x;
+		this._realPosition.y += vector.y;
+		this._gridPosition = realPositionToGrid(this._realPosition);
 	}
 
 }

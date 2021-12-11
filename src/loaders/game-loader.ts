@@ -6,8 +6,8 @@ import GameState from '../model/states/game-state';
 import {Selectors} from '../selectors/selectors';
 import MazeBuilder from '../builders/maze-builder';
 import PlayerBuilder from '../builders/player-builder';
-import {SCENE_HEIGHT, SCENE_WIDTH, SPRITE_SIZE} from '../constants/config';
-import MonsterBuilder from "../builders/monster-builder";
+import {SCENE_HEIGHT, SCENE_WIDTH, GRID_SIZE} from '../constants/config';
+import MonsterBuilder from '../builders/monster-builder';
 
 /**
  * Game loader, loads assets
@@ -32,10 +32,10 @@ export class GameLoader {
 		// console.log(levelData);
 		MazeBuilder.build(scene, levelData);
 		let player = PlayerBuilder.build(scene, levelData.playerInitPos);
-		MonsterBuilder.build(scene, { row: 10, column: 10 });
+		MonsterBuilder.build(scene, { row: 5, column: 5 });
 
-		scene.stage.pivot.x = (levelData.playerInitPos.column * SPRITE_SIZE) - (SCENE_WIDTH/SPRITE_SIZE/2 * SPRITE_SIZE)/2 + SPRITE_SIZE/2;
-		scene.stage.pivot.y = (levelData.playerInitPos.row * SPRITE_SIZE) - (SCENE_HEIGHT/SPRITE_SIZE/2 * SPRITE_SIZE)/2 + SPRITE_SIZE/2;
+		scene.stage.pivot.x = (levelData.playerInitPos.column * GRID_SIZE) - (SCENE_WIDTH/GRID_SIZE/2 * GRID_SIZE)/2 + GRID_SIZE/2;
+		scene.stage.pivot.y = (levelData.playerInitPos.row * GRID_SIZE) - (SCENE_HEIGHT/GRID_SIZE/2 * GRID_SIZE)/2 + GRID_SIZE/2;
 	}
 
 	private onAssetsLoaded(engine: ECS.Engine) {
