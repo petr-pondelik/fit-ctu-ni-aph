@@ -10,6 +10,7 @@
     "compile-test": "tsc --project tsconfig.json --noemit"
   },
   "dependencies": {
+    "easystarjs": "^0.4.4",
     "eventemitter3": "^4.0.7",
     "matter-js": "^0.17.1",
     "pixi-sound": "^3.0.5",

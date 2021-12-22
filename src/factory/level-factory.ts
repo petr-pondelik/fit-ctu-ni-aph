@@ -8,6 +8,7 @@ export class LevelFactory {
 		let res: LevelData[] = [];
 		for (const level of LEVELS) {
 			let map: MapData = {
+				raw: level.map,
 				tiles: [],
 				size: {
 					rows: level.map.length,

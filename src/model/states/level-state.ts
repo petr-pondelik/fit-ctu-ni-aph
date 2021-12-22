@@ -3,7 +3,6 @@ import ObservableState from './observable-state';
 import PlayerState from './player-state';
 import {GridPosition, LevelData, MapTile} from '../game-struct';
 import MonsterState from './monster-state';
-import {RealPosition} from '../movement';
 
 
 export default class LevelState extends ObservableState {

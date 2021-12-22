@@ -29,10 +29,9 @@ export class GameLoader {
 
 	loadLevel(scene: ECS.Scene, index: number) {
 		const levelData = Selectors.gameDataSelector(scene).levels[index];
-		// console.log(levelData);
 		MazeBuilder.build(scene, levelData);
 		let player = PlayerBuilder.build(scene, levelData.playerInitPos);
-		MonsterBuilder.build(scene, { row: 5, column: 5 });
+		MonsterBuilder.build(scene, { row: 5, column: 5 }, levelData.map);
 
 		scene.stage.pivot.x = (levelData.playerInitPos.column * GRID_SIZE) - (SCENE_WIDTH/GRID_SIZE/2 * GRID_SIZE)/2 + GRID_SIZE/2;
 		scene.stage.pivot.y = (levelData.playerInitPos.row * GRID_SIZE) - (SCENE_HEIGHT/GRID_SIZE/2 * GRID_SIZE)/2 + GRID_SIZE/2;
@@ -46,11 +45,13 @@ export class GameLoader {
 			levels: LevelFactory.createAllLevels()
 		};
 
+		let gameState: GameState = new GameState(engine.scene, gameData);
+
 		console.log('GAME DATA');
 		console.log(gameData);
 
 		engine.scene.assignGlobalAttribute(Attributes.GAME_DATA, gameData);
-		engine.scene.assignGlobalAttribute(Attributes.GAME_STATE, new GameState(engine.scene, gameData));
+		engine.scene.assignGlobalAttribute(Attributes.GAME_STATE, gameState);
 
 		console.log('ADD KeyInputComponent');
 		// console.log(engine.scene.getGlobalAttribute<LevelData>(Attributes.GAME_DATA));

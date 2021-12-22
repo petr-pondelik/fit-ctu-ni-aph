@@ -37,6 +37,7 @@ export class MapTile {
 }
 
 export type MapData = {
+	raw: number[][];
 	tiles: MapTile[][];
 	size: {
 		rows: number;
