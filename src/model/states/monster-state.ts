@@ -1,3 +1,4 @@
+import * as ECS from '../../../libs/pixi-ecs';
 import ObservableState from './observable-state';
 import {MovementVector, RealPosition} from '../movement';
 import {GridPosition} from '../game-struct';

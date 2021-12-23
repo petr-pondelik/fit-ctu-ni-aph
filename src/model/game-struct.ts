@@ -60,17 +60,34 @@ export class MapData {
 	}
 }
 
+export class MonsterSeed {
+	position: GridPosition;
+
+	constructor(row: number, column: number) {
+		this.position = new GridPosition(row, column);
+	}
+}
+
+export class MonstersData {
+	amount: number;
+	seeds: MonsterSeed[] = [];
+
+	constructor(amount: number) {
+		this.amount = amount;
+	}
+}
+
 export class LevelData {
 	name: string;
 	map: MapData;
 	playerInitPos: GridPosition;
-	monstersAmount: number;
+	monsters: MonstersData;
 
-	constructor(name: string, map: MapData, playerInitPos: GridPosition, monstersAmount: number) {
+	constructor(name: string, map: MapData, playerInitPos: GridPosition, monsters: MonstersData) {
 		this.name = name;
 		this.map = map;
 		this.playerInitPos = playerInitPos;
-		this.monstersAmount = monstersAmount;
+		this.monsters = monsters;
 	}
 }
 

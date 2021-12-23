@@ -38,7 +38,6 @@ class MazeEscape {
 		PIXI.settings.ROUND_PIXELS = true;
 		PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 		new GameLoader().loadGame(this.engine);
-		// console.log(this.engine.app.loader.resources);
 	}
 }
 

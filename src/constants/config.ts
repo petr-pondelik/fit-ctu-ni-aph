@@ -19,4 +19,3 @@ export const PLAYER_SPEED = 0.2;
 export const MONSTER_SPEED = 0.2;
 export const MONSTER_MAX_MOVING_DISTANCE = 14;
 export const MONSTER_PLAYER_MIN_DISTANCE = 0.25;
-export const MONSTER_MUTUAL_MIN_DISTANCE = 0.2;

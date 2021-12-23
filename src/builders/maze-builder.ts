@@ -33,10 +33,10 @@ export default class MazeBuilder {
 		mazeContainerBuilder.build().pivot.set(GRID_SIZE/2, GRID_SIZE/2);
 
 		PlayerBuilder.build(engine.scene, levelState.levelData.playerInitPos);
-		console.log(levelState.playerState.gridPosition);
-		for (let monsterState of levelState.monstersState) {
-			console.log(monsterState.gridPosition);
-			let tile = getMonsterInitPosition(levelState.map, levelState.playerState, levelState.monstersState);
+		for (let i = 0; i < levelState.levelData.monsters.amount; i++) {
+			let monsterSeed = levelState.levelData.monsters.seeds[i];
+			let monsterState = levelState.monstersState[i];
+			let tile = getMonsterInitPosition(levelState.map, levelState.playerState, monsterSeed);
 			monsterState.position = tile.position;
 			MonsterBuilder.build(engine.scene, tile.position, levelState.map);
 		}

@@ -34,6 +34,13 @@ export const LEVELS = [
 			[0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3],
 		],
 		playerInitPos: [2, 1],
-		monstersAmount: 2
+		monsters: [
+			{
+				positionSeed: [25, 15]
+			},
+			{
+				positionSeed: [5, 25]
+			}
+		]
 	}
 ];

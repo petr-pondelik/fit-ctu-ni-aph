@@ -32,12 +32,10 @@ export default class MonsterBehavior extends ECS.Component {
 	}
 
 	randomDestination() {
-		// console.log('randomDestination');
 		this.destination = getRandomTileInSurroundings(this.map, this.origin, MONSTER_MAX_MOVING_DISTANCE).position;
 		this.aStar.findPath(this.actualPosition.column, this.actualPosition.row, this.destination.column, this.destination.row, (path) => {
 			this.path = path.slice(1);
 		});
-		// console.log([this.origin, this.destination]);
 		this.aStar.calculate();
 	}
 

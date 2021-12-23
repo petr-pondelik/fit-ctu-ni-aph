@@ -1,4 +1,11 @@
-import {GridPosition, LevelData, MapData, MapDimensions, MapTile} from '../model/game-struct';
+import {
+	GridPosition,
+	LevelData,
+	MapData,
+	MapDimensions,
+	MapTile,
+	MonstersData, MonsterSeed,
+} from '../model/game-struct';
 import {LEVELS} from '../constants/levels';
 
 
@@ -21,9 +28,11 @@ export class LevelFactory {
 				map.tiles.push(row);
 				rowInx++;
 			}
-			res.push(
-				new LevelData(level.name, map, new GridPosition(level.playerInitPos[0], level.playerInitPos[1]), level.monstersAmount)
-			);
+			let monstersData = new MonstersData(level.monsters.length);
+			for (const m of level.monsters) {
+				monstersData.seeds.push(new MonsterSeed(m.positionSeed[0], m.positionSeed[1]));
+			}
+			res.push(new LevelData(level.name, map, new GridPosition(level.playerInitPos[0], level.playerInitPos[1]), monstersData));
 		}
 		return res;
 	}
