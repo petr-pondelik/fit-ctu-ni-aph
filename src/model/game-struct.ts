@@ -1,5 +1,5 @@
-import {isAccessibleTile} from '../helpers';
 import {MapTileType} from '../constants/constants';
+import {isAccessibleTile} from '../helpers/grid';
 
 export class GridPosition {
 	row: number;
@@ -36,22 +36,48 @@ export class MapTile {
 
 }
 
-export type MapData = {
+export type MapDimensions = {
+	rows: number;
+	columns: number;
+};
+
+export class MapData {
 	raw: number[][];
 	tiles: MapTile[][];
-	size: {
-		rows: number;
-		columns: number;
-	};
+	size: MapDimensions
+
+	constructor(raw: number[][], tiles: MapTile[][], size: MapDimensions) {
+		this.raw = raw;
+		this.tiles = tiles;
+		this.size = size;
+	}
+
+	getTile(position: GridPosition): MapTile {
+		if (position.column >= this.size.columns || position.row >= this.size.rows || position.column < 0 || position.row < 0) {
+			throw new Error(`Coordinates outside bounds: [${position.column}, ${position.row}]`);
+		}
+		return this.tiles[position.row][position.column];
+	}
 }
 
-export type LevelData = {
+export class LevelData {
 	name: string;
 	map: MapData;
 	playerInitPos: GridPosition;
 	monstersAmount: number;
+
+	constructor(name: string, map: MapData, playerInitPos: GridPosition, monstersAmount: number) {
+		this.name = name;
+		this.map = map;
+		this.playerInitPos = playerInitPos;
+		this.monstersAmount = monstersAmount;
+	}
 }
 
-export type GameData = {
+export class GameData {
 	levels: LevelData[];
+
+	constructor(levels: LevelData[]) {
+		this.levels = levels;
+	}
 }

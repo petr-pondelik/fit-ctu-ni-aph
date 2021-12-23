@@ -33,5 +33,5 @@ export enum Attributes {
 }
 
 export enum Messages {
-	TEST_MESSAGE = 'test_message'
+	TEST_MESSAGE = 'test_message',
 }

@@ -3,11 +3,10 @@ import {Assets, Attributes} from '../constants/constants';
 import {GameData} from '../model/game-struct';
 import {LevelFactory} from '../factory/level-factory';
 import GameState from '../model/states/game-state';
-import {Selectors} from '../selectors/selectors';
+import {Selectors} from '../helpers/selectors';
 import MazeBuilder from '../builders/maze-builder';
-import PlayerBuilder from '../builders/player-builder';
 import {SCENE_HEIGHT, SCENE_WIDTH, GRID_SIZE} from '../constants/config';
-import MonsterBuilder from '../builders/monster-builder';
+import LevelState from '../model/states/level-state';
 
 /**
  * Game loader, loads assets
@@ -27,34 +26,26 @@ export class GameLoader {
 			.load(() => this.onAssetsLoaded(engine));
 	}
 
-	loadLevel(scene: ECS.Scene, index: number) {
-		const levelData = Selectors.gameDataSelector(scene).levels[index];
-		MazeBuilder.build(scene, levelData);
-		let player = PlayerBuilder.build(scene, levelData.playerInitPos);
-		MonsterBuilder.build(scene, { row: 5, column: 5 }, levelData.map);
-
-		scene.stage.pivot.x = (levelData.playerInitPos.column * GRID_SIZE) - (SCENE_WIDTH/GRID_SIZE/2 * GRID_SIZE)/2 + GRID_SIZE/2;
-		scene.stage.pivot.y = (levelData.playerInitPos.row * GRID_SIZE) - (SCENE_HEIGHT/GRID_SIZE/2 * GRID_SIZE)/2 + GRID_SIZE/2;
+	loadLevel(engine: ECS.Engine, index: number) {
+		const levelData = Selectors.gameDataSelector(engine.scene).levels[index];
+		const levelState = new LevelState(engine.scene, levelData);
+		let gameState = engine.scene.getGlobalAttribute<GameState>(Attributes.GAME_STATE);
+		gameState.currentLevel = levelState;
+		MazeBuilder.build(engine, gameState.currentLevel);
+		engine.scene.stage.pivot.x = (levelData.playerInitPos.column * GRID_SIZE) - (SCENE_WIDTH/GRID_SIZE/2 * GRID_SIZE)/2 + GRID_SIZE/2;
+		engine.scene.stage.pivot.y = (levelData.playerInitPos.row * GRID_SIZE) - (SCENE_HEIGHT/GRID_SIZE/2 * GRID_SIZE)/2 + GRID_SIZE/2;
 	}
 
 	private onAssetsLoaded(engine: ECS.Engine) {
 		console.log('ASSETS LOADED');
 		console.log(engine.app.loader.resources);
 
-		const gameData: GameData = {
-			levels: LevelFactory.createAllLevels()
-		};
-
-		let gameState: GameState = new GameState(engine.scene, gameData);
-
-		console.log('GAME DATA');
-		console.log(gameData);
+		const gameData = new GameData(LevelFactory.createAllLevels());
+		let gameState = new GameState(engine.scene, gameData);
 
 		engine.scene.assignGlobalAttribute(Attributes.GAME_DATA, gameData);
 		engine.scene.assignGlobalAttribute(Attributes.GAME_STATE, gameState);
 
-		console.log('ADD KeyInputComponent');
-		// console.log(engine.scene.getGlobalAttribute<LevelData>(Attributes.GAME_DATA));
-		this.loadLevel(engine.scene, 0);
+		this.loadLevel(engine, 0);
 	}
 }

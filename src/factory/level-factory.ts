@@ -1,4 +1,4 @@
-import {LevelData, MapData, MapTile} from '../model/game-struct';
+import {GridPosition, LevelData, MapData, MapDimensions, MapTile} from '../model/game-struct';
 import {LEVELS} from '../constants/levels';
 
 
@@ -7,14 +7,11 @@ export class LevelFactory {
 	static createAllLevels = (): LevelData[] => {
 		let res: LevelData[] = [];
 		for (const level of LEVELS) {
-			let map: MapData = {
-				raw: level.map,
-				tiles: [],
-				size: {
-					rows: level.map.length,
-					columns: level.map[0].length
-				}
+			let size: MapDimensions = {
+				rows: level.map.length,
+				columns: level.map[0].length
 			};
+			let map: MapData = new MapData(level.map, [], size);
 			let rowInx: number = 0;
 			for (const r of level.map) {
 				let row: MapTile[] = [], colInx: number = 0;
@@ -24,11 +21,9 @@ export class LevelFactory {
 				map.tiles.push(row);
 				rowInx++;
 			}
-			res.push({
-				name: level.name,
-				map: map,
-				playerInitPos: {row: level.playerInitPos[0], column: level.playerInitPos[1]}
-			} as LevelData);
+			res.push(
+				new LevelData(level.name, map, new GridPosition(level.playerInitPos[0], level.playerInitPos[1]), level.monstersAmount)
+			);
 		}
 		return res;
 	}

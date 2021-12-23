@@ -1,6 +1,6 @@
 import * as PIXI from 'pixi.js';
 import {Assets, GameObjectType, MapTileType} from '../constants/constants';
-import {getAsset} from '../helpers';
+import {getAsset} from "../helpers/assets";
 
 export default class TextureFactory {
 	static create = (type: MapTileType|GameObjectType) => {

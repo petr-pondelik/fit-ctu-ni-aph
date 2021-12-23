@@ -57,7 +57,7 @@ export default class PlayerController extends ECS.Component {
 		];
 
 		for (const shift of exploringShifts) {
-			let tile: MapTile = levelState.getMapTile(
+			let tile: MapTile = levelState.levelData.map.getTile(
 				new GridPosition(
 					Math.floor((newY - shift[0] * GRID_SIZE) / GRID_SIZE),
 					Math.floor((newX - shift[1] * GRID_SIZE) / GRID_SIZE)
