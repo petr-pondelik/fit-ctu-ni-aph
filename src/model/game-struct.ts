@@ -1,5 +1,8 @@
 import {MapTileType} from '../constants/constants';
 import {isAccessibleTile} from '../helpers/grid';
+import {BLOCK_SIZE} from '../constants/config';
+import {Container} from "../../libs/pixi-ecs";
+import {MovementVector} from "./movement";
 
 export class GridPosition {
 	row: number;
@@ -62,6 +65,45 @@ export class MapData {
 		}
 		return this.tiles[position.row][position.column];
 	}
+
+	getSurrounding(newX: number, newY: number) {
+
+		let surrounding: MapTile[] = [];
+
+		/**
+		 *  topL    |   topM    | topR
+		 *             -------
+		 *  leftM   |   Player  | rightM
+		 *             -------
+		 *  bottomL |  bottomM  | bottomR
+		 */
+
+		let exploringShifts = [
+			[ -1, -1 ], // Top-Left
+			[ -1, 0 ], // Top-Middle
+			[ -1, 1 ], // Top-Right
+			[ 0, 1 ], // Right-Middle
+			[ 1, 1 ], // Bottom-Right
+			[ 1, 0 ], // Bottom-Middle
+			[ 1, -1 ], // Bottom-Left
+			[ 0, -1 ] // Left-Middle
+		];
+
+		for (const shift of exploringShifts) {
+			let tile: MapTile = this.getTile(
+				new GridPosition(
+					Math.floor((newY - shift[0] * BLOCK_SIZE) / BLOCK_SIZE),
+					Math.floor((newX - shift[1] * BLOCK_SIZE) / BLOCK_SIZE)
+				)
+			);
+			if (!tile.isAccessible) {
+				surrounding.push(tile);
+			}
+		}
+
+		return surrounding;
+	}
+
 }
 
 export class MonsterSeed {

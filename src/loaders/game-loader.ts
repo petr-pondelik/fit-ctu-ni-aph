@@ -5,7 +5,7 @@ import {LevelFactory} from '../factory/level-factory';
 import GameState from '../model/states/game-state';
 import {Selectors} from '../helpers/selectors';
 import MazeBuilder from '../builders/maze-builder';
-import {SCENE_HEIGHT, SCENE_WIDTH, GRID_SIZE} from '../constants/config';
+import {SCENE_HEIGHT, SCENE_WIDTH, BLOCK_SIZE} from '../constants/config';
 import LevelState from '../model/states/level-state';
 
 /**
@@ -29,11 +29,11 @@ export class GameLoader {
 	loadLevel(engine: ECS.Engine, index: number) {
 		const levelData = Selectors.gameDataSelector(engine.scene).levels[index];
 		const levelState = new LevelState(engine.scene, levelData);
-		let gameState = engine.scene.getGlobalAttribute<GameState>(Attributes.GAME_STATE);
-		gameState.currentLevel = levelState;
-		MazeBuilder.build(engine, gameState.currentLevel);
-		engine.scene.stage.pivot.x = (levelData.playerInitPos.column * GRID_SIZE) - (SCENE_WIDTH/GRID_SIZE/2 * GRID_SIZE)/2 + GRID_SIZE/2;
-		engine.scene.stage.pivot.y = (levelData.playerInitPos.row * GRID_SIZE) - (SCENE_HEIGHT/GRID_SIZE/2 * GRID_SIZE)/2 + GRID_SIZE/2;
+		let gameState = Selectors.gameStateSelector(engine.scene);
+		gameState.levelState = levelState;
+		MazeBuilder.build(engine, gameState.levelState);
+		engine.scene.stage.pivot.x = (levelData.playerInitPos.column * BLOCK_SIZE) - (SCENE_WIDTH/BLOCK_SIZE/2 * BLOCK_SIZE)/2 + BLOCK_SIZE/2;
+		engine.scene.stage.pivot.y = (levelData.playerInitPos.row * BLOCK_SIZE) - (SCENE_HEIGHT/BLOCK_SIZE/2 * BLOCK_SIZE)/2 + BLOCK_SIZE/2;
 	}
 
 	private onAssetsLoaded(engine: ECS.Engine) {
@@ -46,6 +46,6 @@ export class GameLoader {
 		engine.scene.assignGlobalAttribute(Attributes.GAME_DATA, gameData);
 		engine.scene.assignGlobalAttribute(Attributes.GAME_STATE, gameState);
 
-		this.loadLevel(engine, 0);
+		this.loadLevel(engine, gameState.currentLevel);
 	}
 }

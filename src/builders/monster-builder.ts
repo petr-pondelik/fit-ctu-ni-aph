@@ -1,13 +1,14 @@
 import * as ECS from '../../libs/pixi-ecs';
-import {Containers, GameObjectType} from '../constants/constants';
+import {Containers, GameObjectType, Tags} from '../constants/constants';
 import TextureFactory from '../factory/texture-factory';
-import {GRID_SIZE} from '../constants/config';
+import {BLOCK_SIZE} from '../constants/config';
 import {Container} from '../../libs/pixi-ecs';
-import MonsterMovementComponent from '../components/monster-movement-component';
+import MonsterMovement from '../components/monster-movement';
 import MonsterState from '../model/states/monster-state';
-import {MonsterSyncComponent} from '../components/monster-sync-component';
+import {MonsterSync} from '../components/monster-sync';
 import LevelState from '../model/states/level-state';
-import MonsterChaseComponent from '../components/monster-chase-component';
+import MonsterChasePlayer from '../components/monster-chase-player';
+import PlayerMonsterCollision from '../components/player-monster-collision';
 
 
 export default class MonsterBuilder {
@@ -15,16 +16,18 @@ export default class MonsterBuilder {
 	static build = (scene: ECS.Scene, levelState: LevelState, monsterState: MonsterState) => {
 		return new ECS.Builder(scene)
 			.asSprite(TextureFactory.create(GameObjectType.MONSTER))
-			.localPos(monsterState.gridPosition.column * GRID_SIZE, monsterState.gridPosition.row * GRID_SIZE)
+			.localPos(monsterState.gridPosition.column * BLOCK_SIZE, monsterState.gridPosition.row * BLOCK_SIZE)
+			.anchor(0.5)
 			.withParent(scene.stage.getChildByName(Containers.MAZE) as Container)
 			.withComponents([
-				new MonsterMovementComponent(monsterState, levelState),
-				new MonsterChaseComponent(monsterState, levelState),
-				new MonsterSyncComponent(monsterState)
+				new MonsterMovement(monsterState),
+				new MonsterChasePlayer(monsterState),
+				new PlayerMonsterCollision(),
+				new MonsterSync(monsterState)
 			])
-			.withTag('MONSTER_' + monsterState.monsterId)
+			.withTag(Tags.MONSTER + '_' + monsterState.monsterId)
 			.build()
-			.pivot.set(GRID_SIZE/2, GRID_SIZE/2);
+			.pivot.set(BLOCK_SIZE/2, BLOCK_SIZE/2);
 	}
 
 }

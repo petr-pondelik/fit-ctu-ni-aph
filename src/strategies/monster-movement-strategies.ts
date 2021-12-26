@@ -1,17 +1,17 @@
-import MonsterMovementComponent from '../components/monster-movement-component';
-import {getDirections, realPositionToGrid} from '../helpers/grid';
+import MonsterMovement from '../components/monster-movement';
+import {getDirections} from '../helpers/grid';
 import {GridPosition} from '../model/game-struct';
-import {MovementVector, RealPosition} from '../model/movement';
+import {MovementVector} from '../model/movement';
 import {MONSTER_MAX_MOVING_DISTANCE, MONSTER_SPEED} from '../constants/config';
 import {getRandomTileInSurroundings} from '../helpers/random';
 
 export interface IMonsterMovementStrategy {
-	move(component: MonsterMovementComponent, delta: number);
+	move(component: MonsterMovement, delta: number);
 }
 
 export class MonsterRandomWalk implements IMonsterMovementStrategy {
 
-	randomDestination(component: MonsterMovementComponent) {
+	randomDestination(component: MonsterMovement) {
 		component.destination = getRandomTileInSurroundings(component.map, component.origin, MONSTER_MAX_MOVING_DISTANCE).position;
 		component.aStar.findPath(
 			component.actualPosition.column, component.actualPosition.row,
@@ -22,7 +22,7 @@ export class MonsterRandomWalk implements IMonsterMovementStrategy {
 		component.aStar.calculate();
 	}
 
-	move(component: MonsterMovementComponent, delta: number) {
+	move(component: MonsterMovement, delta: number) {
 		if (component.destination === undefined && component.path.length < 1) {
 			this.randomDestination(component);
 		}
@@ -31,12 +31,12 @@ export class MonsterRandomWalk implements IMonsterMovementStrategy {
 
 		if (nextStep) {
 			const directions = getDirections(component.actualPosition, new GridPosition(nextStep.y, nextStep.x));
-			let movement: MovementVector = {
+			let vector: MovementVector = {
 				x: MONSTER_SPEED * delta * directions.x,
 				y: MONSTER_SPEED * delta * directions.y
 			};
-			component.props.applyMovement(movement);
-			component.actualPosition = realPositionToGrid(new RealPosition(component.owner.position.x, component.owner.position.y));
+			component.props.applyMovement(vector);
+			component.actualPosition = new GridPosition(component.props.gridPosition.row, component.props.gridPosition.column);
 		} else {
 			component.destination = undefined;
 		}
@@ -46,7 +46,7 @@ export class MonsterRandomWalk implements IMonsterMovementStrategy {
 
 export class MonsterChasePlayer implements IMonsterMovementStrategy {
 
-	destinationToPlayer(component: MonsterMovementComponent) {
+	destinationToPlayer(component: MonsterMovement) {
 		component.destination = component.levelState.playerState.gridPosition;
 		component.aStar.findPath(
 			component.actualPosition.column, component.actualPosition.row,
@@ -57,19 +57,19 @@ export class MonsterChasePlayer implements IMonsterMovementStrategy {
 		component.aStar.calculate();
 	}
 
-	move(component: MonsterMovementComponent, delta: number) {
+	move(component: MonsterMovement, delta: number) {
 		this.destinationToPlayer(component);
 
 		let nextStep = component.getNextStep();
 
 		if (nextStep) {
 			const directions = getDirections(component.actualPosition, new GridPosition(nextStep.y, nextStep.x));
-			let movement: MovementVector = {
+			let vector: MovementVector = {
 				x: MONSTER_SPEED * delta * directions.x,
 				y: MONSTER_SPEED * delta * directions.y
 			};
-			component.props.applyMovement(movement);
-			component.actualPosition = realPositionToGrid(new RealPosition(component.owner.position.x, component.owner.position.y));
+			component.props.applyMovement(vector);
+			component.actualPosition = new GridPosition(component.props.gridPosition.row, component.props.gridPosition.column);
 		} else {
 			component.destination = undefined;
 		}

@@ -4,20 +4,17 @@ import {euclideanDistance} from '../model/states/geometry';
 import {PLAYER_CHASE_DISTANCE} from '../constants/config';
 import {Messages} from '../constants/constants';
 import MonsterState from '../model/states/monster-state';
+import {Selectors} from '../helpers/selectors';
 
 
-export default class MonsterChaseComponent extends ECS.Component<MonsterState> {
+export default class MonsterChasePlayer extends ECS.Component<MonsterState> {
 
 	levelState: LevelState;
 	isChasingPlayer: boolean = false;
 
-	constructor(props: MonsterState, levelState: LevelState) {
-		super(props);
-		this.levelState = levelState;
-	}
-
 	onInit() {
 		console.log('MonsterChaseComponent INIT');
+		this.levelState = Selectors.levelStateSelector(this.scene);
 	}
 
 	onUpdate(delta: number, absolute: number) {

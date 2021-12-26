@@ -1,11 +1,13 @@
 import * as ECS from '../../libs/pixi-ecs';
-import {GRID_SIZE} from '../constants/config';
+import {BLOCK_SIZE} from '../constants/config';
 import TextureFactory from '../factory/texture-factory';
 import {Containers, MapTileType} from '../constants/constants';
 import PlayerBuilder from './player-builder';
 import LevelState from '../model/states/level-state';
 import MonsterBuilder from './monster-builder';
 import {getMonsterInitPosition} from '../helpers/random';
+import {isAccessibleTile} from '../helpers/grid';
+import {Selectors} from '../helpers/selectors';
 
 export default class MazeBuilder {
 
@@ -23,14 +25,14 @@ export default class MazeBuilder {
 				}
 				const tileBuilder = new ECS.Builder(scene)
 					.asSprite(TextureFactory.create(tile.type))
-					.localPos(tile.getColumn() * GRID_SIZE, tile.getRow() * GRID_SIZE)
-					.withName(`tile_${tile.getRow()}_${tile.getColumn()}`)
+					.localPos(tile.getColumn() * BLOCK_SIZE, tile.getRow() * BLOCK_SIZE)
+					.withName(`TILE_${tile.getRow()}_${tile.getColumn()}`)
 					.anchor(0.5);
 				mazeContainerBuilder.withChild(tileBuilder);
 			}
 		}
 
-		mazeContainerBuilder.build().pivot.set(GRID_SIZE/2, GRID_SIZE/2);
+		mazeContainerBuilder.build().pivot.set(BLOCK_SIZE/2, BLOCK_SIZE/2);
 
 		PlayerBuilder.build(engine.scene, levelState.playerState);
 		for (let i = 0; i < levelState.levelData.monsters.amount; i++) {

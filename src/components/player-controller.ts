@@ -1,10 +1,10 @@
 import * as ECS from '../../libs/pixi-ecs';
 import {MovementVector} from '../model/movement';
-import {Attributes} from '../constants/constants';
-import GameState from '../model/states/game-state';
 import {GridPosition, MapTile} from '../model/game-struct';
-import {GRID_SIZE} from '../constants/config';
+import {BLOCK_SIZE} from '../constants/config';
 import LevelState from '../model/states/level-state';
+import {Selectors} from '../helpers/selectors';
+import {adjustMovementByObstacles} from '../helpers/grid';
 
 
 export default class PlayerController extends ECS.Component {
@@ -13,11 +13,13 @@ export default class PlayerController extends ECS.Component {
 
 	move() {
 		if (this.vector.x !== 0 || this.vector.y !== 0) {
-			let levelState = this.scene.getGlobalAttribute<GameState>(Attributes.GAME_STATE).currentLevel;
+			let levelState = Selectors.levelStateSelector(this.scene);
 			let playerState = levelState.playerState;
-			let surroundingTiles: MapTile[] = this.exploreSurrounding(levelState);
-			let canMove: boolean = this.limitMovement(surroundingTiles);
-			if (canMove) {
+			let newX = this.owner.position.x + this.vector.x;
+			let newY = this.owner.position.y + this.vector.y;
+			let surroundingTiles = levelState.map.getSurrounding(newX, newY);
+			this.vector = adjustMovementByObstacles(surroundingTiles, this.owner, this.vector);
+			if (this.vector.x !== 0.0 || this.vector.y !== 0.0) {
 				playerState.applyMovement(this.vector);
 			}
 		}
@@ -51,8 +53,8 @@ export default class PlayerController extends ECS.Component {
 		for (const shift of exploringShifts) {
 			let tile: MapTile = levelState.levelData.map.getTile(
 				new GridPosition(
-					Math.floor((newY - shift[0] * GRID_SIZE) / GRID_SIZE),
-					Math.floor((newX - shift[1] * GRID_SIZE) / GRID_SIZE)
+					Math.floor((newY - shift[0] * BLOCK_SIZE) / BLOCK_SIZE),
+					Math.floor((newX - shift[1] * BLOCK_SIZE) / BLOCK_SIZE)
 				)
 			);
 			if (!tile.isAccessible) {
@@ -78,7 +80,7 @@ export default class PlayerController extends ECS.Component {
 		 * */
 
 		for (const tile of surrounding) {
-			let tileFrame = this.owner.parentGameObject.getChildByName(`tile_${tile.getRow()}_${tile.getColumn()}`);
+			let tileFrame = this.owner.parentGameObject.getChildByName(`TILE_${tile.getRow()}_${tile.getColumn()}`);
 
 			/** Check the top tiles collision */
 			if (this.vector.y < 0) {

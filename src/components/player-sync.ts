@@ -2,7 +2,7 @@ import * as ECS from '../../libs/pixi-ecs';
 import {Messages} from '../constants/constants';
 import PlayerState from '../model/states/player-state';
 
-export class PlayerSyncComponent extends ECS.Component<PlayerState> {
+export class PlayerSync extends ECS.Component<PlayerState> {
 
 	onInit() {
 		this.subscribe(Messages.STATE_CHANGE_PLAYER_POSITION);

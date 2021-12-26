@@ -12,13 +12,14 @@ import {
 	MonsterRandomWalk
 } from '../strategies/monster-movement-strategies';
 import LevelState from '../model/states/level-state';
+import {Selectors} from '../helpers/selectors';
 
 type PathStep = {
 	x: number;
 	y: number;
 }
 
-export default class MonsterMovementComponent extends ECS.Component<MonsterState> {
+export default class MonsterMovement extends ECS.Component<MonsterState> {
 
 	levelState: LevelState;
 	map: MapData;
@@ -32,14 +33,10 @@ export default class MonsterMovementComponent extends ECS.Component<MonsterState
 	movementStrategies = { 'RANDOM_WALK': new MonsterRandomWalk(), 'CHASE_PLAYER': new MonsterChasePlayer() };
 	activeStrategy: IMonsterMovementStrategy;
 
-	constructor(props: MonsterState, levelState: LevelState) {
-		super(props);
-		this.levelState = levelState;
-	}
-
 	onInit() {
-		this.map = this.levelState.levelData.map;
 		console.log('MonsterBehavior INIT');
+		this.levelState = Selectors.levelStateSelector(this.scene);
+		this.map = this.levelState.levelData.map;
 		this.subscribe(Messages.MONSTER_START_CHASING_PLAYER, Messages.MONSTER_STOP_CHASING_PLAYER);
 		this.aStar.setGrid(this.map.raw);
 		this.initPositions();
@@ -63,6 +60,7 @@ export default class MonsterMovementComponent extends ECS.Component<MonsterState
 
 	onUpdate(delta: number, absolute: number) {
 		this.activeStrategy.move(this, delta);
+		this.sendMessage(Messages.STATE_CHANGE_MONSTER_POSITION);
 	}
 
 	getNextStep(): PathStep|undefined {

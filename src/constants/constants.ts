@@ -32,6 +32,10 @@ export enum Attributes {
 	GAME_STATE = 'GAME_STATE'
 }
 
+export enum Tags {
+	MONSTER = 'MONSTER'
+}
+
 export enum Messages {
 	STATE_CHANGE_PLAYER_POSITION = 'state_change_player_position',
 	STATE_CHANGE_MONSTER_POSITION = 'state_change_monster_position',

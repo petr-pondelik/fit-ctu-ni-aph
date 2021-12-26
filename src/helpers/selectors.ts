@@ -6,4 +6,5 @@ import GameState from '../model/states/game-state';
 export class Selectors {
 	static gameDataSelector = (scene: ECS.Scene) => scene.getGlobalAttribute<GameData>(Attributes.GAME_DATA);
 	static gameStateSelector = (scene: ECS.Scene) => scene.getGlobalAttribute<GameState>(Attributes.GAME_STATE);
+	static levelStateSelector = (scene: ECS.Scene) => scene.getGlobalAttribute<GameState>(Attributes.GAME_STATE).levelState;
 }

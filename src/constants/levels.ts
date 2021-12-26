@@ -40,6 +40,9 @@ export const LEVELS = [
 			},
 			{
 				positionSeed: [5, 25]
+			},
+			{
+				positionSeed: [25, 25]
 			}
 		]
 	}

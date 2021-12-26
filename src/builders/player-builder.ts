@@ -1,10 +1,10 @@
 import * as ECS from '../../libs/pixi-ecs';
 import {Container} from '../../libs/pixi-ecs';
-import {GRID_SIZE} from '../constants/config';
+import {BLOCK_SIZE} from '../constants/config';
 import PlayerKeyboardController from '../components/player-keyboard-controller';
 import TextureFactory from '../factory/texture-factory';
 import {Containers, GameObjectType} from '../constants/constants';
-import {PlayerSyncComponent} from '../components/player-sync-component';
+import {PlayerSync} from '../components/player-sync';
 import PlayerState from '../model/states/player-state';
 
 
@@ -16,11 +16,11 @@ export default class PlayerBuilder {
 			.asSprite(TextureFactory.create(GameObjectType.PLAYER))
 			.anchor(0.5)
 			.withAttribute('pivot', 16)
-			.localPos(state.gridPosition.column * GRID_SIZE + GRID_SIZE/2, state.gridPosition.row * GRID_SIZE + GRID_SIZE / 2)
+			.localPos(state.gridPosition.column * BLOCK_SIZE + BLOCK_SIZE/2, state.gridPosition.row * BLOCK_SIZE + BLOCK_SIZE / 2)
 			.withParent(scene.stage.getChildByName(Containers.MAZE) as Container)
-			.withComponents([new PlayerKeyboardController(), new PlayerSyncComponent(state)])
+			.withComponents([new PlayerKeyboardController(), new PlayerSync(state)])
 			.build()
-			.pivot.set(GRID_SIZE/2, GRID_SIZE/2);
+			.pivot.set(BLOCK_SIZE/2, BLOCK_SIZE/2);
 	}
 
 }

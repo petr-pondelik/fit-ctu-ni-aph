@@ -2,7 +2,7 @@ import * as ECS from '../../../libs/pixi-ecs';
 import ObservableState from './observable-state';
 import {MovementVector, RealPosition} from '../movement';
 import {GridPosition} from '../game-struct';
-import {GRID_SIZE} from '../../constants/config';
+import {BLOCK_SIZE} from '../../constants/config';
 import {realPositionToGrid} from '../../helpers/grid';
 import {Messages} from '../../constants/constants';
 
@@ -32,7 +32,7 @@ export default class MonsterState extends ObservableState {
 
 	set position(gridPosition: GridPosition) {
 		this._gridPosition = gridPosition;
-		this._realPosition = new RealPosition(gridPosition.column * GRID_SIZE + GRID_SIZE/2, gridPosition.row * GRID_SIZE + GRID_SIZE/2);
+		this._realPosition = new RealPosition(gridPosition.column * BLOCK_SIZE + BLOCK_SIZE/2, gridPosition.row * BLOCK_SIZE + BLOCK_SIZE/2);
 	}
 
 	applyMovement(vector: MovementVector) {
