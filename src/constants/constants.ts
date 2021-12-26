@@ -34,4 +34,5 @@ export enum Attributes {
 
 export enum Messages {
 	TEST_MESSAGE = 'test_message',
+	STATE_CHANGE_PLAYER_POSITION = 'state_change_player_position'
 }

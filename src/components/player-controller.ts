@@ -1,4 +1,3 @@
-import * as PIXI from 'pixi.js';
 import * as ECS from '../../libs/pixi-ecs';
 import {MovementVector} from '../model/movement';
 import {Attributes} from '../constants/constants';
@@ -16,16 +15,9 @@ export default class PlayerController extends ECS.Component {
 		if (this.vector.x !== 0 || this.vector.y !== 0) {
 			let levelState = this.scene.getGlobalAttribute<GameState>(Attributes.GAME_STATE).currentLevel;
 			let playerState = levelState.playerState;
-
 			let surroundingTiles: MapTile[] = this.exploreSurrounding(levelState);
-
 			let canMove: boolean = this.limitMovement(surroundingTiles);
-
 			if (canMove) {
-				this.owner.parentGameObject.position.x -= this.vector.x;
-				this.owner.parentGameObject.position.y -= this.vector.y;
-				this.owner.position.x += this.vector.x;
-				this.owner.position.y += this.vector.y;
 				playerState.applyMovement(this.vector);
 			}
 		}
