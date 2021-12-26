@@ -1,7 +1,7 @@
 import {GridPosition, MapData, MapTile, MonsterSeed} from '../model/game-struct';
 import PlayerState from '../model/states/player-state';
 import {euclideanDistance} from '../model/states/geometry';
-import {MONSTER_PLAYER_MIN_DISTANCE} from '../constants/config';
+import {MONSTER_PLAYER_MIN_DISTANCE, MONSTER_SPAWN_DISPERSION} from '../constants/config';
 
 export const getRandomInt = (dispersion: number, shift: number = 0) => {
 	return Math.floor(Math.floor(Math.random() * dispersion) + shift);
@@ -26,7 +26,7 @@ export const getRandomTileInSurroundings = (map: MapData, center: GridPosition, 
 		col = col >= 0 && col < map.size.columns ? col : center.column;
 		let pos = new GridPosition(row, col);
 		tile = map.getTile(pos);
-	} while (!tile.isAccessible);
+	} while (!tile.isAccessible || tile.position.isEqual(center));
 	return tile;
 };
 
@@ -35,7 +35,7 @@ export const getMonsterInitPosition = (map: MapData, playerState: PlayerState, m
 	let mapDist = euclideanDistance(new GridPosition(0, 0), new GridPosition(map.size.rows, map.size.columns));
 	let playerMinDistance = MONSTER_PLAYER_MIN_DISTANCE * mapDist;
 	do {
-		let tile = getRandomTileInSurroundings(map, monsterSeed.position, 10);
+		let tile = getRandomTileInSurroundings(map, monsterSeed.position, MONSTER_SPAWN_DISPERSION);
 		if (euclideanDistance(playerState.gridPosition, tile.position) < playerMinDistance) {
 			valid = false;
 		}

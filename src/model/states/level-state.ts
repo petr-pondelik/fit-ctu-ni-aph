@@ -16,7 +16,7 @@ export default class LevelState extends ObservableState {
 		this._levelData = levelData;
 		this._playerState = new PlayerState(scene, levelData.playerInitPos);
 		for (let i = 0; i < levelData.monsters.amount; i++) {
-			this._monstersState.push(new MonsterState(scene));
+			this._monstersState.push(new MonsterState(scene, i));
 		}
 	}
 

@@ -36,7 +36,7 @@ export default class PlayerState extends ObservableState {
 		this._realPosition.y += vector.y;
 		this._gridPosition = realPositionToGrid(this._realPosition);
 		this._lastMove = vector;
-		this.sendMessage(Messages.STATE_CHANGE_PLAYER_POSITION, this._realPosition);
+		this.sendMessage(Messages.STATE_CHANGE_PLAYER_POSITION);
 	}
 
 }

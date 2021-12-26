@@ -1,5 +1,5 @@
-import {Messages} from '../constants/constants';
 import * as ECS from '../../libs/pixi-ecs';
+import {Messages} from '../constants/constants';
 import PlayerState from '../model/states/player-state';
 
 export class PlayerSyncComponent extends ECS.Component<PlayerState> {
@@ -12,7 +12,6 @@ export class PlayerSyncComponent extends ECS.Component<PlayerState> {
 		if (msg.action === Messages.STATE_CHANGE_PLAYER_POSITION) {
 			this.syncPosition();
 		}
-		return super.onMessage(msg);
 	}
 
 	syncPosition() {

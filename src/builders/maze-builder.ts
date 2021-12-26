@@ -38,7 +38,7 @@ export default class MazeBuilder {
 			let monsterState = levelState.monstersState[i];
 			let tile = getMonsterInitPosition(levelState.map, levelState.playerState, monsterSeed);
 			monsterState.position = tile.position;
-			MonsterBuilder.build(engine.scene, tile.position, levelState.map);
+			MonsterBuilder.build(engine.scene, levelState, monsterState);
 		}
 	}
 

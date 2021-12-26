@@ -9,6 +9,10 @@ export class GridPosition {
 		this.row = row;
 		this.column = column;
 	}
+
+	isEqual(pos: GridPosition) {
+		return this.row === pos.row && this.column === pos.column;
+	}
 }
 
 /**

@@ -17,5 +17,7 @@ export const GRID_SIZE = 32;
 export const PLAYER_SPEED = 0.2;
 
 export const MONSTER_SPEED = 0.2;
-export const MONSTER_MAX_MOVING_DISTANCE = 14;
+export const MONSTER_MAX_MOVING_DISTANCE = 12;
 export const MONSTER_PLAYER_MIN_DISTANCE = 0.25;
+export const MONSTER_SPAWN_DISPERSION = 10;
+export const PLAYER_CHASE_DISTANCE = 5;

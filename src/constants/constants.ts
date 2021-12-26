@@ -33,6 +33,8 @@ export enum Attributes {
 }
 
 export enum Messages {
-	TEST_MESSAGE = 'test_message',
-	STATE_CHANGE_PLAYER_POSITION = 'state_change_player_position'
+	STATE_CHANGE_PLAYER_POSITION = 'state_change_player_position',
+	STATE_CHANGE_MONSTER_POSITION = 'state_change_monster_position',
+	MONSTER_START_CHASING_PLAYER = 'monster_start_chasing_player',
+	MONSTER_STOP_CHASING_PLAYER = 'monster_stop_chasing_player'
 }
