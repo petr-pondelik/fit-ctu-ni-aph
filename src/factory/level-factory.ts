@@ -1,4 +1,6 @@
+import * as ECS from '../../libs/pixi-ecs';
 import {
+	GameData,
 	GridPosition,
 	LevelData,
 	MapData,
@@ -7,6 +9,11 @@ import {
 	MonstersData, MonsterSeed,
 } from '../model/game-struct';
 import {LEVELS} from '../constants/levels';
+import {Selectors} from '../helpers/selectors';
+import MazeBuilder from '../builders/maze-builder';
+import {BLOCK_SIZE, SCENE_HEIGHT, SCENE_RESOLUTION, SCENE_WIDTH} from '../constants/config';
+import GameState from '../model/states/game-state';
+import {Attributes} from '../constants/constants';
 
 
 export class LevelFactory {
@@ -35,6 +42,25 @@ export class LevelFactory {
 			res.push(new LevelData(level.name, map, new GridPosition(level.playerInitPos[0], level.playerInitPos[1]), monstersData));
 		}
 		return res;
-	}
+	};
 
+	static loadLevel = (scene: ECS.Scene, index: number) => {
+		this.clearScene(scene);
+		const gameState: GameState = Selectors.gameStateSelector(scene);
+		const level: LevelData = gameState.gameData.levels[index];
+		gameState.changeLevel(level);
+		MazeBuilder.build(scene, gameState.levelState);
+		scene.stage.pivot.x = -SCENE_WIDTH/(2*SCENE_RESOLUTION) - (gameState.playerState.gridPosition.column * BLOCK_SIZE) + BLOCK_SIZE/2;
+		scene.stage.pivot.y = -SCENE_HEIGHT/(2*SCENE_RESOLUTION) + (gameState.playerState.gridPosition.row * BLOCK_SIZE) - BLOCK_SIZE + BLOCK_SIZE/2;
+	};
+
+	static clearScene = (scene: ECS.Scene) => {
+		const gameState = Selectors.gameStateSelector(scene);
+		scene.clearScene();
+		// reassign global attributes and keyboard controller
+		scene.stage.sortableChildren = true;
+		scene.assignGlobalAttribute(Attributes.GAME_DATA, gameState.gameData);
+		scene.assignGlobalAttribute(Attributes.GAME_STATE, gameState);
+		scene.addGlobalComponentAndRun(new ECS.KeyInputComponent());
+	}
 }

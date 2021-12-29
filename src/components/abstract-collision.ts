@@ -11,6 +11,6 @@ export default abstract class AbstractCollision extends ECS.Component {
 		return diffX < BLOCK_SIZE / 2 && diffY < BLOCK_SIZE / 2;
 	}
 
-	abstract _action(): void;
+	protected abstract _action(): void;
 
 }

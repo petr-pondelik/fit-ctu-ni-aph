@@ -7,6 +7,7 @@ import {Selectors} from '../helpers/selectors';
 import MazeBuilder from '../builders/maze-builder';
 import {SCENE_HEIGHT, SCENE_WIDTH, BLOCK_SIZE, SCENE_RESOLUTION} from '../constants/config';
 import LevelState from '../model/states/level-state';
+import IntroFactory from "../factory/intro-factory";
 
 /**
  * Game loader, loads assets
@@ -22,19 +23,6 @@ export class GameLoader {
 			.load(() => this.onAssetsLoaded(engine));
 	}
 
-	loadLevel(engine: ECS.Engine, index: number) {
-		const levelData = Selectors.gameDataSelector(engine.scene).levels[index];
-		const levelState = new LevelState(engine.scene, levelData);
-		let gameState = Selectors.gameStateSelector(engine.scene);
-		gameState.levelState = levelState;
-		MazeBuilder.build(engine, gameState.levelState);
-		console.log(SCENE_HEIGHT);
-		console.log(SCENE_HEIGHT/2);
-		engine.scene.stage.pivot.x = -SCENE_WIDTH/(2*SCENE_RESOLUTION) - (levelData.playerInitPos.column * BLOCK_SIZE) + BLOCK_SIZE/2;
-		engine.scene.stage.pivot.y = -SCENE_HEIGHT/(2*SCENE_RESOLUTION) + (levelData.playerInitPos.row * BLOCK_SIZE) - BLOCK_SIZE + BLOCK_SIZE/2;
-		console.log(engine.scene.stage.pivot);
-	}
-
 	private onAssetsLoaded(engine: ECS.Engine) {
 		console.log('ASSETS LOADED');
 		console.log(engine.app.loader.resources);
@@ -45,6 +33,6 @@ export class GameLoader {
 		engine.scene.assignGlobalAttribute(Attributes.GAME_DATA, gameData);
 		engine.scene.assignGlobalAttribute(Attributes.GAME_STATE, gameState);
 
-		this.loadLevel(engine, gameState.currentLevel);
+		IntroFactory.loadIntro(engine.scene);
 	}
 }

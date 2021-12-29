@@ -8,6 +8,8 @@ export default class PlayerKeyboardController extends PlayerController {
 	private keyInputCmp: ECS.KeyInputComponent;
 
 	onInit() {
+		console.log('PlayerKeyboardController INIT');
+		console.log(this.scene.findGlobalComponentByName<ECS.KeyInputComponent>(ECS.KeyInputComponent.name));
 		super.onInit();
 		this.keyInputCmp = this.scene.findGlobalComponentByName<ECS.KeyInputComponent>(ECS.KeyInputComponent.name);
 	}

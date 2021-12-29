@@ -14,7 +14,7 @@ import PlayerMonsterCollision from '../components/player-monster-collision';
 export default class MonsterBuilder {
 
 	static build = (scene: ECS.Scene, levelState: LevelState, monsterState: MonsterState) => {
-		return new ECS.Builder(scene)
+		new ECS.Builder(scene)
 			.asSprite(TextureFactory.createObjectTexture(GameObjectType.MONSTER))
 			.localPos(monsterState.gridPosition.column * BLOCK_SIZE, monsterState.gridPosition.row * BLOCK_SIZE)
 			.anchor(0.5)

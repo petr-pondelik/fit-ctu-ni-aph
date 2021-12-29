@@ -1,0 +1,19 @@
+import * as ECS from '../../libs/pixi-ecs';
+import {LevelFactory} from '../factory/level-factory';
+
+export default class GameActions {
+
+	static start = (scene: ECS.Scene, delay = 1000) => {
+		return new ECS.ChainComponent()
+			.waitTime(delay)
+			.call((cmp) => {
+				cmp.mergeWith(
+					new ECS.ChainComponent()
+						.call(
+							() => scene.callWithDelay(0, () => LevelFactory.loadLevel(scene, 0))
+						)
+				);
+			});
+	}
+
+}

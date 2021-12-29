@@ -11,7 +11,7 @@ import PlayerState from '../model/states/player-state';
 export default class PlayerBuilder {
 
 	static build = (scene: ECS.Scene, state: PlayerState) => {
-		return new ECS.Builder(scene)
+		new ECS.Builder(scene)
 			.withName('player')
 			.asSprite(TextureFactory.createObjectTexture(GameObjectType.PLAYER))
 			.anchor(0.5)

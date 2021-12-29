@@ -1,7 +1,7 @@
 import * as ECS from '../../../libs/pixi-ecs';
 import ObservableState from './observable-state';
 import LevelState from './level-state';
-import {GameData} from '../game-struct';
+import {GameData, LevelData} from '../game-struct';
 
 export default class GameState extends ObservableState {
 
@@ -17,12 +17,16 @@ export default class GameState extends ObservableState {
 		this.gameRunning = false;
 	}
 
-	set levelState(levelState: LevelState) {
-		this._levelState = levelState;
+	changeLevel(levelData: LevelData) {
+		this._levelState = new LevelState(this.scene, levelData);
 	}
 
 	get levelState() {
 		return this._levelState;
+	}
+
+	get playerState() {
+		return this.levelState.playerState;
 	}
 
 	get gameData() {
