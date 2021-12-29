@@ -13,7 +13,7 @@ export default class PlayerBuilder {
 	static build = (scene: ECS.Scene, state: PlayerState) => {
 		return new ECS.Builder(scene)
 			.withName('player')
-			.asSprite(TextureFactory.create(GameObjectType.PLAYER))
+			.asSprite(TextureFactory.createObjectTexture(GameObjectType.PLAYER))
 			.anchor(0.5)
 			.withAttribute('pivot', 16)
 			.localPos(state.gridPosition.column * BLOCK_SIZE + BLOCK_SIZE/2, state.gridPosition.row * BLOCK_SIZE + BLOCK_SIZE / 2)

@@ -1,8 +1,8 @@
 import {MapTileType} from '../constants/constants';
-import {isAccessibleTile} from '../helpers/grid';
+import {isAccessibleTile, isLevelExit} from '../helpers/grid';
 import {BLOCK_SIZE} from '../constants/config';
 import {Container} from "../../libs/pixi-ecs";
-import {MovementVector} from "./movement";
+import {Vector2D} from "./geometry";
 
 export class GridPosition {
 	row: number;
@@ -26,11 +26,13 @@ export class MapTile {
 	readonly type: MapTileType;
 	readonly position: GridPosition;
 	readonly isAccessible: boolean;
+	readonly isLevelExit: boolean;
 
 	constructor(type: MapTileType, row: number, column: number) {
 		this.type = type;
 		this.position = new GridPosition(row, column);
 		this.isAccessible = isAccessibleTile(type);
+		this.isLevelExit = isLevelExit(type);
 	}
 
 	getRow(): number {

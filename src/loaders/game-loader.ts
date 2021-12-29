@@ -16,8 +16,7 @@ export class GameLoader {
 	loadGame(engine: ECS.Engine) {
 		engine.app.loader
 			.reset()
-			.add(Assets.FLOOR, 'assets/floor-tile-3-16.png')
-			.add(Assets.WALL, 'assets/wall-16.png')
+			.add(Assets.SPRITESHEET, 'assets/map-spritesheet.png')
 			.add(Assets.PLAYER, 'assets/draft-player-16.png')
 			.add(Assets.MONSTER, 'assets/draft-monster-16.png')
 			.load(() => this.onAssetsLoaded(engine));
@@ -31,8 +30,8 @@ export class GameLoader {
 		MazeBuilder.build(engine, gameState.levelState);
 		console.log(SCENE_HEIGHT);
 		console.log(SCENE_HEIGHT/2);
-		engine.scene.stage.pivot.x = -SCENE_WIDTH/(2*SCENE_RESOLUTION) + BLOCK_SIZE/2;
-		engine.scene.stage.pivot.y = -SCENE_HEIGHT/(2*SCENE_RESOLUTION) + BLOCK_SIZE + BLOCK_SIZE/2;
+		engine.scene.stage.pivot.x = -SCENE_WIDTH/(2*SCENE_RESOLUTION) - (levelData.playerInitPos.column * BLOCK_SIZE) + BLOCK_SIZE/2;
+		engine.scene.stage.pivot.y = -SCENE_HEIGHT/(2*SCENE_RESOLUTION) + (levelData.playerInitPos.row * BLOCK_SIZE) - BLOCK_SIZE + BLOCK_SIZE/2;
 		console.log(engine.scene.stage.pivot);
 	}
 

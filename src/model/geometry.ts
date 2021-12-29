@@ -1,4 +1,4 @@
-export class RealPosition {
+export class Position2D {
 	x: number;
 	y: number;
 
@@ -8,7 +8,7 @@ export class RealPosition {
 	}
 }
 
-export type MovementVector = {
+export type Vector2D = {
 	x: number;
 	y: number;
 };

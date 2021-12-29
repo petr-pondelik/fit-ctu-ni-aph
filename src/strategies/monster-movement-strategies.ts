@@ -1,7 +1,7 @@
 import MonsterMovement from '../components/monster-movement';
 import {getDirections} from '../helpers/grid';
 import {GridPosition} from '../model/game-struct';
-import {MovementVector} from '../model/movement';
+import {Vector2D} from '../model/geometry';
 import {MONSTER_MAX_MOVING_DISTANCE, MONSTER_SPEED} from '../constants/config';
 import {getRandomTileInSurroundings} from '../helpers/random';
 
@@ -31,7 +31,7 @@ export class MonsterRandomWalk implements IMonsterMovementStrategy {
 
 		if (nextStep) {
 			const directions = getDirections(component.actualPosition, new GridPosition(nextStep.y, nextStep.x));
-			let vector: MovementVector = {
+			let vector: Vector2D = {
 				x: MONSTER_SPEED * delta * directions.x,
 				y: MONSTER_SPEED * delta * directions.y
 			};
@@ -64,7 +64,7 @@ export class MonsterChasePlayer implements IMonsterMovementStrategy {
 
 		if (nextStep) {
 			const directions = getDirections(component.actualPosition, new GridPosition(nextStep.y, nextStep.x));
-			let vector: MovementVector = {
+			let vector: Vector2D = {
 				x: MONSTER_SPEED * delta * directions.x,
 				y: MONSTER_SPEED * delta * directions.y
 			};

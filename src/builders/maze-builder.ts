@@ -6,8 +6,6 @@ import PlayerBuilder from './player-builder';
 import LevelState from '../model/states/level-state';
 import MonsterBuilder from './monster-builder';
 import {getMonsterInitPosition} from '../helpers/random';
-import {isAccessibleTile} from '../helpers/grid';
-import {Selectors} from '../helpers/selectors';
 
 export default class MazeBuilder {
 
@@ -24,7 +22,7 @@ export default class MazeBuilder {
 					continue;
 				}
 				const tileBuilder = new ECS.Builder(scene)
-					.asSprite(TextureFactory.create(tile.type))
+					.asSprite(TextureFactory.createTileTexture(tile.type))
 					.localPos(tile.getColumn() * BLOCK_SIZE, tile.getRow() * BLOCK_SIZE)
 					.withName(`TILE_${tile.getRow()}_${tile.getColumn()}`)
 					.anchor(0.5);

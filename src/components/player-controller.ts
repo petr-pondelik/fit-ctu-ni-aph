@@ -1,5 +1,5 @@
 import * as ECS from '../../libs/pixi-ecs';
-import {MovementVector} from '../model/movement';
+import {Vector2D} from '../model/geometry';
 import {GridPosition, MapTile} from '../model/game-struct';
 import {BLOCK_SIZE} from '../constants/config';
 import LevelState from '../model/states/level-state';
@@ -9,7 +9,7 @@ import {adjustMovementByObstacles} from '../helpers/grid';
 
 export default class PlayerController extends ECS.Component {
 
-	vector: MovementVector = {x: 0, y: 0}
+	vector: Vector2D = {x: 0, y: 0}
 
 	move() {
 		if (this.vector.x !== 0 || this.vector.y !== 0) {

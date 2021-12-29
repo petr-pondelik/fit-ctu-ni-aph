@@ -1,15 +1,26 @@
 import {MapTileType} from '../constants/constants';
-import {MovementVector, RealPosition} from '../model/movement';
+import {Position2D, Vector2D} from '../model/geometry';
 import {GridPosition, MapTile} from '../model/game-struct';
 import {BLOCK_SIZE} from '../constants/config';
 import {Container} from '../../libs/pixi-ecs';
 
 
 export const isAccessibleTile = (type: MapTileType): boolean => {
-	return type === MapTileType.FLOOR;
+	const accessibleTiles = [
+		MapTileType.FLOOR,
+		MapTileType.DOORS_STAIRS_UP_5_1, MapTileType.DOORS_STAIRS_UP_5_2, MapTileType.DOORS_STAIRS_UP_4_1, MapTileType.DOORS_STAIRS_UP_4_2
+	];
+	return accessibleTiles.indexOf(type) !== -1;
 };
 
-export const realPositionToGrid = (realPos: RealPosition): GridPosition => {
+export const isLevelExit = (type: MapTileType): boolean => {
+	const levelExitTiles = [
+		MapTileType.DOORS_STAIRS_UP_4_1, MapTileType.DOORS_STAIRS_UP_4_2
+	];
+	return levelExitTiles.indexOf(type) !== -1;
+};
+
+export const realPositionToGrid = (realPos: Position2D): GridPosition => {
 	return new GridPosition(Math.floor(realPos.y / BLOCK_SIZE), Math.floor(realPos.x / BLOCK_SIZE));
 };
 
@@ -22,7 +33,7 @@ export const getDirections = (origin: GridPosition, destination: GridPosition) =
 	};
 };
 
-export const adjustMovementByObstacles = (surrounding: MapTile[], movingObject: Container, vector: MovementVector) => {
+export const adjustMovementByObstacles = (surrounding: MapTile[], movingObject: Container, vector: Vector2D) => {
 	let bounds = movingObject.getBounds();
 
 	let topBound = bounds.top;

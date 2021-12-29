@@ -1,10 +1,5 @@
 export enum Assets {
-	FLOOR = 'floor',
-	WALL = 'wall',
-	// WALL_FRONT_UPPER = 'wall_front_upper',
-	// WALL_FRONT_BOTTOM = 'wall_front_bottom',
-	// WALL_UPPER_LEFT_INNER_EDGE = 'wall_upper_left_inner_edge',
-	// WALL_LEFT = 'wall_left',
+	SPRITESHEET = 'spritesheet',
 	PLAYER = 'player',
 	MONSTER = 'monster'
 }
@@ -16,7 +11,31 @@ export enum Containers {
 export enum MapTileType {
 	EMPTY,
 	FLOOR,
-	WALL
+	WALL,
+	DOORS_STAIRS_UP_0_0 = 100,
+	DOORS_STAIRS_UP_0_1 = 101,
+	DOORS_STAIRS_UP_0_2 = 102,
+	DOORS_STAIRS_UP_0_3 = 103,
+	DOORS_STAIRS_UP_1_0 = 104,
+	DOORS_STAIRS_UP_1_1 = 105,
+	DOORS_STAIRS_UP_1_2 = 106,
+	DOORS_STAIRS_UP_1_3 = 107,
+	DOORS_STAIRS_UP_2_0 = 108,
+	DOORS_STAIRS_UP_2_1 = 109,
+	DOORS_STAIRS_UP_2_2 = 110,
+	DOORS_STAIRS_UP_2_3 = 111,
+	DOORS_STAIRS_UP_3_0 = 112,
+	DOORS_STAIRS_UP_3_1 = 113,
+	DOORS_STAIRS_UP_3_2 = 114,
+	DOORS_STAIRS_UP_3_3 = 115,
+	DOORS_STAIRS_UP_4_0 = 116,
+	DOORS_STAIRS_UP_4_1 = 117,
+	DOORS_STAIRS_UP_4_2 = 118,
+	DOORS_STAIRS_UP_4_3 = 119,
+	DOORS_STAIRS_UP_5_0 = 120,
+	DOORS_STAIRS_UP_5_1 = 121,
+	DOORS_STAIRS_UP_5_2 = 122,
+	DOORS_STAIRS_UP_5_3 = 123
 }
 
 export enum GameObjectType {

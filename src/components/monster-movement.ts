@@ -1,5 +1,5 @@
 import * as ECS from '../../libs/pixi-ecs';
-import {RealPosition} from '../model/movement';
+import {Position2D} from '../model/geometry';
 import EasyStar from 'easystarjs';
 import easyStar from '../algorithms/a-star';
 import {GridPosition, MapData} from '../model/game-struct';
@@ -44,7 +44,7 @@ export default class MonsterMovement extends ECS.Component<MonsterState> {
 	}
 
 	initPositions() {
-		this.origin = realPositionToGrid(new RealPosition(this.props.realPosition.x, this.props.realPosition.y));
+		this.origin = realPositionToGrid(new Position2D(this.props.realPosition.x, this.props.realPosition.y));
 		this.actualPosition = new GridPosition(this.origin.row, this.origin.column);
 	}
 

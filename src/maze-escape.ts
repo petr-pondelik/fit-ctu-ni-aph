@@ -13,7 +13,7 @@ class MazeEscape {
 
 		// init the game loop
 		this.engine.init(canvas, {
-			// transparent: true,
+			transparent: true,
 			resizeToScreen: true,
 			width: SCENE_WIDTH,
 			height: SCENE_HEIGHT,
