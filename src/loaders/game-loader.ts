@@ -3,11 +3,7 @@ import {Assets, Attributes} from '../constants/constants';
 import {GameData} from '../model/game-struct';
 import {LevelFactory} from '../factory/level-factory';
 import GameState from '../model/states/game-state';
-import {Selectors} from '../helpers/selectors';
-import MazeBuilder from '../builders/maze-builder';
-import {SCENE_HEIGHT, SCENE_WIDTH, BLOCK_SIZE, SCENE_RESOLUTION} from '../constants/config';
-import LevelState from '../model/states/level-state';
-import IntroFactory from "../factory/intro-factory";
+import IntroFactory from '../factory/intro-factory';
 
 /**
  * Game loader, loads assets
@@ -17,9 +13,9 @@ export class GameLoader {
 	loadGame(engine: ECS.Engine) {
 		engine.app.loader
 			.reset()
-			.add(Assets.SPRITESHEET, 'assets/map-spritesheet.png')
-			.add(Assets.PLAYER, 'assets/draft-player-16.png')
-			.add(Assets.MONSTER, 'assets/draft-monster-16.png')
+			.add(Assets.SPRITESHEET, 'assets/mainlevbuild.png')
+			.add(Assets.PLAYER, 'assets/player-16.png')
+			.add(Assets.MONSTER, 'assets/monster-bat-16.png')
 			.load(() => this.onAssetsLoaded(engine));
 	}
 

@@ -1,6 +1,6 @@
 import { TextStyle } from 'pixi.js';
 import * as ECS from '../../libs/pixi-ecs';
-import {SCENE_HEIGHT, SCENE_WIDTH} from '../constants/config';
+import {SCENE_HEIGHT, SCENE_RESOLUTION, SCENE_WIDTH} from '../constants/config';
 
 
 const style = {
@@ -18,7 +18,7 @@ export default class IntroBuilder {
 			.withChild(
 				new ECS.Builder(scene)
 					.asText('Press Enter or Space to start the game', style)
-					.localPos(SCENE_WIDTH/6, SCENE_HEIGHT/6)
+					.localPos(SCENE_WIDTH/(2*SCENE_RESOLUTION), SCENE_HEIGHT/(2*SCENE_RESOLUTION))
 					.anchor(0.5)
 			)
 			.build();

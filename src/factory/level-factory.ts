@@ -13,7 +13,7 @@ import {Selectors} from '../helpers/selectors';
 import MazeBuilder from '../builders/maze-builder';
 import {BLOCK_SIZE, SCENE_HEIGHT, SCENE_RESOLUTION, SCENE_WIDTH} from '../constants/config';
 import GameState from '../model/states/game-state';
-import {Attributes} from '../constants/constants';
+import {Attributes, MapTileType} from '../constants/constants';
 
 
 export class LevelFactory {
@@ -30,7 +30,7 @@ export class LevelFactory {
 			for (const r of level.map) {
 				let row: MapTile[] = [], colInx: number = 0;
 				for (const tileType of r) {
-					row.push(new MapTile(tileType, rowInx, colInx++));
+					row.push(new MapTile(tileType as MapTileType, rowInx, colInx++));
 				}
 				map.tiles.push(row);
 				rowInx++;
@@ -50,8 +50,8 @@ export class LevelFactory {
 		const level: LevelData = gameState.gameData.levels[index];
 		gameState.changeLevel(level);
 		MazeBuilder.build(scene, gameState.levelState);
-		scene.stage.pivot.x = -SCENE_WIDTH/(2*SCENE_RESOLUTION) - (gameState.playerState.gridPosition.column * BLOCK_SIZE) + BLOCK_SIZE/2;
-		scene.stage.pivot.y = -SCENE_HEIGHT/(2*SCENE_RESOLUTION) + (gameState.playerState.gridPosition.row * BLOCK_SIZE) - BLOCK_SIZE + BLOCK_SIZE/2;
+		scene.stage.pivot.x = (gameState.playerState.gridPosition.column * BLOCK_SIZE) - BLOCK_SIZE/2 - SCENE_WIDTH/(2 * SCENE_RESOLUTION);
+		scene.stage.pivot.y = (gameState.playerState.gridPosition.row * BLOCK_SIZE) - BLOCK_SIZE/2 - SCENE_HEIGHT/(2 * SCENE_RESOLUTION);
 	};
 
 	static clearScene = (scene: ECS.Scene) => {

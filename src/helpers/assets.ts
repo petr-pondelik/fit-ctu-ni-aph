@@ -4,8 +4,19 @@ import {BLOCK_SIZE} from '../constants/config';
 
 export const getTileOffset = (type: MapTileType): Position2D|null => {
 	switch (type) {
-		case MapTileType.FLOOR: return {x: 46 * BLOCK_SIZE, y: 13 * BLOCK_SIZE} as Position2D;
-		case MapTileType.WALL: return {x: 17 * BLOCK_SIZE, y: 17 * BLOCK_SIZE} as Position2D;
+		case MapTileType.FLOOR: return {x: 736, y: 13 * BLOCK_SIZE} as Position2D;
+		case MapTileType.WALL_FRONT_UPPER: return {x: 80, y: 112} as Position2D;
+		case MapTileType.WALL_FRONT_STANDARD: return {x: 109, y: 133} as Position2D;
+		case MapTileType.WALL_LEFT: return {x: 272, y: 62} as Position2D;
+		case MapTileType.WALL_RIGHT: return {x: 32, y: 62} as Position2D;
+		case MapTileType.WALL_BACK: return {x: 193, y: 48} as Position2D;
+		case MapTileType.CORNER_OUTER_RIGHT_UPPER: return {x: 272, y: 48} as Position2D;
+		case MapTileType.CORNER_OUTER_RIGHT_BOTTOM: return {x: 272, y: 112} as Position2D;
+		case MapTileType.CORNER_WALL_OUTER_RIGHT: return {x: 272, y: 128} as Position2D;
+		case MapTileType.CORNER_INNER_LEFT_UPPER: return {x: 224, y: 16} as Position2D;
+		case MapTileType.CORNER_INNER_LEFT_BOTTOM: return {x: 128, y: 16} as Position2D;
+		case MapTileType.CORNER_INNER_RIGHT_UPPER: return {x: 80, y: 16} as Position2D;
+		case MapTileType.CORNER_INNER_RIGHT_BOTTOM: return {x: 176, y: 16} as Position2D;
 		case MapTileType.DOORS_STAIRS_UP_0_0: return {x: 55 * BLOCK_SIZE, y: 9} as Position2D;
 		case MapTileType.DOORS_STAIRS_UP_0_1: return {x: 56 * BLOCK_SIZE, y: 9} as Position2D;
 		case MapTileType.DOORS_STAIRS_UP_0_2: return {x: 57 * BLOCK_SIZE, y: 9} as Position2D;
