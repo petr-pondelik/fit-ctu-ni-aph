@@ -6,16 +6,24 @@ import {Container} from '../../libs/pixi-ecs';
 
 
 export const isAccessibleTile = (type: MapTileType): boolean => {
-	const accessibleTiles = [
+	const tiles = [
 		MapTileType.FLOOR,
 		MapTileType.DOORS_STAIRS_UP_5_1, MapTileType.DOORS_STAIRS_UP_5_2, MapTileType.DOORS_STAIRS_UP_4_1, MapTileType.DOORS_STAIRS_UP_4_2
 	];
-	return accessibleTiles.indexOf(type) !== -1;
+	return tiles.indexOf(type) !== -1;
+};
+
+export const isLevelExitTile = (type: MapTileType): boolean => {
+	const tiles = [
+		MapTileType.DOORS_STAIRS_UP_5_1, MapTileType.DOORS_STAIRS_UP_5_2,
+		MapTileType.DOORS_STAIRS_UP_4_1, MapTileType.DOORS_STAIRS_UP_4_2
+	];
+	return tiles.indexOf(type) !== -1;
 };
 
 export const isLevelExit = (type: MapTileType): boolean => {
 	const levelExitTiles = [
-		MapTileType.DOORS_STAIRS_UP_4_1, MapTileType.DOORS_STAIRS_UP_4_2
+		MapTileType.DOORS_STAIRS_UP_4_1, MapTileType.DOORS_STAIRS_UP_4_2,
 	];
 	return levelExitTiles.indexOf(type) !== -1;
 };

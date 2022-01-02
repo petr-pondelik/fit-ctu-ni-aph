@@ -1,8 +1,7 @@
 import {MapTileType} from '../constants/constants';
 import {isAccessibleTile, isLevelExit} from '../helpers/grid';
 import {BLOCK_SIZE} from '../constants/config';
-import {Container} from "../../libs/pixi-ecs";
-import {Vector2D} from "./geometry";
+
 
 export class GridPosition {
 	row: number;

@@ -11,11 +11,12 @@ export default class PlayerMonsterCollision extends AbstractCollision {
 	onInit() {
 		this.gameState = Selectors.gameStateSelector(this.scene);
 		this.subscribe(Messages.STATE_CHANGE_MONSTER_POSITION);
+		console.log(this.gameState.playerState.realPosition);
 	}
 
 	onMessage(msg: ECS.Message): any {
 		if (msg.action === Messages.STATE_CHANGE_MONSTER_POSITION) {
-			if (this.hasCollided(this.gameState.levelState.playerState.realPosition.x, this.gameState.levelState.playerState.realPosition.y)) {
+			if (this.hasCollided(this.gameState.playerState.realPosition.x, this.gameState.playerState.realPosition.y)) {
 				this._action();
 			}
 		}

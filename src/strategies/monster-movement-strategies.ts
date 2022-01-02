@@ -52,7 +52,9 @@ export class MonsterChasePlayer implements IMonsterMovementStrategy {
 			component.actualPosition.column, component.actualPosition.row,
 			component.destination.column, component.destination.row,
 			(path) => {
-				component.path = path.slice(1);
+				if (path !== null) {
+					component.path = path.slice(1);
+				}
 			});
 		component.aStar.calculate();
 	}

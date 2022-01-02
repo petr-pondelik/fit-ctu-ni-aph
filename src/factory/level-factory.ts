@@ -48,19 +48,21 @@ export class LevelFactory {
 		this.clearScene(scene);
 		const gameState: GameState = Selectors.gameStateSelector(scene);
 		const level: LevelData = gameState.gameData.levels[index];
-		gameState.changeLevel(level);
+		gameState.changeLevel(level, index);
 		MazeBuilder.build(scene, gameState.levelState);
 		scene.stage.pivot.x = (gameState.playerState.gridPosition.column * BLOCK_SIZE) - BLOCK_SIZE/2 - SCENE_WIDTH/(2 * SCENE_RESOLUTION);
 		scene.stage.pivot.y = (gameState.playerState.gridPosition.row * BLOCK_SIZE) - BLOCK_SIZE/2 - SCENE_HEIGHT/(2 * SCENE_RESOLUTION);
 	};
 
-	static clearScene = (scene: ECS.Scene) => {
+	static clearScene = (scene: ECS.Scene, addAttributes: boolean = true) => {
 		const gameState = Selectors.gameStateSelector(scene);
 		scene.clearScene();
 		// reassign global attributes and keyboard controller
 		scene.stage.sortableChildren = true;
-		scene.assignGlobalAttribute(Attributes.GAME_DATA, gameState.gameData);
-		scene.assignGlobalAttribute(Attributes.GAME_STATE, gameState);
 		scene.addGlobalComponentAndRun(new ECS.KeyInputComponent());
+		if (addAttributes === true) {
+			scene.assignGlobalAttribute(Attributes.GAME_DATA, gameState.gameData);
+			scene.assignGlobalAttribute(Attributes.GAME_STATE, gameState);
+		}
 	}
 }

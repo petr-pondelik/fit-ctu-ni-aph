@@ -17,8 +17,9 @@ export default class GameState extends ObservableState {
 		this.gameRunning = false;
 	}
 
-	changeLevel(levelData: LevelData) {
+	changeLevel(levelData: LevelData, index: number) {
 		this._levelState = new LevelState(this.scene, levelData);
+		this._currentLevel = index;
 	}
 
 	get levelState() {

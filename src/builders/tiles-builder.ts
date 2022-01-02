@@ -3,6 +3,7 @@ import {Containers, MapTileType} from '../constants/constants';
 import * as ECS from '../../libs/pixi-ecs';
 import TextureFactory from '../factory/texture-factory';
 import {BLOCK_SIZE} from '../constants/config';
+import LevelCompletionChecker from '../components/level-completion-checker';
 
 export default class TilesBuilder {
 
@@ -10,7 +11,10 @@ export default class TilesBuilder {
 		const mazeContainerBuilder = new ECS.Builder(scene)
 			.asContainer()
 			.withName(Containers.MAZE)
-			.withParent(scene.stage);
+			.withParent(scene.stage)
+			.withComponents([
+				new LevelCompletionChecker()
+			]);
 
 		for (const tilesRow of tiles) {
 			for (const tile of tilesRow) {
