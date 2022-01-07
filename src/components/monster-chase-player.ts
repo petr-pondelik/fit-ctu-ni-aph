@@ -1,6 +1,6 @@
 import * as ECS from '../../libs/pixi-ecs';
 import LevelState from '../model/states/level-state';
-import {euclideanDistance} from '../model/states/geometry';
+import {euclideanDistance} from '../helpers/geometry';
 import {PLAYER_CHASE_DISTANCE} from '../constants/config';
 import {Messages} from '../constants/constants';
 import MonsterState from '../model/states/monster-state';

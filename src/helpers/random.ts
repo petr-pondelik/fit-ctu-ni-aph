@@ -1,6 +1,6 @@
 import {MapData, MapTile, MonsterSeed} from '../model/game-struct';
 import PlayerState from '../model/states/player-state';
-import {euclideanDistance} from '../model/states/geometry';
+import {euclideanDistance} from './geometry';
 import {MONSTER_PLAYER_MIN_DISTANCE, MONSTER_SPAWN_DISPERSION} from '../constants/config';
 import {Position2D} from '../model/geometry';
 

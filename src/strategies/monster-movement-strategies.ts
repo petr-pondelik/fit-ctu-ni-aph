@@ -39,10 +39,11 @@ export class MonsterRandomWalk implements IMonsterMovementStrategy {
 
 		if (nextStep) {
 			const directions = getDirections(component.actualPosition, new Position2D(nextStep.x, nextStep.y));
-			let vector: Vector2D = {
-				x: component.getMonsterActualSpeed() * delta * directions.x,
-				y: component.getMonsterActualSpeed() * delta * directions.y
-			};
+			let vector = new Vector2D(
+				component.getMonsterActualSpeed() * delta * directions.x,
+				component.getMonsterActualSpeed() * delta * directions.y
+			);
+			vector.normalizeDiagonalSize();
 			component.props.applyMovement(vector);
 			component.actualPosition = component.props.gridPosition.clone();
 		} else {
@@ -77,10 +78,11 @@ export class MonsterChasePlayer implements IMonsterMovementStrategy {
 
 		if (nextStep) {
 			const directions = getDirections(component.actualPosition, new Position2D(nextStep.x, nextStep.y));
-			let vector: Vector2D = {
-				x: component.getMonsterActualSpeed() * delta * directions.x,
-				y: component.getMonsterActualSpeed() * delta * directions.y
-			};
+			let vector = new Vector2D(
+				component.getMonsterActualSpeed() * delta * directions.x,
+				component.getMonsterActualSpeed() * delta * directions.y
+			);
+			vector.normalizeDiagonalSize();
 			component.props.applyMovement(vector);
 			component.actualPosition = component.props.gridPosition.clone();
 		} else {

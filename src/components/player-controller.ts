@@ -6,7 +6,7 @@ import {adjustMovementByObstacles} from '../helpers/grid';
 
 export default class PlayerController extends ECS.Component {
 
-	vector: Vector2D = {x: 0, y: 0}
+	vector: Vector2D = new Vector2D(0, 0);
 
 	move() {
 		if (this.vector.x !== 0 || this.vector.y !== 0) {
@@ -16,7 +16,8 @@ export default class PlayerController extends ECS.Component {
 			let newY = this.owner.position.y + this.vector.y;
 			let surroundingTiles = levelState.map.getSurrounding(newX, newY);
 			this.vector = adjustMovementByObstacles(surroundingTiles, this.owner, this.vector);
-			if (this.vector.x !== 0.0 || this.vector.y !== 0.0) {
+			if (this.vector.getSize() !== 0) {
+				this.vector.normalizeDiagonalSize();
 				playerState.applyMovement(this.vector);
 			}
 		}

@@ -1,6 +1,7 @@
 import * as ECS from '../../libs/pixi-ecs';
 import PlayerController from './player-controller';
 import {PLAYER_SPEED} from '../constants/config';
+import {Vector2D} from '../model/geometry';
 
 
 export default class PlayerKeyboardController extends PlayerController {
@@ -32,7 +33,7 @@ export default class PlayerKeyboardController extends PlayerController {
 			xStep += stepSize;
 		}
 
-		this.vector = { x: xStep, y: yStep };
+		this.vector = new Vector2D(xStep, yStep);
 
 		this.move();
 	}

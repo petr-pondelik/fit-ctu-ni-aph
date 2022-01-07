@@ -26,7 +26,28 @@ export class Position2D {
 	}
 }
 
-export type Vector2D = {
+export class Vector2D {
 	x: number;
 	y: number;
-};
+
+	constructor(x: number, y: number) {
+		this.x = x;
+		this.y = y;
+	}
+
+	isDiagonal = (): boolean => {
+		return this.x !== 0 && this.y !== 0;
+	}
+
+	normalizeDiagonalSize = () => {
+		if (this.isDiagonal()) {
+			const c = Math.sqrt(2);
+			this.x = this.x / c;
+			this.y = this.y / c;
+		}
+	}
+
+	getSize = (): number => {
+		return Math.sqrt(this.x**2 + this.y**2);
+	}
+}
