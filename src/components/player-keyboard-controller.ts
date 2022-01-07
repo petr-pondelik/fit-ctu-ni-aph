@@ -20,19 +20,15 @@ export default class PlayerKeyboardController extends PlayerController {
 		let yStep: number = 0;
 
 		if (this.keyInputCmp.isKeyPressed(ECS.Keys.KEY_W)) {
-			// console.log('KEY_W');
 			yStep -= stepSize;
 		}
 		if (this.keyInputCmp.isKeyPressed(ECS.Keys.KEY_A)) {
-			// console.log('KEY_A');
 			xStep -= stepSize;
 		}
 		if (this.keyInputCmp.isKeyPressed(ECS.Keys.KEY_S)) {
-			// console.log('KEY_S');
 			yStep += stepSize;
 		}
 		if (this.keyInputCmp.isKeyPressed(ECS.Keys.KEY_D)) {
-			// console.log('KEY_D');
 			xStep += stepSize;
 		}
 

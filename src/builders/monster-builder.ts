@@ -16,7 +16,7 @@ export default class MonsterBuilder {
 	static basic = (scene: ECS.Scene, levelState: LevelState, monsterState: MonsterState): ECS.Builder => {
 		return new ECS.Builder(scene)
 			.asSprite(TextureFactory.createObjectTexture(GameObjectType.MONSTER))
-			.localPos(monsterState.gridPosition.column * BLOCK_SIZE, monsterState.gridPosition.row * BLOCK_SIZE)
+			.localPos(monsterState.gridPosition.x * BLOCK_SIZE, monsterState.gridPosition.y * BLOCK_SIZE)
 			.anchor(0.5)
 			.withParent(scene.stage.getChildByName(Containers.MAZE) as Container)
 			.withComponents([

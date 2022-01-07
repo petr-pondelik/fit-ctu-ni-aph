@@ -1,22 +1,19 @@
 import * as ECS from '../../../libs/pixi-ecs';
 import ObservableState from './observable-state';
 import {Vector2D, Position2D} from '../geometry';
-import {GridPosition} from '../game-struct';
-import {BLOCK_SIZE} from '../../constants/config';
-import {realPositionToGrid} from '../../helpers/grid';
 import {Messages} from '../../constants/constants';
 
 
 export default class PlayerState extends ObservableState {
 
-	private _gridPosition: GridPosition;
+	private _gridPosition: Position2D;
 	private _realPosition: Position2D;
 	private _lastMove: Vector2D;
 
-	constructor(scene: ECS.Scene, gridPosition: GridPosition) {
+	constructor(scene: ECS.Scene, gridPosition: Position2D) {
 		super(scene);
 		this._gridPosition = gridPosition;
-		this._realPosition = new Position2D(gridPosition.column * BLOCK_SIZE + BLOCK_SIZE/2, gridPosition.row * BLOCK_SIZE + BLOCK_SIZE/2);
+		this._realPosition = gridPosition.toReal();
 	}
 
 	get gridPosition() {
@@ -34,9 +31,9 @@ export default class PlayerState extends ObservableState {
 	applyMovement(vector: Vector2D) {
 		this._realPosition.x += vector.x;
 		this._realPosition.y += vector.y;
-		this._gridPosition = realPositionToGrid(this._realPosition);
+		this._gridPosition = this._realPosition.toGrid();
 		this._lastMove = vector;
-		this.sendMessage(Messages.STATE_CHANGE_PLAYER_POSITION, {row: this.gridPosition.row, column: this.gridPosition.column});
+		this.sendMessage(Messages.STATE_CHANGE_PLAYER_POSITION, {x: this.gridPosition.x, y: this.gridPosition.y});
 	}
 
 }

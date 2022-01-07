@@ -1,21 +1,7 @@
 import {MapTileType} from '../constants/constants';
 import {isAccessibleTile, isLevelExit} from '../helpers/grid';
 import {BLOCK_SIZE} from '../constants/config';
-
-
-export class GridPosition {
-	row: number;
-	column: number;
-
-	constructor(row: number, column: number) {
-		this.row = row;
-		this.column = column;
-	}
-
-	isEqual(pos: GridPosition) {
-		return this.row === pos.row && this.column === pos.column;
-	}
-}
+import {Position2D} from './geometry';
 
 /**
  * A single sprite descriptor for map tile
@@ -23,23 +9,23 @@ export class GridPosition {
 export class MapTile {
 
 	readonly type: MapTileType;
-	readonly position: GridPosition;
+	readonly position: Position2D;
 	readonly isAccessible: boolean;
 	readonly isLevelExit: boolean;
 
 	constructor(type: MapTileType, row: number, column: number) {
 		this.type = type;
-		this.position = new GridPosition(row, column);
+		this.position = new Position2D(column, row);
 		this.isAccessible = isAccessibleTile(type);
 		this.isLevelExit = isLevelExit(type);
 	}
 
 	getRow(): number {
-		return this.position.row;
+		return this.position.y;
 	}
 
 	getColumn(): number {
-		return this.position.column;
+		return this.position.x;
 	}
 
 }
@@ -60,11 +46,11 @@ export class MapData {
 		this.size = size;
 	}
 
-	getTile(position: GridPosition): MapTile {
-		if (position.column >= this.size.columns || position.row >= this.size.rows || position.column < 0 || position.row < 0) {
-			throw new Error(`Coordinates outside bounds: [${position.column}, ${position.row}]`);
+	getTile(position: Position2D): MapTile {
+		if (position.x >= this.size.columns || position.y >= this.size.rows || position.x < 0 || position.y < 0) {
+			throw new Error(`Coordinates outside bounds: [${position.x}, ${position.y}]`);
 		}
-		return this.tiles[position.row][position.column];
+		return this.tiles[position.y][position.x];
 	}
 
 	getSurrounding(newX: number, newY: number) {
@@ -81,20 +67,20 @@ export class MapData {
 
 		let exploringShifts = [
 			[ -1, -1 ], // Top-Left
-			[ -1, 0 ], // Top-Middle
-			[ -1, 1 ], // Top-Right
-			[ 0, 1 ], // Right-Middle
+			[ 0, -1 ], // Top-Middle
+			[ 1, -1 ], // Top-Right
+			[ 1, 0 ], // Right-Middle
 			[ 1, 1 ], // Bottom-Right
-			[ 1, 0 ], // Bottom-Middle
-			[ 1, -1 ], // Bottom-Left
-			[ 0, -1 ] // Left-Middle
+			[ 0, 1 ], // Bottom-Middle
+			[ -1, 1 ], // Bottom-Left
+			[ -1, 0 ] // Left-Middle
 		];
 
 		for (const shift of exploringShifts) {
 			let tile: MapTile = this.getTile(
-				new GridPosition(
-					Math.floor((newY - shift[0] * BLOCK_SIZE) / BLOCK_SIZE),
-					Math.floor((newX - shift[1] * BLOCK_SIZE) / BLOCK_SIZE)
+				new Position2D(
+					Math.floor((newX + shift[0] * BLOCK_SIZE) / BLOCK_SIZE),
+					Math.floor((newY + shift[1] * BLOCK_SIZE) / BLOCK_SIZE),
 				)
 			);
 			if (!tile.isAccessible) {
@@ -108,10 +94,10 @@ export class MapData {
 }
 
 export class MonsterSeed {
-	position: GridPosition;
+	position: Position2D;
 
-	constructor(row: number, column: number) {
-		this.position = new GridPosition(row, column);
+	constructor(x: number, y: number) {
+		this.position = new Position2D(x, y);
 	}
 }
 
@@ -127,10 +113,10 @@ export class MonstersData {
 export class LevelData {
 	name: string;
 	map: MapData;
-	playerInitPos: GridPosition;
+	playerInitPos: Position2D;
 	monsters: MonstersData;
 
-	constructor(name: string, map: MapData, playerInitPos: GridPosition, monsters: MonstersData) {
+	constructor(name: string, map: MapData, playerInitPos: Position2D, monsters: MonstersData) {
 		this.name = name;
 		this.map = map;
 		this.playerInitPos = playerInitPos;

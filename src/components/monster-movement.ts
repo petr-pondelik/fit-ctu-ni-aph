@@ -2,8 +2,7 @@ import * as ECS from '../../libs/pixi-ecs';
 import {Position2D} from '../model/geometry';
 import EasyStar from 'easystarjs';
 import easyStar from '../algorithms/a-star';
-import {GridPosition, MapData} from '../model/game-struct';
-import {realPositionToGrid} from '../helpers/grid';
+import {MapData} from '../model/game-struct';
 import MonsterState from '../model/states/monster-state';
 import {Messages} from '../constants/constants';
 import {
@@ -13,7 +12,7 @@ import {
 } from '../strategies/monster-movement-strategies';
 import LevelState from '../model/states/level-state';
 import {Selectors} from '../helpers/selectors';
-import {MONSTER_SPEED_MIN} from "../constants/config";
+import {MONSTER_SPEED_MIN} from '../constants/config';
 
 type PathStep = {
 	x: number;
@@ -26,9 +25,9 @@ export default class MonsterMovement extends ECS.Component<MonsterState> {
 	map: MapData;
 	aStar: EasyStar.js = easyStar;
 
-	origin: GridPosition;
-	actualPosition: GridPosition;
-	destination?: GridPosition;
+	origin: Position2D;
+	actualPosition: Position2D;
+	destination?: Position2D;
 	path: PathStep[] = [];
 
 	movementStrategies = { 'RANDOM_WALK': new MonsterRandomWalk(), 'CHASE_PLAYER': new MonsterChasePlayer() };
@@ -46,8 +45,8 @@ export default class MonsterMovement extends ECS.Component<MonsterState> {
 	}
 
 	initPositions() {
-		this.origin = realPositionToGrid(new Position2D(this.props.realPosition.x, this.props.realPosition.y));
-		this.actualPosition = new GridPosition(this.origin.row, this.origin.column);
+		this.origin = this.props.realPosition.toGrid();
+		this.actualPosition = this.origin.clone();
 	}
 
 	onMessage(msg: ECS.Message) {
@@ -68,7 +67,7 @@ export default class MonsterMovement extends ECS.Component<MonsterState> {
 	getNextStep(): PathStep|undefined {
 		if (this.path.length > 0) {
 			let nextStep = this.path[0];
-			if (nextStep && this.actualPosition.row !== nextStep.y || this.actualPosition.column !== nextStep.x) {
+			if (nextStep && this.actualPosition.y !== nextStep.y || this.actualPosition.x !== nextStep.x) {
 				return nextStep;
 			}
 			return this.path.shift();

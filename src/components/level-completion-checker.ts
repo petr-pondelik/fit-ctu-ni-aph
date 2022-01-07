@@ -3,8 +3,8 @@ import AbstractCollision from './abstract-collision';
 import {Selectors} from '../helpers/selectors';
 import {Messages} from '../constants/constants';
 import GameState from '../model/states/game-state';
-import {GridPosition} from '../model/game-struct';
 import GameActions from '../actions/game-actions';
+import {Position2D} from '../model/geometry';
 
 
 export default class LevelCompletionChecker extends AbstractCollision {
@@ -18,7 +18,7 @@ export default class LevelCompletionChecker extends AbstractCollision {
 
 	onMessage(msg: ECS.Message): any {
 		if (msg.action === Messages.STATE_CHANGE_PLAYER_POSITION) {
-			const pos = msg.data as GridPosition;
+			const pos = msg.data as Position2D;
 			if (this.gameState.levelState.map.getTile(pos).isLevelExit) {
 				this._action();
 			}
