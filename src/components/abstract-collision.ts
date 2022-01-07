@@ -8,7 +8,7 @@ export default abstract class AbstractCollision extends ECS.Component {
 		const ownerPos = this.owner.position;
 		const diffX = Math.abs(ownerPos.x - targetX);
 		const diffY = Math.abs(ownerPos.y - targetY);
-		return diffX < (BLOCK_SIZE * 0.6) && diffY < (BLOCK_SIZE * 0.6);
+		return diffX < BLOCK_SIZE * 0.6 && diffY < BLOCK_SIZE * 0.6;
 	}
 
 	protected abstract _action(): void;

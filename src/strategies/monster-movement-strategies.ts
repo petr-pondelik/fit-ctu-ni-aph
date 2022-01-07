@@ -29,6 +29,14 @@ export class MonsterRandomWalk implements IMonsterMovementStrategy {
 	move(component: MonsterMovement, delta: number) {
 		if (component.destination === undefined && component.path.length < 1) {
 			this.randomDestination(component);
+		} else if (component.destination !== undefined && component.path.length < 1) {
+			component.aStar.findPath(
+				component.actualPosition.x, component.actualPosition.y,
+				component.destination.x, component.destination.y,
+				(path) => {
+					component.path = path.slice(1);
+				});
+			component.aStar.calculate();
 		}
 
 		let nextStep = component.getNextStep();

@@ -60,8 +60,8 @@ export const getTileOffset = (type: MapTileType): Position2D|null => {
 		case MapTileType.ABYSS_3_1: return {x: 640, y: 320} as Position2D;
 		case MapTileType.ABYSS_3_2: return {x: 656, y: 320} as Position2D;
 		case MapTileType.IRON_GRID_0_0: return {x: 496, y: 288} as Position2D;
-		case MapTileType.IRON_GRID_0_1: return {x: 496, y: 304} as Position2D;
-		case MapTileType.IRON_GRID_1_0: return {x: 510, y: 288} as Position2D;
+		case MapTileType.IRON_GRID_0_1: return {x: 510, y: 288} as Position2D;
+		case MapTileType.IRON_GRID_1_0: return {x: 496, y: 304} as Position2D;
 		case MapTileType.IRON_GRID_1_1: return {x: 510, y: 304} as Position2D;
 	}
 	return null;

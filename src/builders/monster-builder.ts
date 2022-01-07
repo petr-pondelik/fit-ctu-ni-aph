@@ -7,7 +7,7 @@ import MonsterMovement from '../components/monster-movement';
 import MonsterState from '../model/states/monster-state';
 import {MonsterSync} from '../components/monster-sync';
 import LevelState from '../model/states/level-state';
-import MonsterChasePlayer from '../components/monster-chase-player';
+import MonsterSense from '../components/monster-sense';
 import PlayerMonsterCollision from '../components/player-monster-collision';
 
 
@@ -21,7 +21,7 @@ export default class MonsterBuilder {
 			.withParent(scene.stage.getChildByName(Containers.MAZE) as Container)
 			.withComponents([
 				new MonsterMovement(monsterState),
-				new MonsterChasePlayer(monsterState),
+				new MonsterSense(monsterState),
 				new PlayerMonsterCollision(),
 				new MonsterSync(monsterState)
 			])

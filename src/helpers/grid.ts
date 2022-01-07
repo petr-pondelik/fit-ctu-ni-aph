@@ -7,7 +7,8 @@ import {Container} from '../../libs/pixi-ecs';
 export const isAccessibleTile = (type: MapTileType): boolean => {
 	const tiles = [
 		MapTileType.FLOOR,
-		MapTileType.DOORS_STAIRS_UP_5_1, MapTileType.DOORS_STAIRS_UP_5_2, MapTileType.DOORS_STAIRS_UP_4_1, MapTileType.DOORS_STAIRS_UP_4_2
+		MapTileType.DOORS_STAIRS_UP_5_1, MapTileType.DOORS_STAIRS_UP_5_2, MapTileType.DOORS_STAIRS_UP_4_1, MapTileType.DOORS_STAIRS_UP_4_2,
+		MapTileType.IRON_GRID_0_0, MapTileType.IRON_GRID_0_1, MapTileType.IRON_GRID_1_0, MapTileType.IRON_GRID_1_1
 	];
 	return tiles.indexOf(type) !== -1;
 };
@@ -25,6 +26,13 @@ export const isLevelExit = (type: MapTileType): boolean => {
 		MapTileType.DOORS_STAIRS_UP_4_1, MapTileType.DOORS_STAIRS_UP_4_2,
 	];
 	return levelExitTiles.indexOf(type) !== -1;
+};
+
+export const isIronGridTile = (type: MapTileType): boolean => {
+	const ironGridTiles = [
+		MapTileType.IRON_GRID_0_0, MapTileType.IRON_GRID_0_1, MapTileType.IRON_GRID_1_0, MapTileType.IRON_GRID_1_1
+	];
+	return ironGridTiles.indexOf(type) !== -1;
 };
 
 export const getDirections = (origin: Position2D, destination: Position2D) => {

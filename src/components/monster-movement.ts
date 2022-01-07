@@ -38,7 +38,7 @@ export default class MonsterMovement extends ECS.Component<MonsterState> {
 		console.log('MonsterBehavior INIT');
 		this.levelState = Selectors.levelStateSelector(this.scene);
 		this.map = this.levelState.levelData.map;
-		this.subscribe(Messages.MONSTER_START_CHASING_PLAYER, Messages.MONSTER_STOP_CHASING_PLAYER);
+		this.subscribe(Messages.MONSTER_START_CHASING_PLAYER, Messages.MONSTER_STOP_CHASING_PLAYER, Messages.MONSTER_ALERTED);
 		this.aStar.setGrid(this.map.raw);
 		this.initPositions();
 		this.activeStrategy = this.movementStrategies.RANDOM_WALK;
@@ -56,6 +56,9 @@ export default class MonsterMovement extends ECS.Component<MonsterState> {
 		} else if (msg.action === Messages.MONSTER_STOP_CHASING_PLAYER && msg.gameObject.tags.has('MONSTER_' + this.props.monsterId)) {
 			this.reset();
 			this.activeStrategy = this.movementStrategies.RANDOM_WALK;
+		} else if (msg.action === Messages.MONSTER_ALERTED) {
+			console.log('MONSTER_ALERTED');
+			this.destination = msg.data;
 		}
 	}
 

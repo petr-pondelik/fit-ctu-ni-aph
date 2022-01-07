@@ -4,6 +4,7 @@ import * as ECS from '../../libs/pixi-ecs';
 import TextureFactory from '../factory/texture-factory';
 import {BLOCK_SIZE} from '../constants/config';
 import LevelCompletionChecker from '../components/level-completion-checker';
+import IronGridCollision from '../components/iron-grid-collision';
 
 export default class TilesBuilder {
 
@@ -13,7 +14,8 @@ export default class TilesBuilder {
 			.withName(Containers.MAZE)
 			.withParent(scene.stage)
 			.withComponents([
-				new LevelCompletionChecker()
+				new LevelCompletionChecker(),
+				new IronGridCollision()
 			]);
 
 		for (const tilesRow of tiles) {
