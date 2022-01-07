@@ -13,6 +13,7 @@ import {
 } from '../strategies/monster-movement-strategies';
 import LevelState from '../model/states/level-state';
 import {Selectors} from '../helpers/selectors';
+import {MONSTER_SPEED_MIN} from "../constants/config";
 
 type PathStep = {
 	x: number;
@@ -32,6 +33,7 @@ export default class MonsterMovement extends ECS.Component<MonsterState> {
 
 	movementStrategies = { 'RANDOM_WALK': new MonsterRandomWalk(), 'CHASE_PLAYER': new MonsterChasePlayer() };
 	activeStrategy: IMonsterMovementStrategy;
+	acceleration: number = 0.0;
 
 	onInit() {
 		console.log('MonsterBehavior INIT');
@@ -72,6 +74,10 @@ export default class MonsterMovement extends ECS.Component<MonsterState> {
 			return this.path.shift();
 		}
 		return undefined;
+	}
+
+	getMonsterActualSpeed(): number {
+		return MONSTER_SPEED_MIN + this.acceleration;
 	}
 
 	reset() {
