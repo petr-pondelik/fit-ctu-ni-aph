@@ -17,7 +17,7 @@ class MazeEscape {
 			resizeToScreen: true,
 			width: SCENE_WIDTH,
 			height: SCENE_HEIGHT,
-			resolution: SCENE_RESOLUTION,
+			resolution: 3,
 			flagsSearchEnabled: false, // searching by flags feature
 			statesSearchEnabled: false, // searching by states feature
 			tagsSearchEnabled: false, // searching by tags feature

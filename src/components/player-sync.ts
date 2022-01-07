@@ -15,8 +15,8 @@ export class PlayerSync extends ECS.Component<PlayerState> {
 	}
 
 	syncPosition() {
-		this.owner.parentGameObject.position.x -= this.props.lastMove.x;
-		this.owner.parentGameObject.position.y -= this.props.lastMove.y;
+		this.owner.parentGameObject.pivot.x += this.props.lastMove.x;
+		this.owner.parentGameObject.pivot.y += this.props.lastMove.y;
 		this.owner.position.x = this.props.realPosition.x;
 		this.owner.position.y = this.props.realPosition.y;
 	}

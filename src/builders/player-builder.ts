@@ -14,7 +14,6 @@ export default class PlayerBuilder {
 			.withName('player')
 			.asSprite(TextureFactory.createObjectTexture(GameObjectType.PLAYER))
 			.anchor(0.5)
-			.withAttribute('pivot', 16)
 			.localPos(state.realPosition.x, state.realPosition.y)
 			.withParent(scene.stage.getChildByName(Containers.MAZE) as Container)
 			.withComponents([new PlayerKeyboardController(), new PlayerSync(state)]);
