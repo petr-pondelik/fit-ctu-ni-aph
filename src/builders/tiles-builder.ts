@@ -7,7 +7,7 @@ import LevelCompletionChecker from '../components/level-completion-checker';
 
 export default class TilesBuilder {
 
-	static build = (scene: ECS.Scene, tiles: MapTile[][]) => {
+	static basic = (scene: ECS.Scene, tiles: MapTile[][]): ECS.Builder => {
 		const mazeContainerBuilder = new ECS.Builder(scene)
 			.asContainer()
 			.withName(Containers.MAZE)
@@ -30,7 +30,7 @@ export default class TilesBuilder {
 			}
 		}
 
-		mazeContainerBuilder.build().pivot.set(BLOCK_SIZE/2, BLOCK_SIZE/2);
+		return mazeContainerBuilder;
 	}
 
 }

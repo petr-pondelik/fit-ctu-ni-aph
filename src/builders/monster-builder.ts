@@ -13,8 +13,8 @@ import PlayerMonsterCollision from '../components/player-monster-collision';
 
 export default class MonsterBuilder {
 
-	static build = (scene: ECS.Scene, levelState: LevelState, monsterState: MonsterState) => {
-		new ECS.Builder(scene)
+	static basic = (scene: ECS.Scene, levelState: LevelState, monsterState: MonsterState): ECS.Builder => {
+		return new ECS.Builder(scene)
 			.asSprite(TextureFactory.createObjectTexture(GameObjectType.MONSTER))
 			.localPos(monsterState.gridPosition.column * BLOCK_SIZE, monsterState.gridPosition.row * BLOCK_SIZE)
 			.anchor(0.5)
@@ -25,9 +25,8 @@ export default class MonsterBuilder {
 				new PlayerMonsterCollision(),
 				new MonsterSync(monsterState)
 			])
-			.withTag(Tags.MONSTER + '_' + monsterState.monsterId)
-			.build()
-			.pivot.set(BLOCK_SIZE/2, BLOCK_SIZE/2);
+			.withTag(Tags.MONSTER + '_' + monsterState.monsterId);
+
 	}
 
 }

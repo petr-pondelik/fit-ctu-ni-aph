@@ -57,7 +57,7 @@ export const LEVELS = [
 				positionSeed: [30, 30]
 			},
 			{
-				positionSeed: [2, 40]
+				positionSeed: [2, 38]
 			},
 		]
 	},

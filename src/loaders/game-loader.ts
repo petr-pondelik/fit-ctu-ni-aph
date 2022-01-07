@@ -3,7 +3,7 @@ import {Assets, Attributes} from '../constants/constants';
 import {GameData} from '../model/game-struct';
 import {LevelFactory} from '../factory/level-factory';
 import GameState from '../model/states/game-state';
-import IntroFactory from '../factory/intro-factory';
+import GameStateScreenFactory from '../factory/game-state-screen-factory';
 
 /**
  * Game loader, loads assets
@@ -29,6 +29,6 @@ export class GameLoader {
 		engine.scene.assignGlobalAttribute(Attributes.GAME_DATA, gameData);
 		engine.scene.assignGlobalAttribute(Attributes.GAME_STATE, gameState);
 
-		IntroFactory.loadIntro(engine.scene);
+		GameStateScreenFactory.loadIntro(engine.scene);
 	}
 }

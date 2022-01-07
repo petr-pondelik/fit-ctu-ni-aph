@@ -1,7 +1,7 @@
 import * as ECS from '../../libs/pixi-ecs';
 import {LevelFactory} from '../factory/level-factory';
 import {Selectors} from '../helpers/selectors';
-import GameFinishedFactory from '../factory/game-finished-factory';
+import GameStateScreenFactory from '../factory/game-state-screen-factory';
 
 export default class GameActions {
 
@@ -16,6 +16,23 @@ export default class GameActions {
 						)
 				);
 			});
+	};
+
+	static playerDied = (scene: ECS.Scene) => {
+		return new ECS.ChainComponent()
+			.call(
+				(cmp) => {
+					cmp.mergeWith(
+						new ECS.ChainComponent()
+							.call(
+								() => scene.callWithDelay(0, () => {
+									LevelFactory.clearScene(scene);
+									GameStateScreenFactory.loadPlayerDied(scene);
+								})
+							)
+					);
+				}
+			);
 	};
 
 	static completeLevel = (scene: ECS.Scene) => {
@@ -45,8 +62,9 @@ export default class GameActions {
 	};
 
 	static completeGame = (scene: ECS.Scene) => {
-		LevelFactory.clearScene(scene, false);
-		return GameFinishedFactory.create(scene);
+		console.log('complete game');
+		LevelFactory.clearScene(scene);
+		return GameStateScreenFactory.loadGameFinished(scene);
 	}
 
 }

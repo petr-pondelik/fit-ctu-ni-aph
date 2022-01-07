@@ -10,17 +10,15 @@ import PlayerState from '../model/states/player-state';
 
 export default class PlayerBuilder {
 
-	static build = (scene: ECS.Scene, state: PlayerState) => {
-		new ECS.Builder(scene)
+	static basic = (scene: ECS.Scene, state: PlayerState): ECS.Builder => {
+		return new ECS.Builder(scene)
 			.withName('player')
 			.asSprite(TextureFactory.createObjectTexture(GameObjectType.PLAYER))
 			.anchor(0.5)
 			.withAttribute('pivot', 16)
-			.localPos(state.gridPosition.column * BLOCK_SIZE + BLOCK_SIZE/2, state.gridPosition.row * BLOCK_SIZE + BLOCK_SIZE / 2)
+			.localPos(state.gridPosition.column * BLOCK_SIZE + BLOCK_SIZE / 2, state.gridPosition.row * BLOCK_SIZE + BLOCK_SIZE / 2)
 			.withParent(scene.stage.getChildByName(Containers.MAZE) as Container)
-			.withComponents([new PlayerKeyboardController(), new PlayerSync(state)])
-			.build()
-			.pivot.set(BLOCK_SIZE/2, BLOCK_SIZE/2);
+			.withComponents([new PlayerKeyboardController(), new PlayerSync(state)]);
 	}
 
 }

@@ -3,6 +3,7 @@ import AbstractCollision from './abstract-collision';
 import {Messages} from '../constants/constants';
 import {Selectors} from '../helpers/selectors';
 import GameState from '../model/states/game-state';
+import GameActions from "../actions/game-actions";
 
 export default class PlayerMonsterCollision extends AbstractCollision {
 
@@ -23,8 +24,7 @@ export default class PlayerMonsterCollision extends AbstractCollision {
 	}
 
 	_action(): void {
-		console.log('ACTION');
-		this.gameState.resetGame();
+		this.scene.addGlobalComponentAndRun(GameActions.playerDied(this.scene));
 	}
 
 }

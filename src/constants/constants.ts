@@ -68,6 +68,11 @@ export enum MapTileType {
 	ABYSS_3_1 = 213,
 	ABYSS_3_2 = 214,
 	ABYSS_3_3 = 215,
+
+	IRON_GRID_0_0 = 300,
+	IRON_GRID_0_1 = 301,
+	IRON_GRID_1_0 = 302,
+	IRON_GRID_1_1 = 303
 }
 
 export enum GameObjectType {

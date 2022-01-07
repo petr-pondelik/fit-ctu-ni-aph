@@ -4,7 +4,7 @@ import {Selectors} from '../helpers/selectors';
 import {Messages} from '../constants/constants';
 import GameState from '../model/states/game-state';
 import {GridPosition} from '../model/game-struct';
-import GameActions from "../actions/game-actions";
+import GameActions from '../actions/game-actions';
 
 
 export default class LevelCompletionChecker extends AbstractCollision {
