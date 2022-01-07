@@ -28,7 +28,7 @@ export const isLevelExit = (type: MapTileType): boolean => {
 	return levelExitTiles.indexOf(type) !== -1;
 };
 
-export const isIronGridTile = (type: MapTileType): boolean => {
+export const isNoisyTile = (type: MapTileType): boolean => {
 	const ironGridTiles = [
 		MapTileType.IRON_GRID_0_0, MapTileType.IRON_GRID_0_1, MapTileType.IRON_GRID_1_0, MapTileType.IRON_GRID_1_1
 	];

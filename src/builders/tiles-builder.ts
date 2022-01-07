@@ -4,7 +4,7 @@ import * as ECS from '../../libs/pixi-ecs';
 import TextureFactory from '../factory/texture-factory';
 import {BLOCK_SIZE} from '../constants/config';
 import LevelCompletionChecker from '../components/level-completion-checker';
-import IronGridCollision from '../components/iron-grid-collision';
+import PlayerNoisyStepChecker from '../components/player-noisy-step-checker';
 
 export default class TilesBuilder {
 
@@ -15,7 +15,7 @@ export default class TilesBuilder {
 			.withParent(scene.stage)
 			.withComponents([
 				new LevelCompletionChecker(),
-				new IronGridCollision()
+				new PlayerNoisyStepChecker()
 			]);
 
 		for (const tilesRow of tiles) {
