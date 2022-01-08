@@ -14,6 +14,7 @@ import GameState from '../model/states/game-state';
 import {Attributes, MapTileType} from '../constants/constants';
 import {Position2D} from '../model/geometry';
 import LampLight from "../graphics/lamp-light";
+import HudBuilder from "../builders/hud-builder";
 
 
 export class LevelFactory {
@@ -55,6 +56,9 @@ export class LevelFactory {
 		scene.stage.addChild(new LampLight(new Position2D(screenCenterX, screenCenterY), gameState.playerState.realPosition));
 		scene.stage.pivot.x = screenCenterX;
 		scene.stage.pivot.y = screenCenterY;
+		HudBuilder.leftTop(scene, gameState).build();
+		HudBuilder.leftBottom(scene, gameState).build();
+		HudBuilder.rightBottom(scene, gameState).build();
 	};
 
 	static clearScene = (scene: ECS.Scene) => {

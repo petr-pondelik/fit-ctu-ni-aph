@@ -1,3 +1,5 @@
+export const GAME_TITLE = 'Escape the Dungeon';
+
 export enum Assets {
 	SPRITESHEET = 'spritesheet',
 	PLAYER = 'player',
@@ -5,7 +7,12 @@ export enum Assets {
 }
 
 export enum Containers {
-	MAZE = 'maze'
+	MAZE = 'maze',
+	HUD_RIGHT_BOTTOM = 'hud_right_bottom'
+}
+
+export enum HudElements {
+	GAME_MESSAGE = 'game_message'
 }
 
 export enum MapTileType {
