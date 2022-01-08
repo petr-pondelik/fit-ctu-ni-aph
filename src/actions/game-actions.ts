@@ -36,7 +36,6 @@ export default class GameActions {
 	};
 
 	static completeLevel = (scene: ECS.Scene) => {
-		console.log('completeLevel');
 		return new ECS.ChainComponent()
 			.call(
 				(cmp) => {
@@ -62,7 +61,6 @@ export default class GameActions {
 	};
 
 	static completeGame = (scene: ECS.Scene) => {
-		console.log('complete game');
 		LevelFactory.clearScene(scene);
 		return GameStateScreenFactory.loadGameFinished(scene);
 	}

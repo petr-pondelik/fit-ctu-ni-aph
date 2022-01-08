@@ -13,8 +13,9 @@ import {BLOCK_SIZE, SCENE_HEIGHT, SCENE_RESOLUTION, SCENE_WIDTH} from '../consta
 import GameState from '../model/states/game-state';
 import {Attributes, MapTileType} from '../constants/constants';
 import {Position2D} from '../model/geometry';
-import LampLight from "../graphics/lamp-light";
-import HudBuilder from "../builders/hud-builder";
+import LampLight from '../graphics/lamp-light';
+import HudBuilder from '../builders/hud-builder';
+import {SoundComponent} from '../components/sound-component';
 
 
 export class LevelFactory {
@@ -50,6 +51,7 @@ export class LevelFactory {
 		const gameState: GameState = Selectors.gameStateSelector(scene);
 		const level: LevelData = gameState.gameData.levels[index];
 		gameState.changeLevel(level, index);
+		scene.addGlobalComponent(new SoundComponent());
 		MazeBuilder.build(scene, gameState.levelState);
 		let screenCenterX = (gameState.playerState.gridPosition.x * BLOCK_SIZE) - BLOCK_SIZE/2 - SCENE_WIDTH/(2 * SCENE_RESOLUTION);
 		let screenCenterY = (gameState.playerState.gridPosition.y * BLOCK_SIZE) - BLOCK_SIZE/2 - SCENE_HEIGHT/(2 * SCENE_RESOLUTION);

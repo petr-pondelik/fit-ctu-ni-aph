@@ -18,7 +18,11 @@ export default class InfoScreenBuilder {
 			.withParent(scene.stage)
 			.withChild(
 				new ECS.Builder(scene)
-					.asText('Press Enter or Space to start the game', textStyle)
+					.asText(
+						'Escape the Dungeon\n\n' +
+						'Press Enter or Space to start the game',
+						textStyle
+					)
 					.localPos(SCENE_WIDTH / (2 * SCENE_RESOLUTION), SCENE_HEIGHT / (2 * SCENE_RESOLUTION))
 					.anchor(0.5)
 			);

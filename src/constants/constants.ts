@@ -3,7 +3,21 @@ export const GAME_TITLE = 'Escape the Dungeon';
 export enum Assets {
 	SPRITESHEET = 'spritesheet',
 	PLAYER = 'player',
-	MONSTER = 'monster'
+	MONSTER = 'monster',
+}
+
+export class Music {
+	static BG_MUSIC = {
+		key: 'LOOP_MUSIC',
+		path: '../../assets/Hazy-Darkness_Looping.mp3',
+		length: 115000 // in ms
+	};
+
+	static BAR_MOVEMENTS_SOUND = {
+		key: 'BAR_MOVEMENTS_SOUND',
+		path: '../../assets/mixkit-metal-bar-movement-hits-3138.wav',
+		length: 2000
+	};
 }
 
 export enum Containers {

@@ -26,7 +26,6 @@ export default class LevelCompletionChecker extends AbstractCollision {
 	}
 
 	_action(): void {
-		console.log('LEVEL COMPLETED');
 		this.scene.addGlobalComponentAndRun(GameActions.completeLevel(this.scene));
 	}
 

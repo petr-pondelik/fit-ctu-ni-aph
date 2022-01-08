@@ -18,7 +18,6 @@ const style = {
 export default class HudBuilder {
 
 	static leftTop = (scene: ECS.Scene, gameState) => {
-		console.log('TEST');
 		return new ECS.Builder(scene)
 			.withParent(scene.stage)
 			.asText(GAME_TITLE, style)

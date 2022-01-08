@@ -20,7 +20,6 @@ export default class MonsterSense extends ECS.Component<MonsterState> {
 	noiseChaseDistance: number;
 
 	onInit() {
-		console.log('MonsterChaseComponent INIT');
 		this.levelState = Selectors.levelStateSelector(this.scene);
 		this.playerChaseDistance = PLAYER_CHASE_DISTANCE;
 		this.noiseChaseDistance = NOISE_CHASE_DISTANCE;

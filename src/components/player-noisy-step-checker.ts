@@ -21,7 +21,6 @@ export default class PlayerNoisyStepChecker extends AbstractCollision {
 		if (msg.action === Messages.STATE_CHANGE_PLAYER_POSITION) {
 			const pos = msg.data as Position2D;
 			if (isNoisyTile(this.map.getTile(pos).type)) {
-				console.log('PLAYER STEPPED ON NOISY TILE!');
 				this.position = pos;
 				this._action();
 			}
@@ -29,7 +28,6 @@ export default class PlayerNoisyStepChecker extends AbstractCollision {
 	}
 
 	protected _action() {
-		console.log('SEND MESSAGE');
 		this.sendMessage(Messages.PLAYER_NOISY_STEP, this.position);
 	}
 }

@@ -7,12 +7,11 @@ export const SCENE_RESOLUTION = 3;
 /** Grid config */
 export const BLOCK_SIZE = 16;
 
-
 /** Game config */
 export const PLAYER_SPEED = 0.12;
 export const MONSTER_SPEED_MIN = 0.08;
-export const MONSTER_SPEED_MAX = 0.2;
-export const MONSTER_CHANGE_SPEED = 0.0004;
+export const MONSTER_SPEED_MAX = 0.25;
+export const MONSTER_CHANGE_SPEED = 0.0005;
 export const MONSTER_MAX_MOVING_DISTANCE = 18;
 export const MONSTER_PLAYER_MIN_DISTANCE = 10;
 export const MONSTER_SPAWN_DISPERSION = 10;
