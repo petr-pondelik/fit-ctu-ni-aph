@@ -1,29 +1,29 @@
 import * as ECS from '../../libs/pixi-ecs';
 import PlayerBuilder from './player-builder';
-import LevelState from '../model/states/level-state';
 import MonsterBuilder from './monster-builder';
 import {getMonsterInitPosition} from '../helpers/random';
 import TilesBuilder from './tiles-builder';
 import {BLOCK_SIZE} from '../constants/config';
+import GameState from '../model/states/game-state';
 
 export default class MazeBuilder {
 
-	static build = (scene: ECS.Scene, levelState: LevelState) => {
+	static build = (scene: ECS.Scene, gameState: GameState) => {
 
-		TilesBuilder.basic(scene, levelState.map.tiles)
+		TilesBuilder.basic(scene, gameState.map.tiles)
 			.build()
 			.pivot.set(BLOCK_SIZE / 2, BLOCK_SIZE / 2);
 
-		PlayerBuilder.basic(scene, levelState.playerState)
+		PlayerBuilder.basic(scene, gameState.playerState)
 			.build()
 			.pivot.set(BLOCK_SIZE / 2, BLOCK_SIZE / 2);
 
-		for (let i = 0; i < levelState.levelData.monsters.amount; i++) {
-			let monsterSeed = levelState.levelData.monsters.seeds[i];
-			let monsterState = levelState.monstersState[i];
-			let tile = getMonsterInitPosition(levelState.map, levelState.playerState, monsterSeed);
+		for (let i = 0; i < gameState.levelState.levelData.monsters.amount; i++) {
+			let monsterSeed = gameState.levelState.levelData.monsters.seeds[i];
+			let monsterState = gameState.levelState.monstersState[i];
+			let tile = getMonsterInitPosition(gameState.map, gameState.playerState, monsterSeed);
 			monsterState.position = tile.position;
-			MonsterBuilder.basic(scene, levelState, monsterState)
+			MonsterBuilder.basic(scene, gameState.levelState, monsterState)
 				.build()
 				.pivot.set(BLOCK_SIZE / 2, BLOCK_SIZE / 2);
 		}

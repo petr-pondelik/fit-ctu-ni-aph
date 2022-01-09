@@ -52,7 +52,7 @@ export class LevelFactory {
 		const level: LevelData = gameState.gameData.levels[index];
 		gameState.changeLevel(level, index);
 		scene.addGlobalComponent(new SoundComponent());
-		MazeBuilder.build(scene, gameState.levelState);
+		MazeBuilder.build(scene, gameState);
 		let screenCenterX = (gameState.playerState.gridPosition.x * BLOCK_SIZE) - BLOCK_SIZE/2 - SCENE_WIDTH/(2 * SCENE_RESOLUTION);
 		let screenCenterY = (gameState.playerState.gridPosition.y * BLOCK_SIZE) - BLOCK_SIZE/2 - SCENE_HEIGHT/(2 * SCENE_RESOLUTION);
 		scene.stage.addChild(new LampLight(new Position2D(screenCenterX, screenCenterY), gameState.playerState.realPosition));

@@ -64,7 +64,7 @@ export class MonsterRandomWalk implements IMonsterMovementStrategy {
 export class MonsterChasePlayer implements IMonsterMovementStrategy {
 
 	destinationToPlayer(component: MonsterMovement) {
-		component.destination = component.levelState.playerState.gridPosition;
+		component.destination = component.gameState.playerState.gridPosition;
 		component.aStar.findPath(
 			component.actualPosition.x, component.actualPosition.y,
 			component.destination.x, component.destination.y,

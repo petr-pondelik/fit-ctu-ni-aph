@@ -2,10 +2,12 @@ import * as ECS from '../../../libs/pixi-ecs';
 import ObservableState from './observable-state';
 import LevelState from './level-state';
 import {GameData, LevelData} from '../game-struct';
+import PlayerState from './player-state';
 
 export default class GameState extends ObservableState {
 
 	private _levelState: LevelState;
+	private _playerState: PlayerState;
 	private readonly _gameData: GameData;
 	private _currentLevel: number;
 	private gameRunning: boolean;
@@ -18,6 +20,7 @@ export default class GameState extends ObservableState {
 	}
 
 	changeLevel(levelData: LevelData, index: number) {
+		this._playerState = new PlayerState(this.scene, levelData.playerInitPos);
 		this._levelState = new LevelState(this.scene, levelData);
 		this._currentLevel = index;
 	}
@@ -27,11 +30,15 @@ export default class GameState extends ObservableState {
 	}
 
 	get playerState() {
-		return this.levelState.playerState;
+		return this._playerState;
 	}
 
 	get gameData() {
 		return this._gameData;
+	}
+
+	get map() {
+		return this._levelState.map;
 	}
 
 	get currentLevel(): number {

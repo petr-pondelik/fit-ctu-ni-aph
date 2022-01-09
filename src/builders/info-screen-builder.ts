@@ -50,7 +50,7 @@ export default class InfoScreenBuilder {
 				new ECS.Builder(scene)
 					.asText(
 						'YOU DIED\n\n' +
-						'Press Enter or Space to play again',
+						'Press Enter or Space to re-play from previous level.',
 						{...textStyle, ...customStyle} as TextStyle)
 					.localPos(SCENE_WIDTH / (2 * SCENE_RESOLUTION), SCENE_HEIGHT / (2 * SCENE_RESOLUTION))
 					.anchor(0.5)

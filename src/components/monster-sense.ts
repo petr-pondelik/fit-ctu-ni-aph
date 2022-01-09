@@ -1,5 +1,4 @@
 import * as ECS from '../../libs/pixi-ecs';
-import LevelState from '../model/states/level-state';
 import {euclideanDistance} from '../helpers/geometry';
 import {
 	NOISE_CHASE_DISTANCE,
@@ -9,18 +8,19 @@ import {Messages} from '../constants/constants';
 import MonsterState from '../model/states/monster-state';
 import {Selectors} from '../helpers/selectors';
 import {Position2D} from '../model/geometry';
+import GameState from '../model/states/game-state';
 
 
 export default class MonsterSense extends ECS.Component<MonsterState> {
 
-	levelState: LevelState;
+	gameState: GameState;
 	isChasingPlayer: boolean = false;
 	isAlerted: boolean = false;
 	playerChaseDistance: number;
 	noiseChaseDistance: number;
 
 	onInit() {
-		this.levelState = Selectors.levelStateSelector(this.scene);
+		this.gameState = Selectors.gameStateSelector(this.scene);
 		this.playerChaseDistance = PLAYER_CHASE_DISTANCE;
 		this.noiseChaseDistance = NOISE_CHASE_DISTANCE;
 		this.subscribe(Messages.PLAYER_NOISY_STEP);
@@ -36,7 +36,7 @@ export default class MonsterSense extends ECS.Component<MonsterState> {
 	}
 
 	onUpdate(delta: number, absolute: number) {
-		let playerDistance = euclideanDistance(this.levelState.playerState.gridPosition, this.props.gridPosition);
+		let playerDistance = euclideanDistance(this.gameState.playerState.gridPosition, this.props.gridPosition);
 		if (!this.isChasingPlayer && playerDistance <= this.playerChaseDistance) {
 			this.switchChasing();
 			this.sendMessage(Messages.MONSTER_START_CHASING_PLAYER);

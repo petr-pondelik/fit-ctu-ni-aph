@@ -22,8 +22,8 @@ export default class HudBuilder {
 			.withParent(scene.stage)
 			.asText(GAME_TITLE, style)
 			.localPos(
-				-SCENE_WIDTH / (2 * SCENE_RESOLUTION) + gameState.levelState.playerState.realPosition.x - BLOCK_SIZE/2,
-				gameState.levelState.playerState.realPosition.y - SCENE_HEIGHT / (2 * SCENE_RESOLUTION) - BLOCK_SIZE/2
+				-SCENE_WIDTH / (2 * SCENE_RESOLUTION) + gameState.playerState.realPosition.x - BLOCK_SIZE/2,
+				gameState.playerState.realPosition.y - SCENE_HEIGHT / (2 * SCENE_RESOLUTION) - BLOCK_SIZE/2
 			);
 	}
 
@@ -32,8 +32,8 @@ export default class HudBuilder {
 			.withParent(scene.stage)
 			.asText(gameState.levelState.levelData.name, {...style, ...{ fontSize: 8 }} as TextStyle)
 			.localPos(
-				-SCENE_WIDTH / (2 * SCENE_RESOLUTION) + gameState.levelState.playerState.realPosition.x - BLOCK_SIZE/2,
-				gameState.levelState.playerState.realPosition.y + SCENE_HEIGHT / (2 * SCENE_RESOLUTION) - 2.25 * BLOCK_SIZE
+				-SCENE_WIDTH / (2 * SCENE_RESOLUTION) + gameState.playerState.realPosition.x - BLOCK_SIZE/2,
+				gameState.playerState.realPosition.y + SCENE_HEIGHT / (2 * SCENE_RESOLUTION) - 2.25 * BLOCK_SIZE
 			);
 	}
 
@@ -45,7 +45,7 @@ export default class HudBuilder {
 			.asContainer()
 			.localPos(
 				SCENE_WIDTH / (2 * SCENE_RESOLUTION) - 4 * BLOCK_SIZE,
-				gameState.levelState.playerState.realPosition.y + SCENE_HEIGHT / (2 * SCENE_RESOLUTION) - 2.25 * BLOCK_SIZE
+				gameState.playerState.realPosition.y + SCENE_HEIGHT / (2 * SCENE_RESOLUTION) - 2.25 * BLOCK_SIZE
 			);
 
 		const hudMessageBuilder = new ECS.Builder(scene)

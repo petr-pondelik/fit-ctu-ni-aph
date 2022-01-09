@@ -2,20 +2,24 @@ import * as ECS from '../../libs/pixi-ecs';
 import PlayerController from './player-controller';
 import {PLAYER_SPEED} from '../constants/config';
 import {Vector2D} from '../model/geometry';
+import PlayerState from '../model/states/player-state';
+import {Selectors} from '../helpers/selectors';
 
 
 export default class PlayerKeyboardController extends PlayerController {
 
 	private keyInputCmp: ECS.KeyInputComponent;
+	private playerState: PlayerState;
 
 	onInit() {
 		super.onInit();
 		this.keyInputCmp = this.scene.findGlobalComponentByName<ECS.KeyInputComponent>(ECS.KeyInputComponent.name);
+		this.playerState = Selectors.playerStateSelector(this.scene);
 	}
 
 	onUpdate(delta: number, absolute: number) {
 
-		let stepSize: number = delta * PLAYER_SPEED;
+		let stepSize: number = delta * this.playerState.speed;
 		let xStep: number = 0;
 		let yStep: number = 0;
 

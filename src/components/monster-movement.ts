@@ -10,9 +10,9 @@ import {
 	MonsterChasePlayer,
 	MonsterRandomWalk
 } from '../strategies/monster-movement-strategies';
-import LevelState from '../model/states/level-state';
 import {Selectors} from '../helpers/selectors';
 import {MONSTER_SPEED_MIN} from '../constants/config';
+import GameState from '../model/states/game-state';
 
 type PathStep = {
 	x: number;
@@ -21,7 +21,7 @@ type PathStep = {
 
 export default class MonsterMovement extends ECS.Component<MonsterState> {
 
-	levelState: LevelState;
+	gameState: GameState;
 	map: MapData;
 	aStar: EasyStar.js = easyStar;
 
@@ -35,8 +35,8 @@ export default class MonsterMovement extends ECS.Component<MonsterState> {
 	acceleration: number = 0.0;
 
 	onInit() {
-		this.levelState = Selectors.levelStateSelector(this.scene);
-		this.map = this.levelState.levelData.map;
+		this.gameState = Selectors.gameStateSelector(this.scene);
+		this.map = this.gameState.levelState.levelData.map;
 		this.subscribe(Messages.MONSTER_START_CHASING_PLAYER, Messages.MONSTER_STOP_CHASING_PLAYER, Messages.MONSTER_ALERTED);
 		this.aStar.setGrid(this.map.raw);
 		this.initPositions();
