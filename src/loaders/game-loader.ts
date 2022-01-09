@@ -15,11 +15,13 @@ export class GameLoader {
 		engine.app.loader
 			.reset()
 			.add(Assets.SPRITESHEET, 'assets/mainlevbuild.png')
+			.add(Assets.ITEMS_SPRITESHEET, 'assets/decorative.png')
 			.add(Assets.PLAYER, 'assets/player-16.png')
 			.add(Assets.MONSTER, 'assets/monster-bat-16.png')
 			.load(() => this.onAssetsLoaded(engine));
 		PIXISound.add(Music.BG_MUSIC.key, Music.BG_MUSIC.path);
 		PIXISound.add(Music.BAR_MOVEMENTS_SOUND.key, Music.BAR_MOVEMENTS_SOUND.path);
+		PIXISound.add(Music.BREAK_DOSE.key, Music.BREAK_DOSE.path);
 	}
 
 	private onAssetsLoaded(engine: ECS.Engine) {

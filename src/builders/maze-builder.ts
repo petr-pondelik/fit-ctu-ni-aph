@@ -5,6 +5,7 @@ import {getMonsterInitPosition} from '../helpers/random';
 import TilesBuilder from './tiles-builder';
 import {BLOCK_SIZE} from '../constants/config';
 import GameState from '../model/states/game-state';
+import {ItemsBuilder} from './items-builder';
 
 export default class MazeBuilder {
 
@@ -13,6 +14,9 @@ export default class MazeBuilder {
 		TilesBuilder.basic(scene, gameState.map.tiles)
 			.build()
 			.pivot.set(BLOCK_SIZE / 2, BLOCK_SIZE / 2);
+
+		ItemsBuilder.items(scene, gameState.levelState.levelData.items)
+			.build();
 
 		PlayerBuilder.basic(scene, gameState.playerState)
 			.build()

@@ -1,4 +1,4 @@
-import {MapTileType} from '../constants/constants';
+import {ItemType, MapTileType} from '../constants/constants';
 import {isAccessibleTile, isLevelExit} from '../helpers/grid';
 import {BLOCK_SIZE} from '../constants/config';
 import {Position2D} from './geometry';
@@ -28,6 +28,16 @@ export class MapTile {
 		return this.position.x;
 	}
 
+}
+
+export class Item {
+	readonly position: Position2D;
+	type: ItemType;
+
+	constructor(position: Position2D, type: ItemType) {
+		this.position = position;
+		this.type = type;
+	};
 }
 
 export type MapDimensions = {
@@ -66,14 +76,14 @@ export class MapData {
 		 */
 
 		let exploringShifts = [
-			[ -1, -1 ], // Top-Left
-			[ 0, -1 ], // Top-Middle
-			[ 1, -1 ], // Top-Right
-			[ 1, 0 ], // Right-Middle
-			[ 1, 1 ], // Bottom-Right
-			[ 0, 1 ], // Bottom-Middle
-			[ -1, 1 ], // Bottom-Left
-			[ -1, 0 ] // Left-Middle
+			[-1, -1], // Top-Left
+			[0, -1], // Top-Middle
+			[1, -1], // Top-Right
+			[1, 0], // Right-Middle
+			[1, 1], // Bottom-Right
+			[0, 1], // Bottom-Middle
+			[-1, 1], // Bottom-Left
+			[-1, 0] // Left-Middle
 		];
 
 		for (const shift of exploringShifts) {
@@ -110,17 +120,33 @@ export class MonstersData {
 	}
 }
 
+export class LevelConfig {
+	monsterSpeedMin: number;
+	monsterSpeedMax: number;
+	monsterSpeedChange: number;
+
+	constructor(monsterSpeedMin: number, monsterSpeedMax: number, monsterSpeedChange: number) {
+		this.monsterSpeedMin = monsterSpeedMin;
+		this.monsterSpeedMax = monsterSpeedMax;
+		this.monsterSpeedChange = monsterSpeedChange;
+	}
+}
+
 export class LevelData {
 	name: string;
 	map: MapData;
+	items: Item[];
 	playerInitPos: Position2D;
 	monsters: MonstersData;
+	config: LevelConfig;
 
-	constructor(name: string, map: MapData, playerInitPos: Position2D, monsters: MonstersData) {
+	constructor(name: string, map: MapData, items: Item[], playerInitPos: Position2D, monsters: MonstersData, config: LevelConfig) {
 		this.name = name;
 		this.map = map;
+		this.items = items;
 		this.playerInitPos = playerInitPos;
 		this.monsters = monsters;
+		this.config = config;
 	}
 }
 

@@ -55,7 +55,18 @@ export const LEVELS = [
 			{ positionSeed: [40, 7] },
 			{ positionSeed: [43, 7] },
 			{ positionSeed: [32, 15] },
-		]
+		],
+		items: [
+			{
+				position: [6, 6],
+				type: 'speed_up'
+			}
+		],
+		levelConfig: {
+			monsterSpeedMin: 0.08,
+			monsterSpeedMax: 0.25,
+			monsterSpeedChange: 0.0005
+		}
 	},
 	{
 		name: 'Level 2',
@@ -117,7 +128,13 @@ export const LEVELS = [
 			// {
 			// 	positionSeed: [2, 40]
 			// },
-		]
+		],
+		items: [],
+		levelConfig: {
+			monsterSpeedMin: 0.15,
+			monsterSpeedMax: 0.3,
+			monsterSpeedChange: 0.001
+		}
 	},
 	{
 		name: 'Level 3',
@@ -179,6 +196,12 @@ export const LEVELS = [
 			// {
 			// 	positionSeed: [2, 40]
 			// },
-		]
+		],
+		items: [],
+		levelConfig: {
+			monsterSpeedMin: 0.08,
+			monsterSpeedMax: 0.25,
+			monsterSpeedChange: 0.0005
+		}
 	}
 ];

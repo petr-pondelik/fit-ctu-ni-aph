@@ -1,10 +1,10 @@
 import * as ECS from '../libs/pixi-ecs';
 import * as PIXI from 'pixi.js';
 import {GameLoader} from './loaders/game-loader';
-import {SCENE_HEIGHT, SCENE_RESOLUTION, SCENE_WIDTH} from './constants/config';
+import {SCENE_HEIGHT, SCENE_WIDTH} from './constants/config';
 
 
-class MazeEscape {
+class EscapeTheDungeon {
 	engine: ECS.Engine;
 
 	constructor() {
@@ -42,4 +42,4 @@ class MazeEscape {
 }
 
 // this will create a new instance as soon as this file is loaded
-export default new MazeEscape();
+export default new EscapeTheDungeon();

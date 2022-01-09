@@ -2,10 +2,7 @@ import MonsterMovement from '../components/monster-movement';
 import {getDirections} from '../helpers/grid';
 import {Position2D, Vector2D} from '../model/geometry';
 import {
-	MONSTER_CHANGE_SPEED,
 	MONSTER_MAX_MOVING_DISTANCE,
-	MONSTER_SPEED_MAX,
-	MONSTER_SPEED_MIN
 } from '../constants/config';
 import {getRandomTileInSurroundings} from '../helpers/random';
 
@@ -41,8 +38,8 @@ export class MonsterRandomWalk implements IMonsterMovementStrategy {
 
 		let nextStep = component.getNextStep();
 
-		if (component.getMonsterActualSpeed() > MONSTER_SPEED_MIN) {
-			component.acceleration -= MONSTER_CHANGE_SPEED;
+		if (component.getMonsterActualSpeed() > component.gameState.config.monsterSpeedMin) {
+			component.acceleration -= component.gameState.config.monsterSpeedChange;
 		}
 
 		if (nextStep) {
@@ -80,8 +77,8 @@ export class MonsterChasePlayer implements IMonsterMovementStrategy {
 		this.destinationToPlayer(component);
 		let nextStep = component.getNextStep();
 
-		if (component.getMonsterActualSpeed() < MONSTER_SPEED_MAX) {
-			component.acceleration += MONSTER_CHANGE_SPEED;
+		if (component.getMonsterActualSpeed() < component.gameState.config.monsterSpeedMax) {
+			component.acceleration += component.gameState.config.monsterSpeedChange;
 		}
 
 		if (nextStep) {

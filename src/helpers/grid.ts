@@ -60,6 +60,9 @@ export const adjustMovementByObstacles = (surrounding: MapTile[], movingObject: 
 
 	for (const tile of surrounding) {
 		let tileFrame = movingObject.parentGameObject.getChildByName(`TILE_${tile.getRow()}_${tile.getColumn()}`);
+		if (tileFrame === null) {
+			return new Vector2D(0, 0);
+		}
 
 		/** Check the top tiles collision */
 		if (vector.y < 0) {

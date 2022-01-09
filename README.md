@@ -33,7 +33,7 @@ project
 │   │   utils.js            // various file utilities
 │
 └───src                     // source files of your project
-│   │   maze-escape.ts          // the main source file that is included in the html file
+│   │   escape-the-dungeon.ts          // the main source file that is included in the html file
 │
 └───view                    // folder with HTML content
 │   │   index.html          // file that includes TS file with your game

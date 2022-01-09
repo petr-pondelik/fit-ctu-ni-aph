@@ -4,6 +4,7 @@ export enum Assets {
 	SPRITESHEET = 'spritesheet',
 	PLAYER = 'player',
 	MONSTER = 'monster',
+	ITEMS_SPRITESHEET = 'items_spritesheet'
 }
 
 export class Music {
@@ -18,10 +19,17 @@ export class Music {
 		path: '../../assets/mixkit-metal-bar-movement-hits-3138.wav',
 		length: 2000
 	};
+
+	static BREAK_DOSE = {
+		key: 'BREAK_DOSE',
+		path: '../../assets/mixkit-glass-break-with-hammer-thud-759.wav',
+		length: 1000
+	}
 }
 
 export enum Containers {
 	MAZE = 'maze',
+	ITEMS = 'items',
 	HUD_RIGHT_BOTTOM = 'hud_right_bottom'
 }
 
@@ -98,7 +106,11 @@ export enum MapTileType {
 
 export enum GameObjectType {
 	PLAYER = 1000,
-	MONSTER
+	MONSTER,
+}
+
+export enum ItemType {
+	SPEED_UP = 'speed_up'
 }
 
 export enum Attributes {
@@ -116,5 +128,6 @@ export enum Messages {
 	MONSTER_START_CHASING_PLAYER = 'monster_start_chasing_player',
 	MONSTER_STOP_CHASING_PLAYER = 'monster_stop_chasing_player',
 	PLAYER_NOISY_STEP = 'player_noisy_step',
-	MONSTER_ALERTED = 'monster_alerted'
+	MONSTER_ALERTED = 'monster_alerted',
+	DOSE_COLLECTED = 'dose_collected'
 }

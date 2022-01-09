@@ -1,7 +1,7 @@
 import * as ECS from '../../../libs/pixi-ecs';
 import ObservableState from './observable-state';
 import LevelState from './level-state';
-import {GameData, LevelData} from '../game-struct';
+import {GameData, LevelConfig, LevelData} from '../game-struct';
 import PlayerState from './player-state';
 
 export default class GameState extends ObservableState {
@@ -47,6 +47,10 @@ export default class GameState extends ObservableState {
 
 	set currentLevel(currentLevel) {
 		this._currentLevel = currentLevel;
+	}
+
+	get config(): LevelConfig {
+		return this._levelState.levelData.config;
 	}
 
 	resetGame() {

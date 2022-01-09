@@ -1,5 +1,6 @@
 import * as ECS from '../../libs/pixi-ecs';
 import {
+	Item, LevelConfig,
 	LevelData,
 	MapData,
 	MapDimensions,
@@ -11,7 +12,7 @@ import {Selectors} from '../helpers/selectors';
 import MazeBuilder from '../builders/maze-builder';
 import {BLOCK_SIZE, SCENE_HEIGHT, SCENE_RESOLUTION, SCENE_WIDTH} from '../constants/config';
 import GameState from '../model/states/game-state';
-import {Attributes, MapTileType} from '../constants/constants';
+import {Attributes, ItemType, MapTileType} from '../constants/constants';
 import {Position2D} from '../model/geometry';
 import LampLight from '../graphics/lamp-light';
 import HudBuilder from '../builders/hud-builder';
@@ -37,11 +38,24 @@ export class LevelFactory {
 				map.tiles.push(row);
 				rowInx++;
 			}
+			let items: Item[] = [];
+			for (const i of level.items) {
+				items.push(new Item(new Position2D(i.position[0], i.position[1]), i.type as ItemType));
+			}
 			let monstersData = new MonstersData(level.monsters.length);
 			for (const m of level.monsters) {
 				monstersData.seeds.push(new MonsterSeed(m.positionSeed[0], m.positionSeed[1]));
 			}
-			res.push(new LevelData(level.name, map, new Position2D(level.playerInitPos[0], level.playerInitPos[1]), monstersData));
+			res.push(
+				new LevelData(
+					level.name,
+					map,
+					items,
+					new Position2D(level.playerInitPos[0], level.playerInitPos[1]),
+					monstersData,
+					new LevelConfig(level.levelConfig.monsterSpeedMin, level.levelConfig.monsterSpeedMax, level.levelConfig.monsterSpeedChange)
+				)
+			);
 		}
 		return res;
 	};

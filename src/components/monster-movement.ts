@@ -11,7 +11,6 @@ import {
 	MonsterRandomWalk
 } from '../strategies/monster-movement-strategies';
 import {Selectors} from '../helpers/selectors';
-import {MONSTER_SPEED_MIN} from '../constants/config';
 import GameState from '../model/states/game-state';
 
 type PathStep = {
@@ -77,7 +76,7 @@ export default class MonsterMovement extends ECS.Component<MonsterState> {
 	}
 
 	getMonsterActualSpeed(): number {
-		return MONSTER_SPEED_MIN + this.acceleration;
+		return this.gameState.config.monsterSpeedMin + this.acceleration;
 	}
 
 	reset() {
