@@ -1,15 +1,12 @@
 import * as ECS from '../../libs/pixi-ecs';
 import PlayerController from './player-controller';
-import {PLAYER_SPEED} from '../constants/config';
 import {Vector2D} from '../model/geometry';
-import PlayerState from '../model/states/player-state';
 import {Selectors} from '../helpers/selectors';
 
 
 export default class PlayerKeyboardController extends PlayerController {
 
 	private keyInputCmp: ECS.KeyInputComponent;
-	private playerState: PlayerState;
 
 	onInit() {
 		super.onInit();

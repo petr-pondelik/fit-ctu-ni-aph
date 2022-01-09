@@ -55,8 +55,9 @@ export default class GameActions {
 			.call(
 				(cmp) => {
 					const gameState = Selectors.gameStateSelector(scene);
+					const gameData = Selectors.gameDataSelector(scene);
 					let nextLevelInx = gameState.currentLevel + 1;
-					if (nextLevelInx < gameState.gameData.levels.length) {
+					if (nextLevelInx < gameData.levels.length) {
 						cmp.mergeWith(
 							new ECS.ChainComponent()
 								.call(

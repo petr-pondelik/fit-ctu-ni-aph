@@ -5,7 +5,7 @@ import TextureFactory from '../factory/texture-factory';
 import {Containers, GameObjectType} from '../constants/constants';
 import {PlayerSync} from '../components/player-sync';
 import PlayerState from '../model/states/player-state';
-import PlayerEffectsWatcher from '../components/player-effects-watcher';
+import PlayerAbilityResetWatcher from '../components/player-ability-reset-watcher';
 
 
 export default class PlayerBuilder {
@@ -17,7 +17,7 @@ export default class PlayerBuilder {
 			.anchor(0.5)
 			.localPos(state.realPosition.x, state.realPosition.y)
 			.withParent(scene.stage.getChildByName(Containers.MAZE) as Container)
-			.withComponents([new PlayerKeyboardController(), new PlayerSync(state), new PlayerEffectsWatcher()]);
+			.withComponents([new PlayerKeyboardController(), new PlayerSync(state), new PlayerAbilityResetWatcher()]);
 	}
 
 }

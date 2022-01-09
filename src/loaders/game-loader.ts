@@ -26,7 +26,7 @@ export class GameLoader {
 
 	private onAssetsLoaded(engine: ECS.Engine) {
 		const gameData = new GameData(LevelFactory.createAllLevels());
-		let gameState = new GameState(engine.scene, gameData);
+		let gameState = new GameState(engine.scene);
 
 		engine.scene.assignGlobalAttribute(Attributes.GAME_DATA, gameData);
 		engine.scene.assignGlobalAttribute(Attributes.GAME_STATE, gameState);

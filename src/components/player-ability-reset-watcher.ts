@@ -2,7 +2,7 @@ import * as ECS from '../../libs/pixi-ecs';
 import PlayerState from '../model/states/player-state';
 import {Selectors} from '../helpers/selectors';
 
-export default class PlayerEffectsWatcher extends ECS.Component {
+export default class PlayerAbilityResetWatcher extends ECS.Component {
 
 	playerState: PlayerState;
 

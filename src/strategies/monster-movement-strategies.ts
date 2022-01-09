@@ -13,7 +13,7 @@ export interface IMonsterMovementStrategy {
 export class MonsterRandomWalk implements IMonsterMovementStrategy {
 
 	randomDestination(component: MonsterMovement) {
-		component.destination = getRandomTileInSurroundings(component.map, component.origin, MONSTER_MAX_MOVING_DISTANCE).position;
+		component.destination = getRandomTileInSurroundings(component.gameState.map, component.origin, MONSTER_MAX_MOVING_DISTANCE).position;
 		component.aStar.findPath(
 			component.actualPosition.x, component.actualPosition.y,
 			component.destination.x, component.destination.y,

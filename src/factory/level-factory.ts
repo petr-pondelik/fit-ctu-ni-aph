@@ -1,5 +1,6 @@
 import * as ECS from '../../libs/pixi-ecs';
 import {
+	GameData,
 	Item, LevelConfig,
 	LevelData,
 	MapData,
@@ -63,7 +64,8 @@ export class LevelFactory {
 	static loadLevel = (scene: ECS.Scene, index: number) => {
 		this.clearScene(scene);
 		const gameState: GameState = Selectors.gameStateSelector(scene);
-		const level: LevelData = gameState.gameData.levels[index];
+		const gameData: GameData = Selectors.gameDataSelector(scene);
+		const level: LevelData = gameData.levels[index];
 		gameState.changeLevel(level, index);
 		scene.addGlobalComponent(new SoundComponent());
 		MazeBuilder.build(scene, gameState);
@@ -78,12 +80,13 @@ export class LevelFactory {
 	};
 
 	static clearScene = (scene: ECS.Scene) => {
+		const gameData = Selectors.gameDataSelector(scene);
 		const gameState = Selectors.gameStateSelector(scene);
 		scene.clearScene();
 		// reassign global attributes, keyboard controller
 		scene.stage.sortableChildren = true;
 		scene.addGlobalComponentAndRun(new ECS.KeyInputComponent());
-		scene.assignGlobalAttribute(Attributes.GAME_DATA, gameState.gameData);
+		scene.assignGlobalAttribute(Attributes.GAME_DATA, gameData);
 		scene.assignGlobalAttribute(Attributes.GAME_STATE, gameState);
 	}
 }

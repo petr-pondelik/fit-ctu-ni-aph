@@ -21,7 +21,9 @@ export default class InfoScreenBuilder {
 				new ECS.Builder(scene)
 					.asText(
 						'Escape the Dungeon\n\n' +
-						'Press Enter or Space to start the game',
+						'Press Enter or Space to start the game.\n\n' +
+						'Use W A S D to move.\n\n' +
+						'If available, collect speed-up items to avoid monsters.',
 						textStyle
 					)
 					.localPos(SCENE_WIDTH / (2 * SCENE_RESOLUTION), SCENE_HEIGHT / (2 * SCENE_RESOLUTION))

@@ -21,7 +21,6 @@ type PathStep = {
 export default class MonsterMovement extends ECS.Component<MonsterState> {
 
 	gameState: GameState;
-	map: MapData;
 	aStar: EasyStar.js = easyStar;
 
 	origin: Position2D;
@@ -35,9 +34,8 @@ export default class MonsterMovement extends ECS.Component<MonsterState> {
 
 	onInit() {
 		this.gameState = Selectors.gameStateSelector(this.scene);
-		this.map = this.gameState.levelState.levelData.map;
 		this.subscribe(Messages.MONSTER_START_CHASING_PLAYER, Messages.MONSTER_STOP_CHASING_PLAYER, Messages.MONSTER_ALERTED);
-		this.aStar.setGrid(this.map.raw);
+		this.aStar.setGrid(this.gameState.map.raw);
 		this.initPositions();
 		this.activeStrategy = this.movementStrategies.RANDOM_WALK;
 	}

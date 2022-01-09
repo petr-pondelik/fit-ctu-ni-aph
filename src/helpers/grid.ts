@@ -61,7 +61,6 @@ export const adjustMovementByObstacles = (surrounding: MapTile[], scene: ECS.Sce
 
 	for (const tile of surrounding) {
 		let tileFrame = scene.findObjectByName(`TILE_${tile.getRow()}_${tile.getColumn()}`);
-		console.log(tileFrame);
 
 		if (tileFrame === null) {
 			return new Vector2D(0, 0);
