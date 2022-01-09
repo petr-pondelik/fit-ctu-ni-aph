@@ -29,12 +29,15 @@ export class Music {
 
 export enum Containers {
 	MAZE = 'maze',
+	TILES = 'tiles',
 	ITEMS = 'items',
 	HUD_RIGHT_BOTTOM = 'hud_right_bottom'
 }
 
 export enum HudElements {
-	GAME_MESSAGE = 'game_message'
+	GAME_MESSAGE = 'hud_game_message',
+	GAME_TITLE = 'hud_game_title',
+	LEVEL_NAME = 'hud_level_name'
 }
 
 export enum MapTileType {
@@ -116,10 +119,6 @@ export enum ItemType {
 export enum Attributes {
 	GAME_DATA = 'GAME_DATA',
 	GAME_STATE = 'GAME_STATE'
-}
-
-export enum Tags {
-	MONSTER = 'MONSTER'
 }
 
 export enum Messages {

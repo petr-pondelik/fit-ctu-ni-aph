@@ -1,3 +1,4 @@
+import * as ECS from '../../libs/pixi-ecs';
 import {MapTileType} from '../constants/constants';
 import {Position2D, Vector2D} from '../model/geometry';
 import {MapTile} from '../model/game-struct';
@@ -44,7 +45,7 @@ export const getDirections = (origin: Position2D, destination: Position2D) => {
 	};
 };
 
-export const adjustMovementByObstacles = (surrounding: MapTile[], movingObject: Container, vector: Vector2D) => {
+export const adjustMovementByObstacles = (surrounding: MapTile[], scene: ECS.Scene, movingObject: Container, vector: Vector2D) => {
 	let bounds = movingObject.getBounds();
 
 	let topBound = bounds.top;
@@ -59,7 +60,9 @@ export const adjustMovementByObstacles = (surrounding: MapTile[], movingObject: 
 	 * */
 
 	for (const tile of surrounding) {
-		let tileFrame = movingObject.parentGameObject.getChildByName(`TILE_${tile.getRow()}_${tile.getColumn()}`);
+		let tileFrame = scene.findObjectByName(`TILE_${tile.getRow()}_${tile.getColumn()}`);
+		console.log(tileFrame);
+
 		if (tileFrame === null) {
 			return new Vector2D(0, 0);
 		}

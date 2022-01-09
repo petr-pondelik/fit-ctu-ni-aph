@@ -15,7 +15,7 @@ export default class PlayerController extends ECS.Component {
 			let newX = this.owner.position.x + this.vector.x;
 			let newY = this.owner.position.y + this.vector.y;
 			let surroundingTiles = gameState.map.getSurrounding(newX, newY);
-			this.vector = adjustMovementByObstacles(surroundingTiles, this.owner, this.vector);
+			this.vector = adjustMovementByObstacles(surroundingTiles, this.scene, this.owner, this.vector);
 			if (this.vector.getSize() !== 0) {
 				this.vector.normalizeDiagonalSize();
 				playerState.applyMovement(this.vector);

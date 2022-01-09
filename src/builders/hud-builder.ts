@@ -20,6 +20,7 @@ export default class HudBuilder {
 	static leftTop = (scene: ECS.Scene, gameState) => {
 		return new ECS.Builder(scene)
 			.withParent(scene.stage)
+			.withName(HudElements.GAME_TITLE)
 			.asText(GAME_TITLE, style)
 			.localPos(
 				-SCENE_WIDTH / (2 * SCENE_RESOLUTION) + gameState.playerState.realPosition.x - BLOCK_SIZE/2,
@@ -30,6 +31,7 @@ export default class HudBuilder {
 	static leftBottom = (scene: ECS.Scene, gameState: GameState) => {
 		return new ECS.Builder(scene)
 			.withParent(scene.stage)
+			.withName(HudElements.LEVEL_NAME)
 			.asText(gameState.levelState.levelData.name, {...style, ...{ fontSize: 8 }} as TextStyle)
 			.localPos(
 				-SCENE_WIDTH / (2 * SCENE_RESOLUTION) + gameState.playerState.realPosition.x - BLOCK_SIZE/2,

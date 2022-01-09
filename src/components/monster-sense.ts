@@ -23,11 +23,11 @@ export default class MonsterSense extends ECS.Component<MonsterState> {
 		this.gameState = Selectors.gameStateSelector(this.scene);
 		this.playerChaseDistance = PLAYER_CHASE_DISTANCE;
 		this.noiseChaseDistance = NOISE_CHASE_DISTANCE;
-		this.subscribe(Messages.PLAYER_NOISY_STEP);
+		this.subscribe(Messages.PLAYER_NOISY_STEP, Messages.DOSE_COLLECTED);
 	}
 
 	onMessage(msg: ECS.Message): any {
-		if (msg.action === Messages.PLAYER_NOISY_STEP) {
+		if (msg.action === Messages.PLAYER_NOISY_STEP || msg.action === Messages.DOSE_COLLECTED) {
 			let noiseDistance = euclideanDistance(msg.data as Position2D, this.props.gridPosition);
 			console.log(noiseDistance);
 			if (noiseDistance <= this.noiseChaseDistance) {

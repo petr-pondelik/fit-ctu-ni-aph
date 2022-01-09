@@ -76,14 +76,14 @@ export class MapData {
 		 */
 
 		let exploringShifts = [
-			[-1, -1], // Top-Left
-			[0, -1], // Top-Middle
-			[1, -1], // Top-Right
-			[1, 0], // Right-Middle
-			[1, 1], // Bottom-Right
-			[0, 1], // Bottom-Middle
-			[-1, 1], // Bottom-Left
-			[-1, 0] // Left-Middle
+			[-0.75, -0.75], // Top-Left
+			[0, -0.75], // Top-Middle
+			[0.75, -0.75], // Top-Right
+			[0.75, 0], // Right-Middle
+			[0.75, 0.75], // Bottom-Right
+			[0, 0.75], // Bottom-Middle
+			[-0.75, 0.75], // Bottom-Left
+			[-0.75, 0] // Left-Middle
 		];
 
 		for (const shift of exploringShifts) {

@@ -1,5 +1,5 @@
 import * as ECS from '../../libs/pixi-ecs';
-import {Containers, GameObjectType, Tags} from '../constants/constants';
+import {Containers, GameObjectType} from '../constants/constants';
 import TextureFactory from '../factory/texture-factory';
 import {BLOCK_SIZE} from '../constants/config';
 import {Container} from '../../libs/pixi-ecs';
@@ -25,7 +25,7 @@ export default class MonsterBuilder {
 				new PlayerMonsterCollision(),
 				new MonsterSync(monsterState)
 			])
-			.withTag(Tags.MONSTER + '_' + monsterState.monsterId);
+			.withName('monster_' + monsterState.monsterId);
 
 	}
 

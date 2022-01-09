@@ -48,14 +48,13 @@ export default class MonsterMovement extends ECS.Component<MonsterState> {
 	}
 
 	onMessage(msg: ECS.Message) {
-		if (msg.action === Messages.MONSTER_START_CHASING_PLAYER && msg.gameObject.tags.has('MONSTER_' + this.props.monsterId)) {
+		if (msg.action === Messages.MONSTER_START_CHASING_PLAYER && msg.gameObject.name === 'monster_' + this.props.monsterId) {
 			this.reset();
 			this.activeStrategy = this.movementStrategies.CHASE_PLAYER;
-		} else if (msg.action === Messages.MONSTER_STOP_CHASING_PLAYER && msg.gameObject.tags.has('MONSTER_' + this.props.monsterId)) {
+		} else if (msg.action === Messages.MONSTER_STOP_CHASING_PLAYER && msg.gameObject.name === 'monster_' + this.props.monsterId) {
 			this.reset();
 			this.activeStrategy = this.movementStrategies.RANDOM_WALK;
-		} else if (msg.action === Messages.MONSTER_ALERTED && msg.gameObject.tags.has('MONSTER_' + this.props.monsterId)) {
-			console.log(this.owner.name);
+		} else if (msg.action === Messages.MONSTER_ALERTED && msg.gameObject.name === 'monster_' + this.props.monsterId) {
 			this.destination = msg.data;
 		}
 	}

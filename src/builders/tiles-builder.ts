@@ -18,6 +18,12 @@ export default class TilesBuilder {
 				new PlayerNoisyStepChecker()
 			]);
 
+		const tilesContainerBuilder = new ECS.Builder(scene)
+			.asContainer()
+			.withName(Containers.TILES);
+
+		mazeContainerBuilder.withChild(tilesContainerBuilder);
+
 		for (const tilesRow of tiles) {
 			for (const tile of tilesRow) {
 				if (tile.type === MapTileType.EMPTY) {
@@ -28,7 +34,7 @@ export default class TilesBuilder {
 					.localPos(tile.getColumn() * BLOCK_SIZE, tile.getRow() * BLOCK_SIZE)
 					.withName(`TILE_${tile.getRow()}_${tile.getColumn()}`)
 					.anchor(0.5);
-				mazeContainerBuilder.withChild(tileBuilder);
+				tilesContainerBuilder.withChild(tileBuilder);
 			}
 		}
 

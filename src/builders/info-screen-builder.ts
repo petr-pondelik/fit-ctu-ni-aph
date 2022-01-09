@@ -16,6 +16,7 @@ export default class InfoScreenBuilder {
 	static intro = (scene: ECS.Scene): ECS.Builder => {
 		return new ECS.Builder(scene)
 			.withParent(scene.stage)
+			.withName('intro_screen')
 			.withChild(
 				new ECS.Builder(scene)
 					.asText(
@@ -31,6 +32,7 @@ export default class InfoScreenBuilder {
 	static gameFinished = (scene: ECS.Scene): ECS.Builder => {
 		return new ECS.Builder(scene)
 			.withParent(scene.stage)
+			.withName('game_finished_screen')
 			.withChild(
 				new ECS.Builder(scene)
 					.asText(
@@ -46,11 +48,12 @@ export default class InfoScreenBuilder {
 		const customStyle = { fill: '#ff0000' } as TextStyle;
 		return new ECS.Builder(scene)
 			.withParent(scene.stage)
+			.withName('player_died_screen')
 			.withChild(
 				new ECS.Builder(scene)
 					.asText(
 						'YOU DIED\n\n' +
-						'Press Enter or Space to re-play from previous level.',
+						'Press Enter or Space to re-play the level.',
 						{...textStyle, ...customStyle} as TextStyle)
 					.localPos(SCENE_WIDTH / (2 * SCENE_RESOLUTION), SCENE_HEIGHT / (2 * SCENE_RESOLUTION))
 					.anchor(0.5)
