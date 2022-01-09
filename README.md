@@ -1,4 +1,4 @@
-# Escape the Dungeon game
+# Escape the Dungeon
 
 * Genre: Maze (horror) game
 * Library: PixiJS
@@ -20,6 +20,25 @@ Available online at https://escape-the-dungeon-game.4fan.cz.
 ## Architecture
 
 ![Game architecture](./architecture-diagram.png)
+
+## 3rd Party code and assets
+
+### Code
+
+**EasyStar.js** (https://easystarjs.com/) library used for monsters pathfinding.
+
+### Graphics
+
+**Rogue Fantasy Catacombs Pixel Art Assets** used as tileset for the game.
+* https://szadiart.itch.io/rogue-fantasy-catacombs
+
+### Sound
+
+**HAZY DARKNESS** track used for background loop. (https://soundimage.org/dark-ominous/)
+
+**Metal bar movement hits** sound used for noisy steps sounds. (https://mixkit.co/free-sound-effects/metal/?page=2)
+
+**Glass break with hammer thud** sound used for breaking the power-up dose. ([https://soundimage.org/sample-page/](https://soundimage.org/sample-page/))
 
 ## Other scripts
 - lint: run `npm run lint` to see if there are linting errors. You can fix them by using `npm run lint -- --fix`
