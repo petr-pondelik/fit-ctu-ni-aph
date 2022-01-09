@@ -19,13 +19,13 @@ export class ItemCollector extends ECS.Component {
 	onMessage(msg: ECS.Message): any {
 		if (msg.action === Messages.STATE_CHANGE_PLAYER_POSITION) {
 			let item = this.levelState.getItem(msg.data as Position2D);
-			if (item !== undefined) {
+			if (item !== undefined && this.owner.name === `item_${item.position.x}_${item.position.y}`) {
 				this.sendMessage(Messages.DOSE_COLLECTED);
 				this.sendMessage(Messages.PLAYER_NOISY_STEP, msg.data);
 				if (item.type === ItemType.SPEED_UP) {
 					this.speedUpEffect();
 				}
-				this.owner.destroy();
+				this.owner.detach();
 			}
 		}
 	}

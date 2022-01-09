@@ -1,7 +1,7 @@
 import * as ECS from '../libs/pixi-ecs';
 import * as PIXI from 'pixi.js';
 import {GameLoader} from './loaders/game-loader';
-import {SCENE_HEIGHT, SCENE_WIDTH} from './constants/config';
+import {SCENE_HEIGHT, SCENE_RESOLUTION, SCENE_WIDTH} from './constants/config';
 
 
 class EscapeTheDungeon {
@@ -17,7 +17,7 @@ class EscapeTheDungeon {
 			resizeToScreen: true,
 			width: SCENE_WIDTH,
 			height: SCENE_HEIGHT,
-			resolution: 3,
+			resolution: SCENE_RESOLUTION,
 			flagsSearchEnabled: false, // searching by flags feature
 			statesSearchEnabled: false, // searching by states feature
 			tagsSearchEnabled: false, // searching by tags feature

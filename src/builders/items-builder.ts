@@ -18,6 +18,7 @@ export class ItemsBuilder {
 			const itemBuilder = new ECS.Builder(scene)
 				.asSprite(TextureFactory.createItemTexture(item.type))
 				.localPos(item.position.x * BLOCK_SIZE, item.position.y * BLOCK_SIZE)
+				.withName(`item_${item.position.x}_${item.position.y}`)
 				.anchor(0.5)
 				.withComponent(new ItemCollector());
 			mazeItemsBuilder.withChild(itemBuilder);

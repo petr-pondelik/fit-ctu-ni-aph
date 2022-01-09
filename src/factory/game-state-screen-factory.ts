@@ -25,7 +25,7 @@ export default class GameStateScreenFactory {
 		InfoScreenBuilder.playerDied(scene).build();
 		scene.addGlobalComponentAndRun(new ECS.ChainComponent()
 			.waitFor(() => new WaitInputComponent())
-			.mergeWith(GameActions.reloadPreviousLevel(scene))
+			.mergeWith(GameActions.reloadLevel(scene))
 		);
 	}
 

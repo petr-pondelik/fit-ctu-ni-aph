@@ -45,7 +45,9 @@ export default class PlayerState extends ObservableState {
 	}
 
 	speedUp(multiplier: number) {
-		this._speed *= multiplier;
+		if (this._speed <= PLAYER_SPEED) {
+			this._speed *= multiplier;
+		}
 		this._speedUpAt = this.scene.currentAbsolute;
 	}
 
@@ -53,6 +55,7 @@ export default class PlayerState extends ObservableState {
 		this._realPosition.x += vector.x;
 		this._realPosition.y += vector.y;
 		this._gridPosition = this._realPosition.toGrid();
+		console.log(this._gridPosition);
 		this._lastMove = vector;
 		this.sendMessage(Messages.STATE_CHANGE_PLAYER_POSITION, {x: this.gridPosition.x, y: this.gridPosition.y});
 	}

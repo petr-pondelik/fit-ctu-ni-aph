@@ -35,16 +35,15 @@ export default class GameActions {
 			);
 	};
 
-	static reloadPreviousLevel = (scene: ECS.Scene) => {
+	static reloadLevel = (scene: ECS.Scene) => {
 		return new ECS.ChainComponent()
 			.call(
 				(cmp) => {
 					const gameState = Selectors.gameStateSelector(scene);
-					let inx = gameState.currentLevel > 0 ? gameState.currentLevel - 1 : 0;
 					cmp.mergeWith(
 						new ECS.ChainComponent()
 							.call(
-								() => scene.callWithDelay(0, () => LevelFactory.loadLevel(scene, inx))
+								() => scene.callWithDelay(0, () => LevelFactory.loadLevel(scene, gameState.currentLevel))
 							)
 					);
 				}

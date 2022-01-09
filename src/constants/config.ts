@@ -9,12 +9,9 @@ export const BLOCK_SIZE = 16;
 
 /** Game config */
 export const PLAYER_SPEED = 0.12;
-export const PLAYER_SPEEDUP_DURATION = 2000;
-// export const MONSTER_SPEED_MIN = 0.08;
-// export const MONSTER_SPEED_MAX = 0.25;
-// export const MONSTER_CHANGE_SPEED = 0.0005;
+export const PLAYER_SPEEDUP_DURATION = 5000;
 export const MONSTER_MAX_MOVING_DISTANCE = 18;
 export const MONSTER_PLAYER_MIN_DISTANCE = 10;
 export const MONSTER_SPAWN_DISPERSION = 10;
 export const PLAYER_CHASE_DISTANCE = 8;
-export const NOISE_CHASE_DISTANCE = 14;
+export const NOISE_CHASE_DISTANCE = 16;
