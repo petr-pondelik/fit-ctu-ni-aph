@@ -59,8 +59,8 @@ export const LEVELS = [
 		items: [],
 		levelConfig: {
 			monsterSpeedMin: 0.075,
-			monsterSpeedMax: 0.235,
-			monsterSpeedChange: 0.0003875
+			monsterSpeedMax: 0.23,
+			monsterSpeedChange: 0.00038
 		}
 	},
 	{
@@ -139,8 +139,8 @@ export const LEVELS = [
 		],
 		levelConfig: {
 			monsterSpeedMin: 0.0875,
-			monsterSpeedMax: 0.25,
-			monsterSpeedChange: 0.000585
+			monsterSpeedMax: 0.24,
+			monsterSpeedChange: 0.00055
 		}
 	}
 ];
