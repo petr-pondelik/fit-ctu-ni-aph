@@ -58,13 +58,13 @@ export const LEVELS = [
 		],
 		items: [],
 		levelConfig: {
-			monsterSpeedMin: 0.08,
-			monsterSpeedMax: 0.25,
-			monsterSpeedChange: 0.0005
+			monsterSpeedMin: 0.075,
+			monsterSpeedMax: 0.235,
+			monsterSpeedChange: 0.0003875
 		}
 	},
 	{
-		name: 'Going deeper',
+		name: 'Going Deeper',
 		map: [
 			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 			[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 101, 102, 103, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -138,9 +138,9 @@ export const LEVELS = [
 			},
 		],
 		levelConfig: {
-			monsterSpeedMin: 0.09,
+			monsterSpeedMin: 0.0875,
 			monsterSpeedMax: 0.25,
-			monsterSpeedChange: 0.00075
+			monsterSpeedChange: 0.000585
 		}
 	}
 ];
